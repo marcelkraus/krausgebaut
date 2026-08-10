@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Datenschutz · krausgebaut von Marcel Kraus{% endblock %}
+{% block meta_description %}Datenschutzerklärung von krausgebaut von Marcel Kraus. krausgebaut bietet Internet- und IT-Dienstleistungen im Rhein-Erft-Kreis (bei Köln).{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex,follow">{% endblock %}
+
+{% block content %}
+    <article class="mx-auto max-w-3xl px-6 pt-36 pb-24 lg:px-8 lg:pt-44 lg:pb-32">
+        {{ include('partials/_eyebrow.html.twig', { text: 'Rechtliches' }) }}
+        <h1 class="mt-5 font-display text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">Datenschutz</h1>
+        <p class="mt-6 leading-relaxed text-neutral-700">Der Schutz Ihrer persönlichen Daten ist mir wichtig. Nachfolgend informiere ich Sie über die Verarbeitung personenbezogener Daten beim Besuch dieser Website – die Erhebung beschränkt sich auf das technisch Notwendige und auf die Daten, die Sie mir aktiv über das Kontaktformular übermitteln.</p>
+
+        <div class="mt-12 space-y-12">
+            <section>
+                <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">1 · Verantwortlicher</h2>
+                <p class="mt-4 leading-relaxed text-neutral-700">Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+                <div class="mt-3 space-y-1 text-neutral-800">
+                    <p class="font-medium text-neutral-900">Marcel Kraus</p>
+                    <p>Bonner Straße 88</p>
+                    <p>50374 Erftstadt</p>
+                    <p>E-Mail: mail(at)krausgebaut(dot)de</p>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">2 · Aufruf der Website und Server-Logfiles</h2>
+                <p class="mt-4 leading-relaxed text-neutral-700">Beim Aufrufen der Website werden durch den Hosting-Anbieter automatisch Informationen erfasst, die Ihr Browser übermittelt. Dazu gehören insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, übertragene Datenmenge sowie Browser- und Betriebssystemangaben. Diese Daten dienen dem sicheren und stabilen Betrieb der Website und werden nicht mit anderen Datenquellen zusammengeführt.</p>
+                <p class="mt-3 leading-relaxed text-neutral-700">Rechtsgrundlage ist das berechtigte Interesse am technisch fehlerfreien Betrieb und an der Sicherheit der Website (Art. 6 Abs. 1 lit. f DSGVO).</p>
+            </section>
+
+            <section>
+                <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">3 · Kontaktformular</h2>
+                <p class="mt-4 leading-relaxed text-neutral-700">Wenn Sie mir über das Kontaktformular eine Anfrage senden, verarbeite ich die von Ihnen angegebenen Daten: Name, E-Mail-Adresse, gegebenenfalls Firma und Telefonnummer sowie Ihre Nachricht. Diese Angaben nutze ich ausschließlich zur Bearbeitung Ihrer Anfrage.</p>
+                <p class="mt-3 leading-relaxed text-neutral-700">Rechtsgrundlage ist die Durchführung vorvertraglicher Maßnahmen auf Ihre Anfrage hin (Art. 6 Abs. 1 lit. b DSGVO) sowie mein berechtigtes Interesse an der Beantwortung Ihrer Anfrage (Art. 6 Abs. 1 lit. f DSGVO). Die Daten werden gelöscht, sobald Ihre Anfrage abschließend bearbeitet ist und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+            </section>
+
+            <section>
+                <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">4 · Cookies und Schriften</h2>
+                <p class="mt-4 leading-relaxed text-neutral-700">Diese Website verwendet keine Tracking-Cookies. Lediglich bei der Nutzung des Kontaktformulars wird ein technisch notwendiges Sitzungs-Cookie gesetzt, das dem Schutz vor missbräuchlichen Formularübermittlungen (CSRF-Schutz) dient und nach dem Besuch verfällt.</p>
+                <p class="mt-3 leading-relaxed text-neutral-700">Alle verwendeten Schriftarten werden lokal von dieser Website ausgeliefert. Eine Verbindung zu Schrift-Diensten Dritter (etwa Google Fonts) findet nicht statt.</p>
+            </section>
+
+            <section>
+                <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">5 · Reichweitenmessung mit Matomo</h2>
+                <p class="mt-4 leading-relaxed text-neutral-700">Zur Reichweiten- und Nutzungsanalyse setze ich die datenschutzfreundliche Analysesoftware Matomo ein, die ich auf eigener Infrastruktur (matomo.marcelkraus.de) selbst betreibe. Die dabei erhobenen Daten werden ausschließlich von mir verarbeitet und nicht an Dritte weitergegeben.</p>
+                <p class="mt-3 leading-relaxed text-neutral-700">Matomo läuft hier ohne Cookies, die IP-Adresse wird serverseitig anonymisiert. Es werden keine Informationen auf Ihrem Gerät gespeichert oder ausgelesen; ein Einwilligungsbanner ist daher nicht erforderlich, und die Auswertung bleibt anonym.</p>
+                <p class="mt-3 leading-relaxed text-neutral-700">Rechtsgrundlage ist mein berechtigtes Interesse an einer statistischen Auswertung der Nutzung, um dieses Angebot zu verbessern (Art. 6 Abs. 1 lit. f DSGVO).</p>
+            </section>
+
+            <section>
+                <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">6 · Ihre Rechte</h2>
+                <p class="mt-4 leading-relaxed text-neutral-700">Sie haben im Rahmen der gesetzlichen Vorgaben jederzeit das Recht auf Auskunft über Ihre gespeicherten personenbezogenen Daten (Art. 15 DSGVO), auf Berichtigung (Art. 16 DSGVO), auf Löschung (Art. 17 DSGVO), auf Einschränkung der Verarbeitung (Art. 18 DSGVO), auf Datenübertragbarkeit (Art. 20 DSGVO) sowie ein Widerspruchsrecht gegen die Verarbeitung (Art. 21 DSGVO). Zur Ausübung Ihrer Rechte genügt eine formlose Nachricht an die oben genannten Kontaktdaten.</p>
+                <p class="mt-3 leading-relaxed text-neutral-700">Ihnen steht zudem ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu. Zuständig ist die Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen.</p>
+            </section>
+
+            <section>
+                <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">7 · Verschlüsselung</h2>
+                <p class="mt-4 leading-relaxed text-neutral-700">Diese Website nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- beziehungsweise TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie am Schloss-Symbol in der Adresszeile Ihres Browsers und am Präfix „https://“.</p>
+            </section>
+        </div>
+    </article>
+{% endblock %}

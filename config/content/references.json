@@ -1,0 +1,115 @@
+[
+    {
+        "slug": "3d-druck-kostenrechner",
+        "title": "3D-Druck-Kostenrechner",
+        "kunde": "Eigenes Projekt",
+        "kategorie": "App",
+        "summary": "Native App für iOS und macOS zur Berechnung der „wirklichen“ Kosten für 3D-Drucke – inklusive Material-, Arbeits- & Betriebskosten.",
+        "stack": [
+            "iCloud",
+            "Swift",
+            "SwiftUI"
+        ],
+        "url": "https://apps.apple.com/de/app/3d-druck-kostenrechner/id6502561182",
+        "hatDetailseite": false
+    },
+    {
+        "slug": "ingenieurbuero-windeck",
+        "title": "Ingenieurbüro Windeck",
+        "kunde": "Kundenprojekt",
+        "kategorie": "Website",
+        "summary": "Website für das Ingenieurbüro Windeck. Dipl.-Ing. (FH) Michael Windeck und sein Team kümmern sich in Meckenheim um Gutachten, Hauptuntersuchungen & mehr.",
+        "stack": [
+            "PHP",
+            "Symfony"
+        ],
+        "url": "https://www.pruefstelle-meckenheim.de",
+        "hatDetailseite": false
+    },
+    {
+        "slug": "krausgedruckt",
+        "title": "krausgedruckt",
+        "kunde": "Eigenes Projekt",
+        "kategorie": "Website",
+        "summary": "Website für den anderen Zweig meines Gewerbes, das Angebot der 3D-Druck-Dienstleistungen. Gerne mache ich auch Ihre Idee greifbar.",
+        "stack": [
+            "PHP",
+            "Symfony"
+        ],
+        "url": "https://www.krausgedruckt.de",
+        "hatDetailseite": false
+    },
+    {
+        "slug": "meetmyrc",
+        "title": "meetMyRC",
+        "kunde": "Eigenes Projekt",
+        "kategorie": "Website",
+        "summary": "Das Schaufenster für RC-Modelle weltweit: Land-, Luft- & Wasserfahrzeuge, Übersicht verbauter Komponenten, Clubs, Locations & Meetups.",
+        "stack": [
+            "PHP",
+            "Symfony"
+        ],
+        "tag": "Featured",
+        "url": "https://www.meetmyrc.com",
+        "hatDetailseite": true,
+        "rolle": "Gründer, Produktmanager & Entwickler – alles aus einer Hand.",
+        "ausgangslage": "RC-Begeisterte investieren viel Zeit und Herzblut in ihre Modelle – doch es fehlt ein Ort, an dem sich diese Modelle, die verbauten Komponenten und die Geschichte dahinter dokumentieren und zeigen lassen.",
+        "loesung": "meetMyRC ist eine kontobasierte Website: ein persönliches Schaufenster für RC-Modelle aller Sparten, ob zu Land, zu Luft oder zu Wasser – mit Fotostrecken, Tagebucheinträgen, Komponentenverwaltung, Clubs, Locations und Terminen.",
+        "ergebnis": "Im Rahmen einer Beta-Version im Juni 2026 veröffentlicht und frei verfügbar."
+    },
+    {
+        "slug": "baum-hien",
+        "title": "Möbelwerk Baum & Hien",
+        "kunde": "Kundenprojekt",
+        "kategorie": "Interne Website",
+        "summary": "Interne Auftragsverwaltung für das Möbelwerk Baum & Hien aus Hennweiler. Die App begleitet jeden Auftrag, von der Terminierung bis zur Auslieferung.",
+        "stack": [
+            "PHP",
+            "Symfony"
+        ],
+        "hatDetailseite": false
+    },
+    {
+        "slug": "ownyard",
+        "title": "OwnYard",
+        "kunde": "Eigenes Projekt",
+        "kategorie": "Website",
+        "summary": "Inventar- und Werkstattverwaltung für Hobbyschrauber: Ob Teile, Fahrzeuge, Ausrüstung, Ausgaben oder Lagerorte – alles an einem Ort.",
+        "stack": [
+            "PHP",
+            "Symfony"
+        ],
+        "tag": "Featured",
+        "url": "https://www.ownyard.app",
+        "hatDetailseite": true,
+        "rolle": "Gründer, Produktmanager & Entwickler – alles aus einer Hand. Wissen: Wo, was & wie.",
+        "ausgangslage": "Wer an einem oder mehreren Fahrzeugen schraubt, verliert schnell den Überblick: Welches Teil liegt wo, was wurde investiert, was verbaut, was ist noch zu tun? Vorhandene Werkzeuge sind entweder teure und überladene Werkstatt-Software für Betriebe oder lose Zettel und Tabellen.",
+        "loesung": "OwnYard bündelt alles rund um die eigene Hobbywerkstatt an einer Stelle – Fahrzeuge als Projekte, dazu Teile, Ausgaben, Lagerorte und Ausrüstung, z. B. Werkzeuge. Eine schlanke, schnelle Web-Anwendung, die sich an Privatpersonen und Hobbyschrauber richtet.",
+        "ergebnis": "Im Rahmen einer Beta-Version im Mai 2026 veröffentlicht und frei verfügbar."
+    },
+    {
+        "slug": "richard-hecker",
+        "title": "Richard Hecker",
+        "kunde": "Kundenprojekt",
+        "kategorie": "Website",
+        "summary": "Website für den Kfz-Meisterbetrieb von Richard Hecker. Richard kümmert sich mit einem engagierten Team in Nörvenich bei Köln auch um Ihr Fahrzeug.",
+        "stack": [
+            "PHP",
+            "Symfony"
+        ],
+        "url": "https://www.richardhecker.de",
+        "hatDetailseite": false
+    },
+    {
+        "slug": "stuppin-robotics",
+        "title": "Stuppin Robotics",
+        "kunde": "Kundenprojekt",
+        "kategorie": "Website",
+        "summary": "Website für die Stuppin Robotics GmbH. Benjamin Stuppin kümmert sich um die Inbetriebnahme und Programmierung von Industrie-Robotern.",
+        "url": "https://www.stuppin-robotics.de",
+        "hatDetailseite": false,
+        "stack": [
+            "HTML"
+        ]
+    }
+]

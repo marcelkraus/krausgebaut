@@ -1,0 +1,61 @@
+{# Hand-rolled contact form. Expects: errors (map path→message),
+   old (submitted values), ts + ts_sig (signed anti-spam timestamp). #}
+{% import _self as field %}
+
+{% macro label(name, text, required) %}
+    <label for="f_{{ name }}" class="block font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">{{ text }}{% if required %} <span class="text-accent">*</span>{% endif %}</label>
+{% endmacro %}
+
+{% macro input(name, text, old, errors, options) %}
+    {% set options = options|default({}) %}
+    {% set err = errors[name] ?? null %}
+    {% set required = options.required ?? false %}
+    <div>
+        {{ _self.label(name, text, required) }}
+        <input type="{{ options.type|default('text') }}" id="f_{{ name }}" name="{{ name }}" value="{{ old[name] ?? '' }}"
+               {% if options.autocomplete is defined %}autocomplete="{{ options.autocomplete }}"{% endif %}
+               {% if required %}aria-required="true"{% endif %}
+               class="mt-2 w-full rounded-lg border {{ err ? 'border-red-500' : 'border-neutral-300' }} bg-white px-4 py-3 text-sm text-neutral-900 focus:border-accent"
+               {% if err %}aria-invalid="true" aria-describedby="e_{{ name }}"{% endif %}>
+        {% if err %}<p id="e_{{ name }}" class="mt-1.5 font-mono text-xs text-red-600">{{ err }}</p>{% endif %}
+    </div>
+{% endmacro %}
+
+<form method="post" action="{{ path('app_contact') }}" class="space-y-5" novalidate{% if focus is defined and focus %} data-error-focus="{{ focus }}"{% endif %}>
+    <input type="hidden" name="_token" value="{{ csrf_token('contact') }}">
+    <input type="hidden" name="ts" value="{{ ts }}">
+    <input type="hidden" name="ts_sig" value="{{ ts_sig }}">
+
+    {# Honeypot: hidden from users, tempting to bots. A neutral field name
+       that browser autofill is unlikely to populate for a real visitor. #}
+    <div class="sr-only" aria-hidden="true">
+        <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+    </div>
+
+    {% if errors.form is defined %}
+        <p class="rounded-lg border border-red-300 bg-red-50 px-4 py-3 font-mono text-xs text-red-700">{{ errors.form }}</p>
+    {% endif %}
+
+    <div class="grid gap-5 sm:grid-cols-2">
+        {{ field.input('company', 'Firma', old, errors, { autocomplete: 'organization' }) }}
+        {{ field.input('name', 'Name', old, errors, { required: true, autocomplete: 'name' }) }}
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+        {{ field.input('email', 'E-Mail', old, errors, { required: true, type: 'email', autocomplete: 'email' }) }}
+        {{ field.input('phone', 'Telefon', old, errors, { type: 'tel', autocomplete: 'tel' }) }}
+    </div>
+
+    <div>
+        {{ field.label('message', 'Nachricht', true) }}
+        <textarea id="f_message" name="message" rows="5" aria-required="true"
+                  {% if errors.message is defined %}aria-invalid="true" aria-describedby="e_message"{% endif %}
+                  class="mt-2 w-full rounded-lg border {{ errors.message is defined ? 'border-red-500' : 'border-neutral-300' }} bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-accent" placeholder="Erzählen Sie mir kurz von Ihrer Idee oder Ihrem Vorhaben.">{{ old.message ?? '' }}</textarea>
+        {% if errors.message is defined %}<p id="e_message" class="mt-1.5 font-mono text-xs text-red-600">{{ errors.message }}</p>{% endif %}
+    </div>
+
+    <div class="flex flex-wrap items-center gap-4 pt-2">
+        <button type="submit" class="rounded-lg bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">Anfrage senden</button>
+        <p class="font-mono text-[0.6875rem] text-neutral-500">Pflichtfelder <span class="text-accent">*</span></p>
+    </div>
+</form>

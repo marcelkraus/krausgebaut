@@ -1,0 +1,48 @@
+[
+    {
+        "key": "app",
+        "title": "App-Entwicklung",
+        "text": "Native Apps für iOS, macOS oder watchOS mit Swift und SwiftUI. Durchdacht, performant – und immer in der Hosentasche dabei.",
+        "icon": "device",
+        "tag": "Fokus"
+    },
+    {
+        "key": "beratung",
+        "title": "Beratung & Konzeption",
+        "text": "Ob Konzeption, Code-Review oder Erstellung von Dokumentationen – eine ehrliche Meinung von jemandem, der selbst Dinge baut.",
+        "icon": "bulb"
+    },
+    {
+        "key": "betrieb",
+        "title": "Betrieb & Wartung",
+        "text": "Hosting, Deployment und Pflege bestehender Anwendungen – damit morgen weiter läuft, was heute läuft.",
+        "icon": "server"
+    },
+    {
+        "key": "vor-ort",
+        "title": "IT-Support",
+        "text": "IT-Unterstützung vor Ort: Lösungen im Business-Umfeld oder das FRITZ!Box-Setup für Privat – oder alles dazwischen.",
+        "icon": "wifi"
+    },
+    {
+        "key": "schulung",
+        "title": "Schulungen & Workshops",
+        "text": "Wissen weitergeben statt nur anwenden. Zugeschnittene Workshops rund um Softwareentwicklung, Tooling (z. B. Git) und sauberes Arbeiten.",
+        "icon": "cap"
+    },
+    {
+        "key": "webentwicklung",
+        "title": "Web-Entwicklung",
+        "text": "Individuelle, genau auf die Bedürfnisse zugeschnittene Websites, mit Symfony und PHP – auf Wunsch inkl. Betreuung über den Launch hinaus.",
+        "icon": "code",
+        "tag": "Fokus"
+    },
+    {
+        "key": "freelancing",
+        "title": "Projektunterstützung als Freelancer",
+        "text": "Sie suchen eine Verstärkung auf Zeit? Gerne steige ich auch als Freelancer für eine beliebige Anzahl an Wochenstunden in Ihr Projekt ein – und werde so für eine bestimmte Zeit Teil Ihres Teams.",
+        "icon": "users",
+        "feature": true,
+        "tag": "Auf Zeit"
+    }
+]

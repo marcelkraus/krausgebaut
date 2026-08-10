@@ -1,0 +1,346 @@
+{% extends 'base.html.twig' %}
+{% import 'partials/_icons.html.twig' as icons %}
+
+{% block structured_data %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "krausgebaut",
+        "image": "{{ app.request.schemeAndHttpHost ~ asset('images/sharing.jpg') }}",
+        "url": "{{ url('app_homepage') }}",
+        "priceRange": "€€",
+        "areaServed": [
+            { "@type": "City", "name": "Erftstadt" },
+            { "@type": "City", "name": "Köln" },
+            { "@type": "AdministrativeArea", "name": "Rhein-Erft-Kreis" }
+        ],
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Erftstadt",
+            "addressRegion": "NRW",
+            "addressCountry": "DE"
+        },
+        "founder": {
+            "@type": "Person",
+            "name": "Marcel Kraus",
+            "url": "https://www.marcelkraus.de",
+            "jobTitle": "Softwareentwickler"
+        }
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+    {# ── Hero ───────────────────────────────────────────────────── #}
+    <section id="start" class="relative isolate overflow-hidden border-b border-neutral-200 bg-neutral-50">
+        {# The gear from the brand mark, oversized and cropped off the edge —
+           texture rather than ornament. #}
+        <div class="pointer-events-none absolute -right-28 top-1/2 -z-10 hidden -translate-y-1/2 text-accent/[0.07] lg:block">
+            {{ include('partials/_gear.html.twig', { class: 'h-[42rem] w-auto' }) }}
+        </div>
+
+        <div class="mx-auto max-w-6xl px-6 pt-40 pb-24 lg:px-8 lg:pt-48 lg:pb-28">
+            <div class="max-w-3xl animate-rise">
+                {{ include('partials/_eyebrow.html.twig', { text: 'Internet- & IT-Dienstleistungen' }) }}
+                <h1 class="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight text-neutral-900 sm:text-6xl lg:text-7xl">Gute Software entsteht mit Persönlichkeit.</h1>
+                <p class="mt-7 max-w-xl text-lg leading-relaxed text-neutral-600">krausgebaut, das ist Marcel Kraus – Softwareentwickler und IT-Dienstleister aus Erftstadt bei Köln.</p>
+                <p class="mt-4 max-w-xl text-lg leading-relaxed text-neutral-600">Von der Website über native iOS-Apps bis zur IT vor Ort: Ich bin Ihr Ansprechpartner.</p>
+                <div class="mt-10 flex flex-wrap items-center gap-4">
+                    <a href="#kontakt" class="rounded-lg bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">Jetzt anfragen</a>
+                    <a href="#leistungen" class="group inline-flex items-center gap-2 px-2 py-3.5 font-mono text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-accent">
+                        Leistungen ansehen
+                        <span class="transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-4 w-4') }}</span>
+                    </a>
+                </div>
+
+                {# Key facts as free-standing chips. #}
+                {% set facts = [
+                    { label: 'Region', value: 'Rhein-Erft-Kreis' },
+                    { label: 'Erfahrung IT', value: '~30 Jahre' },
+                    { label: 'Erfahrung Web', value: '~20 Jahre' },
+                    { label: 'Erfahrung iOS', value: '~10 Jahre' }
+                ] %}
+                <dl class="mt-14 flex flex-wrap gap-3">
+                    {% for fact in facts %}
+                        <div class="inline-flex items-baseline gap-2 rounded-lg border border-neutral-200 bg-white px-3.5 py-2.5 font-mono text-[0.6875rem] uppercase tracking-[0.15em]">
+                            <dt class="text-neutral-400">{{ fact.label }}</dt>
+                            <dd class="font-semibold text-neutral-900">{{ fact.value }}</dd>
+                        </div>
+                    {% endfor %}
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    {# ── Leistungen ─────────────────────────────────────────────── #}
+    <section id="leistungen" class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
+        <div class="grid gap-12 lg:grid-cols-[22rem_1fr] lg:gap-16">
+            {# Section title as a sticky column — the cards scroll past it. #}
+            <div class="lg:sticky lg:top-28 lg:self-start">
+                {{ include('partials/_eyebrow.html.twig', { text: 'Leistungen' }) }}
+                <h2 class="mt-5 font-display text-3xl font-bold leading-tight tracking-tight text-neutral-900 sm:text-4xl lg:text-3xl">Nicht von A–Z. Aber von C wie Code bis W wie Workshop.</h2>
+                <p class="mt-5 text-base leading-relaxed text-neutral-600">Ich biete ein breites, aber ehrliches Spektrum: professionelle Software-Entwicklung im privaten oder Business-Umfeld genauso wie eine greif- und bezahlbare IT-Unterstützung aus der Nachbarschaft.</p>
+                <p class="mt-4 text-base leading-relaxed text-neutral-600">Und das alles aus einer Hand.</p>
+            </div>
+
+            <div>
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    {% for service in services|filter(s => not (s.feature|default(false))) %}
+                        <div class="flex flex-col rounded-xl border border-neutral-200 bg-white p-8 transition-shadow hover:shadow-lg hover:shadow-neutral-200/60">
+                            <span class="text-accent">{{ icons.icon(service.icon, 'h-8 w-8') }}</span>
+                            <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
+                                <h3 class="font-display text-lg font-bold text-neutral-900">{{ service.title }}</h3>
+                                {% if service.tag is defined %}
+                                    {{ include('partials/_badge.html.twig', { text: service.tag }) }}
+                                {% endif %}
+                            </div>
+                            <p class="mt-3 text-sm leading-relaxed text-neutral-600">{{ service.text }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+        {# Freelancing — lifted out of the tile grid into its own roomy,
+           accent-tinted panel so it stands apart as the strategic offering. #}
+        {% for service in services|filter(s => s.feature|default(false)) %}
+            <div class="mt-6 flex flex-col gap-6 rounded-xl border border-accent/20 bg-accent/[0.04] p-8 sm:flex-row sm:items-center sm:gap-8">
+                <span class="shrink-0 text-accent">{{ icons.icon(service.icon, 'h-12 w-12') }}</span>
+                <div class="flex-1">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+                        <h3 class="font-display text-xl font-bold text-neutral-900">{{ service.title }}</h3>
+                        {% if service.tag is defined %}
+                            {{ include('partials/_badge.html.twig', { text: service.tag }) }}
+                        {% endif %}
+                    </div>
+                    <p class="mt-2 max-w-2xl text-base leading-relaxed text-neutral-600">{{ service.text }}</p>
+                </div>
+                <a href="#kontakt" class="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-accent px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">
+                    Anfragen <span class="transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-4 w-4') }}</span>
+                </a>
+            </div>
+        {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {# ── Arbeitsweise ───────────────────────────────────────────── #}
+    <section id="arbeitsweise" class="border-y border-neutral-200 bg-neutral-100">
+        <div class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-32">
+            <div>
+                {{ include('partials/_eyebrow.html.twig', { text: 'Arbeitsweise' }) }}
+                <h2 class="mt-5 font-display text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">Engagement ist Haltung, kein Zufall.</h2>
+                <p class="mt-6 text-lg leading-relaxed text-neutral-600">„krausgebaut“ heißt: Sie sprechen immer mit dem, der es baut – und der Ihr Projekt zu seinem macht.</p>
+                <p class="mt-6 text-lg leading-relaxed text-neutral-600">Keine Warteschleife, kein Agentur-Sprech und keine Weitergabe an ein anonymes Team an einem anderen Ort. Ich höre Ihnen zu, denke mit und liefere ein sauberes Handwerk, auf das man sich verlassen kann.</p>
+                <p class="mt-6 text-lg leading-relaxed text-neutral-600">Falls Sie mehr über meinen beruflichen Werdegang erfahren möchten, finden Sie weitere Informationen auf meiner persönlichen Website.</p>
+                <a href="https://www.marcelkraus.de" class="group mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-accent hover:text-accent-hover">
+                    Mehr über mich<span class="transition-transform group-hover:translate-x-1">{{ icons.icon('external', 'h-4 w-4') }}</span>
+                </a>
+            </div>
+            <ul class="grid gap-6 sm:grid-cols-2">
+                {# Each principle closes on a paragraph of its own with a
+                   one-word promise. The em dash is set apart in the accent
+                   colour, mirroring the required-field marker in the contact
+                   form; the `note` holds the word alone so the copy carries no
+                   inline markup. #}
+                {% set principles = [
+                    { title: 'Ein Ansprechpartner', text: 'Vom ersten Gespräch, über den Launch des Projekts und danach.', note: 'persönlich.' },
+                    { title: 'Sauberes Handwerk', text: 'Saubere Arbeit, klare Dokumentation und definierte Übergaben.', note: 'hochwertig.' },
+                    { title: 'Direkte Kommunikation', text: 'Kurze Wege, schnelle Antworten, Klartext statt Buzzwords.', note: 'einfach.' },
+                    { title: 'Beratung auf Augenhöhe', text: 'Den Nutzen im Blick, auch wenn dies mal ein „Nein“ erfordert.', note: 'ehrlich.' }
+                ] %}
+                {% for principle in principles %}
+                    <li class="rounded-xl border border-neutral-200 bg-white p-6">
+                        <h3 class="font-display text-base font-bold text-neutral-900">{{ principle.title }}</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-neutral-600">{{ principle.text }}</p>
+                        <p class="mt-3 text-sm font-semibold leading-relaxed text-neutral-600"><span class="text-accent">—</span> {{ principle.note }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    {# ── Referenzen ─────────────────────────────────────────────── #}
+    <section id="referenzen" class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
+        <div class="max-w-2xl">
+            {{ include('partials/_eyebrow.html.twig', { text: 'Referenzen' }) }}
+            <h2 class="mt-5 font-display text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">Gebautes im Einsatz</h2>
+            <p class="mt-5 text-lg leading-relaxed text-neutral-600">Ob eigene Angebote oder die Projekte meiner Kunden – nachfolgend eine Auswahl von Websites &amp; Apps, die sich im produktiven Einsatz befinden.</p>
+        </div>
+
+        <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {% for reference in references %}
+                {% set href = reference.hatDetailseite ? path('app_case_study', { slug: reference.slug }) : (reference.url ?? null) %}
+                <article class="flex flex-col rounded-xl border border-neutral-200 bg-white p-6 transition-shadow hover:shadow-lg hover:shadow-neutral-200/60">
+                    <span class="font-mono text-[0.625rem] uppercase tracking-[0.15em] text-accent">{{ reference.kategorie }}</span>
+                    <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+                        <h3 class="font-display text-xl font-bold text-neutral-900">{{ reference.title }}</h3>
+                        {% if reference.tag is defined %}
+                            {{ include('partials/_badge.html.twig', { text: reference.tag }) }}
+                        {% endif %}
+                    </div>
+                    <p class="mt-1 font-mono text-[0.625rem] uppercase tracking-[0.15em] text-neutral-400">{{ reference.kunde }}</p>
+                    <p class="mt-4 flex-1 text-sm leading-relaxed text-neutral-600">{{ reference.summary }}</p>
+                    {% if reference.stack is defined and reference.stack %}
+                        <ul class="mt-5 flex flex-wrap gap-2">
+                            {% for tag in reference.stack %}
+                                <li class="rounded-md bg-neutral-100 px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-neutral-500">{{ tag }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if href %}
+                        <a href="{{ href }}"{% if not reference.hatDetailseite %} target="_blank" rel="noopener"{% endif %} class="group mt-6 inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-accent hover:text-accent-hover">
+                            {{ reference.hatDetailseite ? 'Zur Case Study' : 'Zur Website' }}
+                            <span class="transition-transform group-hover:translate-x-1">{{ icons.icon(reference.hatDetailseite ? 'arrow' : 'external', 'h-3.5 w-3.5') }}</span>
+                        </a>
+                    {% else %}
+                        {# Internal projects have nothing public to link to — the
+                           slot keeps its place so the cards stay aligned. #}
+                        <p class="mt-6 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-neutral-400">Mehr auf Anfrage</p>
+                    {% endif %}
+                </article>
+            {% endfor %}
+
+            {# Conversion card — fills the grid and invites the next project. #}
+            <a href="#kontakt" class="group flex flex-col justify-center rounded-xl border border-dashed border-accent/40 bg-accent/[0.03] p-6 text-center transition-colors hover:bg-accent/[0.06]">
+                <span class="mx-auto text-accent transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-6 w-6') }}</span>
+                <h3 class="mt-4 font-display text-lg font-bold text-neutral-900">Und jetzt Sie?</h3>
+                <p class="mt-2 text-sm leading-relaxed text-neutral-600">Bitte erzählen Sie mir von Ihrem Projekt – ich baue es Ihnen gerne.</p>
+            </a>
+        </div>
+    </section>
+
+    {# ── Ablauf (dark) ──────────────────────────────────────────── #}
+    <section id="ablauf" class="border-y border-neutral-200 bg-neutral-950">
+        <div class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
+            <div class="max-w-2xl">
+                {{ include('partials/_eyebrow.html.twig', { text: 'Ablauf' }) }}
+                <h2 class="mt-5 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">In vier Schritten zum Ergebnis</h2>
+            </div>
+
+            <ol class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {% set steps = [
+                    { no: '01', title: 'Kontakt', text: 'Sie schildern mir Ihr Vorhaben, ich stelle Ihnen die richtigen Fragen.' },
+                    { no: '02', title: 'Konzeption', text: 'Ich erstelle einen klaren Plan mit einem transparenten Angebot.' },
+                    { no: '03', title: 'Umsetzung', text: 'Ich baue Ihr Projekt. Zielgerichtet mit hoher Qualität und regelmäßigen Updates.' },
+                    { no: '04', title: 'Betrieb', text: 'Auf Wunsch bleibe ich auch nach Launch an Bord und kümmere mich um den Betrieb.' }
+                ] %}
+                {% for step in steps %}
+                    <li class="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+                        <span class="font-mono text-2xl font-bold text-accent">{{ step.no }}</span>
+                        <h3 class="mt-4 font-display text-lg font-bold text-white">{{ step.title }}</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-neutral-400">{{ step.text }}</p>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </section>
+
+    {# ── Kundenstimmen (only rendered once real, attributed quotes exist) ── #}
+    {% if testimonials %}
+        <section id="stimmen" class="border-y border-neutral-200 bg-neutral-100">
+            <div class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
+                <div class="max-w-2xl">
+                    {{ include('partials/_eyebrow.html.twig', { text: 'Kundenstimmen' }) }}
+                    <h2 class="mt-5 font-display text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">Was meine Kundinnen und Kunden sagen</h2>
+                </div>
+                <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {% for testimonial in testimonials %}
+                        <figure class="flex flex-col rounded-xl border border-neutral-200 bg-white p-8">
+                            <blockquote class="flex-1 text-base leading-relaxed text-neutral-700">„{{ testimonial.zitat }}“</blockquote>
+                            <figcaption class="mt-6 border-t border-neutral-200 pt-4">
+                                <p class="font-display text-sm font-bold text-neutral-900">{{ testimonial.name }}</p>
+                                <p class="mt-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-neutral-500">{{ testimonial.rolle }}{% if testimonial.firma is defined and testimonial.firma %} · {{ testimonial.firma }}{% endif %}</p>
+                            </figcaption>
+                        </figure>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {# ── Kontakt ────────────────────────────────────────────────── #}
+    <section id="kontakt" class="bg-neutral-50">
+        <div class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
+            <div class="max-w-2xl">
+                {{ include('partials/_eyebrow.html.twig', { text: 'Kontakt' }) }}
+                <h2 class="mt-5 font-display text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">Jetzt anfragen</h2>
+                <p class="mt-5 text-lg leading-relaxed text-neutral-600">Erzählen Sie mir von Ihrer Idee oder Ihrem Anliegen – am schnellsten geht es über das Formular. Gerne auch für ein persönliches Gespräch.</p>
+            </div>
+
+            <div class="mt-14 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+                {# Direct contact + service area #}
+                <div>
+                    <dl class="divide-y divide-neutral-200 border-y border-neutral-200">
+                        <div class="flex items-start gap-4 py-5">
+                            <span class="mt-0.5 text-accent">{{ icons.icon('pin', 'h-5 w-5') }}</span>
+                            <div><dt class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">Vor-Ort-Service</dt><dd class="mt-1.5 text-sm text-neutral-800">Im gesamten Rhein-Erft-Kreis oder nach Vereinbarung</dd></div>
+                        </div>
+                        <div class="flex items-start gap-4 py-5">
+                            <span class="mt-0.5 text-accent">{{ icons.icon('info', 'h-5 w-5') }}</span>
+                            <div><dt class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">Reaktionszeit</dt><dd class="mt-1.5 text-sm text-neutral-800">In der Regel innerhalb eines Werktags</dd></div>
+                        </div>
+                    </dl>
+
+                    <div class="mt-8 flex flex-col gap-4 rounded-xl border border-neutral-200 bg-white p-6 sm:flex-row sm:items-center sm:gap-6">
+                        <span class="shrink-0 text-accent">{{ icons.icon('wifi', 'h-8 w-8') }}</span>
+                        <div>
+                            <p class="font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-accent">IT vor Ort</p>
+                            <p class="mt-1.5 text-sm leading-relaxed text-neutral-700">Ob FRITZ!Box, Software oder IT-Nothilfe – ich helfe auch persönlich in der Nachbarschaft.</p>
+                        </div>
+                    </div>
+                </div>
+
+                {# Form or confirmation #}
+                <div>
+                    {% if app.flashes('contact_success') %}
+                        <div class="flex items-start gap-4 rounded-xl border border-neutral-900 bg-white p-8">
+                            <span class="mt-0.5 text-accent">{{ icons.icon('check', 'h-7 w-7') }}</span>
+                            <div>
+                                <h3 class="font-display text-xl font-bold text-neutral-900">Vielen Dank für Ihre Anfrage!</h3>
+                                <p class="mt-2 text-sm leading-relaxed text-neutral-600">Ihre Nachricht ist eingegangen. Ich melde mich bei Ihnen.</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ include('partials/_contact_form.html.twig', { errors: contact_errors, old: contact_old, ts: contact_ts, ts_sig: contact_ts_sig, focus: contact_focus }) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ── krausgedruckt cross-promo (brand bookend: an orange glow mirrors
+         the petrol hero) ──────────────────────────────────────────── #}
+    <section class="relative isolate overflow-hidden border-t border-neutral-800 bg-neutral-950">
+        <div class="pointer-events-none absolute -right-32 -top-24 -z-10 h-[28rem] w-[28rem] rounded-full bg-brand-krausgedruckt/20 blur-[120px]"></div>
+        <div class="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-8 lg:py-24">
+            <div class="max-w-2xl">
+                {{ include('partials/_eyebrow.html.twig', { text: 'krausgedruckt von Marcel Kraus', tone: 'krausgedruckt' }) }}
+                <h2 class="mt-5 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">Sie möchten Ihre Idee in der Hand halten? 3D-Druck mache ich auch.</h2>
+                <p class="mt-5 text-lg leading-relaxed text-neutral-400">Neben Bits und Bytes mache ich auch mit <strong>krausgedruckt</strong> Ihre Ideen greifbar. Ich fertige individuelle Teile mit dem 3D-Drucker – ob Prototypen, Werkzeuge, Dekoartikel oder etwas völlig anderes.</p>
+            </div>
+            <a href="https://www.krausgedruckt.de" class="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-brand-krausgedruckt px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-krausgedruckt-hover">
+                krausgedruckt besuchen
+                <span class="transition-transform group-hover:translate-x-1">{{ icons.icon('external', 'h-4 w-4') }}</span>
+            </a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        // On a contact-form error re-render, move focus to the first invalid
+        // field so the visitor sees exactly what to fix.
+        (function () {
+            const form = document.querySelector('[data-error-focus]');
+            if (!form) {
+                return;
+            }
+            const field = document.getElementById('f_' + form.dataset.errorFocus);
+            if (field) {
+                field.focus();
+                field.scrollIntoView({ block: 'center' });
+            }
+        }());
+    </script>
+{% endblock %}

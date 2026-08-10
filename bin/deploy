@@ -1,0 +1,4 @@
+git fetch --all
+git reset --hard origin/main
+composer install --no-dev --optimize-autoloader
+bin/console cache:clear --env=prod --no-debug

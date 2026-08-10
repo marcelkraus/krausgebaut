@@ -1,0 +1,109 @@
+/* source(none) switches off Tailwind's automatic project scan. Without it
+   every file in the tree is a candidate source, so a stray word in a
+   Markdown file can end up as a CSS rule in the build. The templates are
+   the only place utilities are written. */
+@import "tailwindcss" source(none);
+@plugin "@tailwindcss/typography";
+@source "../../templates/**/*.html.twig";
+
+/* Self-hosted fonts — no external requests. Aller carries the wordmark,
+   headlines and body (ties the type to the logo); JetBrains Mono is the
+   technical voice for eyebrows, labels and spec data. Latin covers the
+   German umlauts (ä ö ü ß). */
+@font-face {
+    font-family: "Aller";
+    src: url("../fonts/aller_regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Aller";
+    src: url("../fonts/aller_bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "JetBrains Mono Variable";
+    src: url("../fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Design tokens. The single chromatic colour is the krausgebaut petrol
+   accent (brand family colour); everything else is Tailwind's neutral-*.
+   Typographic roles: Aller (display + body), JetBrains Mono (technical). */
+@theme {
+    --font-sans: "Aller", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Aller", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+    /* The accent is Tailwind's cyan-800 — the palette colour the master logo
+       uses (its #015F79 is this colour). Bound to the token rather than a
+       copied hex so it cannot drift from the palette. */
+    --color-accent: var(--color-cyan-800);
+    --color-accent-hover: var(--color-cyan-900);
+
+    /* Sibling brand colours — the marker dots in the footer and the
+       krausgedruckt cross-promo band at the end of the page. */
+    --color-brand-marcelkraus: #607e4a;
+    --color-brand-krausgedruckt: #ea580c;
+    --color-brand-krausgedruckt-hover: #c2410c;
+
+    --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    @keyframes rise {
+        from {
+            opacity: 0;
+            transform: translateY(1rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* Base layer. */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        /* Offset anchor targets for the fixed header. */
+        scroll-padding-top: 5rem;
+    }
+
+    body {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Contact/postal addresses should not render italic. */
+    address {
+        font-style: normal;
+    }
+
+    ::selection {
+        background-color: var(--color-accent);
+        color: white;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

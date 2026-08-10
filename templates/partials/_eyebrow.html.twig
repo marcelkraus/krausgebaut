@@ -1,0 +1,7 @@
+{# Section eyebrow: mono label preceded by a small square marker.
+   Params: text, tone ('accent' default, or 'krausgedruckt' for the sibling
+   cross-promo, which keeps that brand's own colour). #}
+{% set tone = tone|default('accent') %}
+<p class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] {{ tone == 'krausgedruckt' ? 'text-brand-krausgedruckt' : 'text-accent' }}">
+    <span class="inline-block h-2 w-2 shrink-0 rounded-[2px] {{ tone == 'krausgedruckt' ? 'bg-brand-krausgedruckt' : 'bg-accent' }}"></span>{{ text }}
+</p>

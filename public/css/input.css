@@ -53,9 +53,9 @@
          accent-hover           hover of a filled surface
          accent-on-light-hover  hover of type on a light ground
 
-       The accent is Tailwind's cyan-800 — the palette colour the master
-       logo uses (its #015F79 is this colour). Bound to the token rather
-       than a copied hex so it cannot drift from the palette.
+       The accent is Tailwind's cyan-800 — and so is the master artwork, to
+       the digit. Bound to the token rather than a copied hex so it cannot
+       drift from the palette.
 
        The petrol is a dark colour: it carries a light ground as it is
        (6.51:1) and misses AA as type on a dark one (2.72:1), where it needs
@@ -71,10 +71,18 @@
     --color-accent-on-light-hover: var(--color-cyan-900);
 
     /* Sibling brand colours — the marker dots in the footer and the
-       krausgedruckt cross-promo band at the end of the page. */
-    --color-brand-marcelkraus: #607e4a;
-    --color-brand-krausgedruckt: #ea580c;
-    --color-brand-krausgedruckt-hover: #c2410c;
+       krausgedruckt cross-promo band at the end of the page. Bound to the
+       palette, never copied as hex, so they cannot drift from it.
+
+       marcelkraus is purple — the left square of the family logo,
+       which stands for the employment career. It is a dark colour and
+       measures 2.53:1 on the footer's neutral-900, so the marker there uses
+       the brighter step; the papaya passes on that ground as it is
+       (5.50:1) and needs none. */
+    --color-brand-marcelkraus: var(--color-purple-700);
+    --color-brand-marcelkraus-on-dark: var(--color-purple-400);
+    --color-brand-krausgedruckt: var(--color-orange-600);
+    --color-brand-krausgedruckt-hover: var(--color-orange-700);
 
     --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 

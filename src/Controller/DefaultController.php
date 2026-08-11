@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -110,21 +111,31 @@ final class DefaultController extends AbstractController
             ]);
         }
 
-        $this->mailer->send(
-            (new TemplatedEmail())
-                ->from(new Address($this->contactFrom, 'krausgebaut von Marcel Kraus'))
-                ->to($this->contactTo)
-                ->replyTo(new Address($data->email, $data->name))
-                ->subject(sprintf('Anfrage von %s', $data->name))
-                ->textTemplate('default/contact.txt.twig')
-                ->context([
-                    'company' => $data->company,
-                    'emailAddress' => $data->email,
-                    'message' => $data->message,
-                    'name' => $data->name,
-                    'phone' => $data->phone,
-                ])
-        );
+        // A transport failure must not cost the enquiry and must not hand a
+        // visitor a bare error page: the sendmail DSN has two documented ways
+        // of being wrong on this host, and Apache replaces the Symfony error
+        // page with its own.
+        try {
+            $this->mailer->send(
+                (new TemplatedEmail())
+                    ->from(new Address($this->contactFrom, 'krausgebaut von Marcel Kraus'))
+                    ->to($this->contactTo)
+                    ->replyTo(new Address($data->email, $data->name))
+                    ->subject(sprintf('Anfrage von %s', $data->name))
+                    ->textTemplate('default/contact.txt.twig')
+                    ->context([
+                        'company' => $data->company,
+                        'emailAddress' => $data->email,
+                        'message' => $data->message,
+                        'name' => $data->name,
+                        'phone' => $data->phone,
+                    ])
+            );
+        } catch (TransportExceptionInterface) {
+            return $this->renderContactErrors($request, [
+                'form' => 'Die Anfrage konnte gerade nicht zugestellt werden. Bitte versuchen Sie es später noch einmal oder schreiben Sie mir per E-Mail.',
+            ]);
+        }
 
         $this->addFlash('contact_success', true);
 

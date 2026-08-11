@@ -64,7 +64,7 @@
                 <dl class="mt-14 flex flex-wrap gap-3">
                     {% for fact in facts %}
                         <div class="inline-flex items-baseline gap-2 rounded-lg border border-neutral-200 bg-white px-3.5 py-2.5 font-mono text-[0.6875rem] uppercase tracking-[0.15em]">
-                            <dt class="text-neutral-400">{{ fact.label }}</dt>
+                            <dt class="text-neutral-500">{{ fact.label }}</dt>
                             <dd class="font-semibold text-neutral-900">{{ fact.value }}</dd>
                         </div>
                     {% endfor %}
@@ -178,7 +178,7 @@
                             {{ include('partials/_badge.html.twig', { text: reference.tag }) }}
                         {% endif %}
                     </div>
-                    <p class="mt-1 font-mono text-[0.625rem] uppercase tracking-[0.15em] text-neutral-400">{{ reference.kunde }}</p>
+                    <p class="mt-1 font-mono text-[0.625rem] uppercase tracking-[0.15em] text-neutral-500">{{ reference.kunde }}</p>
                     <p class="mt-4 flex-1 text-sm leading-relaxed text-neutral-600">{{ reference.summary }}</p>
                     {% if reference.stack is defined and reference.stack %}
                         <ul class="mt-5 flex flex-wrap gap-2">
@@ -195,7 +195,7 @@
                     {% else %}
                         {# Internal projects have nothing public to link to — the
                            slot keeps its place so the cards stay aligned. #}
-                        <p class="mt-6 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-neutral-400">Mehr auf Anfrage</p>
+                        <p class="mt-6 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-neutral-500">Mehr auf Anfrage</p>
                     {% endif %}
                 </article>
             {% endfor %}

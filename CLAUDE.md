@@ -129,6 +129,27 @@ A light "spec-sheet" look – technical, precise, no dark mode.
   The hover of a filled surface always moves in whichever direction keeps its
   label readable. Here the label is white, so the fill **darkens**; on the
   sibling the label is near-black and the fill lightens.
+
+  The footer is a dark ground, so **every marker dot there carries an
+  `-on-dark` step** — the site's own three included. They used to be plain
+  `accent`, which measures 2.72:1 against `neutral-900` and was effectively a
+  dot nobody could see.
+
+  **The two foreign brands.** Bound to the palette, never copied as hex, so
+  they cannot drift from it. A role step exists only where the base value
+  fails, so a missing step is information.
+
+  | Token | Value | Measured | Used for |
+  | --- | --- | --- | --- |
+  | `brand-marcelkraus` | `purple-700` | 2.53:1 on `neutral-900` | the brand, not for the dark footer |
+  | `brand-marcelkraus-on-dark` | `purple-400` | 6.42:1 | the footer marker dot |
+  | `brand-krausgedruckt` | `orange-600` | 5.50:1 on `neutral-900` | marker dot, eyebrow and the cross-promo band |
+  | `brand-krausgedruckt-hover` | `orange-700` | – | hover of the cross-promo button |
+
+  **marcelkraus is purple**, not the olive it used to be: the personal site
+  now carries the family logo, and its left square — the employment career —
+  is that purple. Like the petrol it is a dark colour and cannot be seen on
+  the dark footer, hence the brighter step for the marker there.
 - **Typography:** `font-display` = `font-sans` = Aller (wordmark, headlines and
   body, which ties the type to the logo); `font-mono` = JetBrains Mono for
   eyebrows, labels and technical data.
@@ -186,7 +207,11 @@ A light "spec-sheet" look – technical, precise, no dark mode.
   The wordmark is outlined, so the logo carries no font dependency. Colours
   come from `fill-*` classes: `fill-accent` for gear and "kraus",
   `fill-neutral-900` for "gebaut"; `mono: true` renders everything in
-  `fill-current`.
+  `fill-current`. **The wordmark must stay outlined.** A master that keeps it
+  as `<text>` carries a `font-family` and therefore a dependency the logo is
+  not allowed to have — it would fall back to a generic sans wherever Aller is
+  not present, and the mark is the one thing on the page that has to be exact.
+  A curve export is the requirement, not a compromise.
 
 Master artwork is **not** kept in the repository. Marcel supplies it on demand,
 and every shipped asset is derived from it.
@@ -207,11 +232,11 @@ intrinsic size, so the browser rasterises it into a default box and scales that
 into the tab slot, which puts a pale rim around the tile. When regenerating the
 rasters, check every file for a fully opaque, single-colour border.
 
-The tile is `#015F79`, taken verbatim from the master; the accent token
-resolves to `#005F78`. The same brand petrol, one step apart because the token
-goes through Tailwind's oklch palette – invisible and deliberate. Icons follow
-the artwork, the interface follows the palette; do not "fix" one to match the
-other.
+The tile is `#005F78`, taken verbatim from the master — and that is exactly
+what the `accent` token resolves to. **Artwork and palette agree to the digit,
+and they have to stay that way.** Icons follow the artwork, the interface
+follows the palette, and the two must not disagree; when the artwork changes,
+the three icon files are re-derived from it rather than edited.
 
 ## Content
 
@@ -255,6 +280,11 @@ Hand-rolled, handled in `DefaultController::contact()`.
   `%kernel.secret%`). Honeypot filled, a missing or tampered signature, or a
   submission under 3 s ⇒ silently dropped (fake success). A valid but expired
   (> 2 h) signature re-renders as a normal error asking the visitor to resend.
+- **A transport failure never reaches the visitor as an error page.** `send()`
+  is wrapped and answers a `TransportExceptionInterface` through the normal
+  form-error path. The sendmail DSN has two documented ways of being wrong on
+  this host, and Apache replaces the Symfony error page with its own — without
+  the catch the enquiry is lost behind a bare 500.
 - **Rate limiting:** `contact_form`, sliding window, 5/hour per IP.
 - **CSRF** enabled, token `contact`.
 - Success ⇒ mail to `CONTACT_TO` (reply-to = sender), PRG redirect to

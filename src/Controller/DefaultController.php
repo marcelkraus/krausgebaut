@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -111,12 +111,19 @@ final class DefaultController extends AbstractController
         }
 
         $this->mailer->send(
-            (new Email())
-                ->from(new Address($this->contactFrom, 'Website krausgebaut'))
+            (new TemplatedEmail())
+                ->from(new Address($this->contactFrom, 'krausgebaut von Marcel Kraus'))
                 ->to($this->contactTo)
                 ->replyTo(new Address($data->email, $data->name))
                 ->subject(sprintf('Anfrage von %s', $data->name))
-                ->text($this->buildMailBody($data))
+                ->textTemplate('default/contact.txt.twig')
+                ->context([
+                    'company' => $data->company,
+                    'emailAddress' => $data->email,
+                    'message' => $data->message,
+                    'name' => $data->name,
+                    'phone' => $data->phone,
+                ])
         );
 
         $this->addFlash('contact_success', true);
@@ -332,18 +339,4 @@ final class DefaultController extends AbstractController
         return 'valid';
     }
 
-    private function buildMailBody(ContactRequest $data): string
-    {
-        return implode("\n", [
-            'Neue Anfrage über die Website',
-            '',
-            'Name:     ' . $data->name,
-            'E-Mail:   ' . $data->email,
-            'Firma:    ' . ($data->company !== '' ? $data->company : '–'),
-            'Telefon:  ' . ($data->phone !== '' ? $data->phone : '–'),
-            '',
-            'Nachricht:',
-            $data->message,
-        ]);
-    }
 }

@@ -293,9 +293,12 @@ wrong one first burns the single authentication attempt a deploy key allows.
 **`.env.local`** (mode 600, never committed) holds `APP_ENV=prod`,
 `APP_DEBUG=0`, a generated `APP_SECRET`, `CONTACT_TO`, `CONTACT_FROM`,
 `DEFAULT_URI=https://www.krausgebaut.de` and the mailer DSN below. The
-committed `.env` carries a `change-me@example.invalid` placeholder for the
-addresses – keeping the real recipient out of the repository follows the same
-reasoning as obfuscating it on the legal pages.
+committed `.env` carries the real addresses as defaults, matching the sibling
+project: `mail@krausgebaut.de` as the recipient, `noreply@krausgebaut.de` as
+the sender. They are no secret — the mailto redirect hands the recipient to
+anyone who follows it — and a placeholder that has to be replaced on every
+machine is a step that gets forgotten. What stays out of the repository is
+`.env.local`, which is where production overrides them.
 
 **Mail.** Delivery goes through the local MTA; the SPF record includes
 `spf.uberspace.de`, so no SMTP credentials are needed. `krausgebaut.de` carries

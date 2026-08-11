@@ -124,6 +124,30 @@ final class DefaultController extends AbstractController
         return $this->redirect($this->generateUrl('app_homepage', ['_fragment' => 'kontakt']));
     }
 
+    /**
+     * The address never appears in the markup — the link points at a route
+     * and the route redirects. That keeps the mailto out of a shape that is
+     * trivial to scrape, which is the same reason the legal pages spell the
+     * address out in words.
+     */
+    #[Route('/kontakt-per-email', name: 'app_contact_email', methods: ['GET'])]
+    public function contactByEmail(): Response
+    {
+        return $this->redirect('mailto:mail@krausgebaut.de');
+    }
+
+    #[Route('/kontakt-per-whats-app', name: 'app_contact_whats_app', methods: ['GET'])]
+    public function contactByWhatsApp(): Response
+    {
+        return $this->redirect('https://wa.me/message/TKVKBR7RPHA7B1');
+    }
+
+    #[Route('/bewerten', name: 'app_review', methods: ['GET'])]
+    public function review(): Response
+    {
+        return $this->redirect($_SERVER['GOOGLE_REVIEW_URL']);
+    }
+
     #[Route('/impressum', name: 'app_imprint', methods: ['GET'])]
     public function imprint(): Response
     {
@@ -141,8 +165,24 @@ final class DefaultController extends AbstractController
     {
         $sitemap = $this->generateUrl('app_sitemap', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
+        // The redirect routes carry no document, only a Location header — and
+        // for the two contact routes that header holds the address. A
+        // well-behaved crawler follows it and takes the address into its
+        // corpus, and those corpora are where address lists come from.
+        // Harvesters ignore robots.txt, but the corpora do not.
+        $disallowed = [
+            '/bewerten',
+            '/kontakt-per-email',
+            '/kontakt-per-whats-app',
+        ];
+
+        $rules = "User-agent: *\n";
+        foreach ($disallowed as $route) {
+            $rules .= "Disallow: {$route}\n";
+        }
+
         return new Response(
-            "User-agent: *\nAllow: /\n\nSitemap: {$sitemap}\n",
+            $rules . "Allow: /\n\nSitemap: {$sitemap}\n",
             Response::HTTP_OK,
             ['Content-Type' => 'text/plain; charset=UTF-8'],
         );

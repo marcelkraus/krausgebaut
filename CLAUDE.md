@@ -83,6 +83,9 @@ Each partial is the single source for its pattern: `_logo` (brand lockup),
 | `GET /` | `app_homepage` | Single-page home |
 | `GET /referenzen/{slug}` | `app_case_study` | Case study (indexable) |
 | `POST /kontakt` | `app_contact` | Form handling (PRG) |
+| `GET /kontakt-per-email` | `app_contact_email` | Redirect to `mailto:` |
+| `GET /kontakt-per-whats-app` | `app_contact_whats_app` | Redirect to WhatsApp |
+| `GET /bewerten` | `app_review` | Redirect to the Google review URL |
 | `GET /impressum` | `app_imprint` | Imprint (`noindex,follow`) |
 | `GET /datenschutz` | `app_privacy` | Privacy policy (`noindex,follow`) |
 | `GET /robots.txt` | `app_robots` | robots (absolute sitemap URL) |
@@ -119,6 +122,13 @@ A light "spec-sheet" look – technical, precise, no dark mode.
   section stacks its heading above the content.
 - **Container:** `max-w-6xl mx-auto px-6 lg:px-8`; legal pages and case
   studies `max-w-3xl`.
+- **Header:** a three-column grid `grid-cols-[10rem_1fr_auto]`, not a flex
+  row. In a flex row the navigation is squeezed between logo and actions and
+  its starting edge follows the width of its own labels — which puts it in a
+  different place than on the sibling site. The fixed first column gives both
+  brands the same edge. The enquiry button stays visible on a phone and
+  shrinks to its icon there; hiding it below `sm` left the whole page without
+  a call to action on every phone.
 - **Voice:** first person singular ("ich").
 - **Place names carry two roles and must not be mixed.** *Where I am* is
   "Erftstadt bei Köln" – title, meta description, hero lead, JSON-LD and the
@@ -209,11 +219,12 @@ Hand-rolled, handled in `DefaultController::contact()`.
   `/#kontakt` with flash `contact_success`. Errors ⇒ home re-renders with
   status 422, per-field errors, old input and the first invalid field name
   (`contact_focus`); inline JS focuses it.
-- **No address is ever a live link.** The footer and the contact section point
-  at the form; the imprint and the privacy policy show
-  `mail(at)krausgebaut(dot)de` as plain, unlinked text. Do not reintroduce a
-  scripted `mailto` – assembling the address in markup puts it there in a
-  trivially scriptable shape and defeats the point.
+- **The address never appears in the markup.** The footer offers an E-Mail
+  and a WhatsApp entry, but both point at a route that answers with a
+  redirect; the `mailto:` never reaches the page. The address therefore never sits in the page,
+  which is the whole point of the rule; the imprint and the privacy policy
+  still show `mail(at)krausgebaut(dot)de` as plain, unlinked text. Do not
+  reintroduce a `mailto:` written into the markup.
 
 ## SEO / meta
 
@@ -341,6 +352,7 @@ would need nonces.
 | `MAILER_DSN` | Mail delivery (dev: ddev Mailpit via `.env.local`) |
 | `CONTACT_TO` | Recipient of form submissions – real value in `.env.local` |
 | `CONTACT_FROM` | Sender address of form mail |
+| `GOOGLE_REVIEW_URL` | Redirect target of `/bewerten` |
 | `DEFAULT_URI` | Base URL for absolute URLs generated in CLI (sitemap) |
 | `APP_SHARE_DIR` | Symfony shared-state directory |
 

@@ -3,7 +3,7 @@
         "dev": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch",
         "build": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --minify"
     },
-    "dependencies": {
+    "devDependencies": {
         "@tailwindcss/cli": "^4.1.11",
         "@tailwindcss/typography": "^0.5.16",
         "tailwindcss": "^4.1.11"

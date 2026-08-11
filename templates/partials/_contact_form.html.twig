@@ -56,6 +56,8 @@
 
     <div class="flex flex-wrap items-center gap-4 pt-2">
         <button type="submit" class="rounded-lg bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">Anfrage senden</button>
-        <p class="font-mono text-[0.6875rem] text-neutral-500">Pflichtfelder <span class="text-accent">*</span></p>
+        <p class="font-mono text-xs text-neutral-500">Pflichtfelder <span class="text-accent">*</span></p>
     </div>
+
+    <p class="text-sm leading-relaxed text-neutral-600">Mit dem Absenden stimmen Sie meiner <a class="font-semibold text-accent transition-colors hover:text-accent-hover" href="{{ path('app_privacy') }}">Datenschutzerklärung</a> zu.</p>
 </form>

@@ -311,10 +311,17 @@ document root and its `.htaccess` is never read. The non-www redirect lives in
 ssh kraus 'cd ~/html/krausgebaut && bin/deploy'
 ```
 
-That fetches, resets hard, installs the production dependencies and clears the
-cache. `public/css/output.css` is committed, so the server needs no npm run.
-The reset is hard, but `.env.local`, `vendor/` and `var/` are ignored and
-survive it.
+That fetches, resets hard, installs the production dependencies, **removes**
+`var/cache/prod` and rebuilds it. `public/css/output.css` is committed, so the
+server needs no npm run. The reset is hard, but `.env.local`, `vendor/` and
+`var/` are ignored and survive it.
+
+The cache is removed rather than cleared, and that is not a detail:
+`cache:clear` loads the existing compiled container before it replaces it, so
+a release that drops a bundle dies on a class that no longer exists. It has
+happened once in the sister project, when its anti-spam bundle went. The
+script also runs under `set -euo pipefail`, so a failed `composer install` is
+not followed by a cache rebuild against half-installed dependencies.
 
 **Repository access.** The server authenticates with a per-repository **deploy
 key**. Deploy keys are bound to one repository, and since they all live on

@@ -1,4 +1,24 @@
+#!/usr/bin/env bash
+#
+# Rolls the checked-out branch out. Run it on the server, inside the
+# application directory:
+#
+#     ssh kraus 'cd ~/html/krausgebaut && bin/deploy'
+#
+# `set -e` matters here: without it a failed `composer install` would be
+# followed by a cache rebuild against half-installed dependencies, and the
+# site would come back up broken instead of staying on the old release.
+set -euo pipefail
+
 git fetch --all
 git reset --hard origin/main
+
 composer install --no-dev --optimize-autoloader
+
+# The compiled container is removed rather than cleared. `cache:clear` loads
+# the existing container before it replaces it, so a release that drops a
+# bundle makes it die on a class that no longer exists — reproduced once, and
+# it takes the site down for the length of the fix.
+rm -rf var/cache/prod
+
 bin/console cache:clear --env=prod --no-debug

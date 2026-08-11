@@ -133,13 +133,13 @@ final class DefaultController extends AbstractController
     #[Route('/kontakt-per-email', name: 'app_contact_email', methods: ['GET'])]
     public function contactByEmail(): Response
     {
-        return $this->redirect('mailto:mail@krausgebaut.de');
+        return $this->redirect('mailto:' . $this->getParameter('app.contact_email_address'));
     }
 
     #[Route('/kontakt-per-whats-app', name: 'app_contact_whats_app', methods: ['GET'])]
     public function contactByWhatsApp(): Response
     {
-        return $this->redirect('https://wa.me/message/TKVKBR7RPHA7B1');
+        return $this->redirect($this->getParameter('app.whats_app_url'));
     }
 
     #[Route('/bewerten', name: 'app_review', methods: ['GET'])]
@@ -339,8 +339,8 @@ final class DefaultController extends AbstractController
             '',
             'Name:     ' . $data->name,
             'E-Mail:   ' . $data->email,
-            'Firma:    ' . ($data->company !== '' ? $data->company : '—'),
-            'Telefon:  ' . ($data->phone !== '' ? $data->phone : '—'),
+            'Firma:    ' . ($data->company !== '' ? $data->company : '–'),
+            'Telefon:  ' . ($data->phone !== '' ? $data->phone : '–'),
             '',
             'Nachricht:',
             $data->message,

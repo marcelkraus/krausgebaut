@@ -26,8 +26,11 @@ the two legal pages.
 - **Development:** ddev (apache-fpm, Node 22)
 
 Deliberately **not** included: Doctrine, symfony/form, symfony/serializer,
-EasyAdmin, AssetMapper/Encore/Vite. There is no database (MariaDB only runs
-because ddev ships it).
+EasyAdmin, AssetMapper/Encore/Vite. **There is no database at all** — no
+Doctrine, no `DATABASE_URL`, and `omit_containers: [db]` in the ddev config so
+no container starts either. It used to run one because ddev ships it, and it
+declared a different MariaDB version than the sister project while never being
+touched.
 
 ## Development
 
@@ -95,11 +98,37 @@ Each partial is the single source for its pattern: `_logo` (brand lockup),
 
 A light "spec-sheet" look – technical, precise, no dark mode.
 
-- **Colours:** the only chromatic colour is the petrol `accent` token
-  (`--color-accent`, plus `accent-hover`); everything else is Tailwind's
-  `neutral-*`, hairlines `neutral-200`. **No hex values in templates** – use
-  the tokens. The marker dots of the two outbound footer links carry their own
-  `brand-*` tokens, so foreign colours stay out of the accent scale.
+- **Colours:** the only chromatic colour is the petrol accent; everything else
+  is Tailwind's `neutral-*`, hairlines `neutral-200`. **No hex values in
+  templates** – use the tokens. The marker dots of the two outbound footer
+  links carry their own `brand-*` tokens, so foreign colours stay out of the
+  accent scale.
+
+  **One vocabulary, both brands.** The role is in the name, so the difference
+  between krausgebaut and krausgedruckt falls into the values and not into the
+  naming. The same five tokens exist over there under the same names.
+
+  | Token | Value | Role |
+  | --- | --- | --- |
+  | `accent` | `cyan-800` | the brand: surfaces, borders, markers, the mark — **never type** |
+  | `accent-on-light` | `cyan-800` | type on a light ground |
+  | `accent-on-dark` | `cyan-600` | type on a dark ground |
+  | `accent-hover` | `cyan-900` | hover of a filled surface |
+  | `accent-on-light-hover` | `cyan-900` | hover of type on a light ground |
+
+  The petrol is a **dark** colour: it carries a light ground as it is (6.51:1)
+  and misses AA as type on a dark one (2.72:1), where it needs a brighter
+  step. The sibling's papaya has the mirror problem, which is why its tokens
+  hold different values under the same names. Two of the values coincide here
+  and that is fine — the names still say which rule they answer.
+
+  The naming makes the rule checkable: **`text-accent` without a role suffix
+  must not appear anywhere.** The dark `Ablauf` block shipped with type at
+  2.72:1 precisely because there was no name for the case.
+
+  The hover of a filled surface always moves in whichever direction keeps its
+  label readable. Here the label is white, so the fill **darkens**; on the
+  sibling the label is near-black and the fill lightens.
 - **Typography:** `font-display` = `font-sans` = Aller (wordmark, headlines and
   body, which ties the type to the logo); `font-mono` = JetBrains Mono for
   eyebrows, labels and technical data.
@@ -121,9 +150,22 @@ A light "spec-sheet" look – technical, precise, no dark mode.
   uses a sticky title column on the left and cards on the right; every other
   section stacks its heading above the content.
 - **Container:** `max-w-6xl mx-auto px-6 lg:px-8`; legal pages and case
-  studies `max-w-3xl`.
-- **Header:** a three-column grid `grid-cols-[10rem_1fr_auto]`, not a flex
-  row. In a flex row the navigation is squeezed between logo and actions and
+  studies `max-w-3xl`. The legal pages clear the fixed header themselves
+  (`pt-36 lg:pt-40`) because there is no padding on `main`; those numbers are
+  the header height plus the same rhythm the sibling gets from `main.pt-20`,
+  so the two sites' legal pages sit at identical measurements. Changing one
+  without the other is what put them 16 pixels apart.
+- **Section headings on the legal pages** are `font-display`, not mono. Mono
+  is reserved for labels and technical data; a heading set in it ended up
+  smaller and quieter than the body text it introduced.
+- **Tap targets** in the footer carry `py-2.5` (contact rows) and `py-2` (the
+  legal links), so nothing there falls below the 44 pixel mark on a phone.
+- **Header:** a three-column grid, not a flex row. The fixed first column
+  (`lg:grid-cols-[10rem_1fr_auto]`) starts at `lg`, where the navigation is
+  visible and the shared edge is actually perceived; below that the grid is
+  `grid-cols-[auto_1fr_auto]`, because reserving 160 pixels for a logo that
+  needs less pushed the actions off a 320 pixel screen, which WCAG 1.4.10
+  forbids. In a flex row the navigation is squeezed between logo and actions and
   its starting edge follows the width of its own labels — which puts it in a
   different place than on the sibling site. The fixed first column gives both
   brands the same edge. The enquiry button stays visible on a phone and

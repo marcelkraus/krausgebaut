@@ -3,7 +3,7 @@
 {% import _self as field %}
 
 {% macro label(name, text, required) %}
-    <label for="f_{{ name }}" class="block font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">{{ text }}{% if required %} <span class="text-accent-on-light">*</span>{% endif %}</label>
+    <label for="f_{{ name }}" class="block font-mono text-xs uppercase tracking-[0.15em] text-neutral-600">{{ text }}{% if required %} <span class="text-accent-on-light">*</span>{% endif %}</label>
 {% endmacro %}
 
 {% macro input(name, text, old, errors, options) %}
@@ -15,7 +15,7 @@
         <input type="{{ options.type|default('text') }}" id="f_{{ name }}" name="{{ name }}" value="{{ old[name] ?? '' }}"
                {% if options.autocomplete is defined %}autocomplete="{{ options.autocomplete }}"{% endif %}
                {% if required %}aria-required="true"{% endif %}
-               class="mt-2 w-full rounded-lg border {{ err ? 'border-red-500' : 'border-neutral-300' }} bg-white px-4 py-3 text-sm text-neutral-900 focus:border-accent"
+               class="mt-2 w-full rounded-lg border {{ err ? 'border-red-500' : 'border-neutral-200' }} bg-white px-4 py-3 text-sm text-neutral-900 focus:border-accent focus:outline-2 focus:outline-offset-2 focus:outline-accent"
                {% if err %}aria-invalid="true" aria-describedby="e_{{ name }}"{% endif %}>
         {% if err %}<p id="e_{{ name }}" class="mt-1.5 font-mono text-xs text-red-600">{{ err }}</p>{% endif %}
     </div>
@@ -50,13 +50,13 @@
         {{ field.label('message', 'Nachricht', true) }}
         <textarea id="f_message" name="message" rows="5" aria-required="true"
                   {% if errors.message is defined %}aria-invalid="true" aria-describedby="e_message"{% endif %}
-                  class="mt-2 w-full rounded-lg border {{ errors.message is defined ? 'border-red-500' : 'border-neutral-300' }} bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-accent" placeholder="Erzählen Sie mir kurz von Ihrer Idee oder Ihrem Vorhaben.">{{ old.message ?? '' }}</textarea>
+                  class="mt-2 w-full rounded-lg border {{ errors.message is defined ? 'border-red-500' : 'border-neutral-200' }} bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-500 focus:border-accent focus:outline-2 focus:outline-offset-2 focus:outline-accent" placeholder="Erzählen Sie mir kurz von Ihrer Idee oder Ihrem Vorhaben.">{{ old.message ?? '' }}</textarea>
         {% if errors.message is defined %}<p id="e_message" class="mt-1.5 font-mono text-xs text-red-600">{{ errors.message }}</p>{% endif %}
     </div>
 
     <div class="flex flex-wrap items-center gap-4 pt-2">
         <button type="submit" class="rounded-lg bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">Anfrage senden</button>
-        <p class="font-mono text-xs text-neutral-500">Pflichtfelder <span class="text-accent-on-light">*</span></p>
+        <p class="font-mono text-xs text-neutral-600">Pflichtfelder <span class="text-accent-on-light">*</span></p>
     </div>
 
     <p class="text-sm leading-relaxed text-neutral-600">Mit dem Absenden stimmen Sie meiner <a class="font-semibold text-accent-on-light transition-colors hover:text-accent-on-light-hover" href="{{ path('app_privacy') }}">Datenschutzerklärung</a> zu.</p>

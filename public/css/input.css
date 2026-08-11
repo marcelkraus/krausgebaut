@@ -42,11 +42,33 @@
     --font-display: "Aller", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
-    /* The accent is Tailwind's cyan-800 — the palette colour the master logo
-       uses (its #015F79 is this colour). Bound to the token rather than a
-       copied hex so it cannot drift from the palette. */
+    /* One vocabulary, both brands: the role is in the name, so the
+       difference between the two brands falls into the values and not into
+       the naming.
+
+         accent                 the brand itself — surfaces, borders, markers,
+                                the mark. Never type without a checked step.
+         accent-on-light        type on a light ground
+         accent-on-dark         type on a dark ground
+         accent-hover           hover of a filled surface
+         accent-on-light-hover  hover of type on a light ground
+
+       The accent is Tailwind's cyan-800 — the palette colour the master
+       logo uses (its #015F79 is this colour). Bound to the token rather
+       than a copied hex so it cannot drift from the palette.
+
+       The petrol is a dark colour: it carries a light ground as it is
+       (6.51:1) and misses AA as type on a dark one (2.72:1), where it needs
+       a brighter step. The sibling's papaya has the mirror problem, which
+       is why its tokens carry different values under the same names.
+
+       The hover of a filled surface moves in whichever direction keeps its
+       label readable — here the label is white, so the fill DARKENS. */
     --color-accent: var(--color-cyan-800);
+    --color-accent-on-light: var(--color-cyan-800);
+    --color-accent-on-dark: var(--color-cyan-600);
     --color-accent-hover: var(--color-cyan-900);
+    --color-accent-on-light-hover: var(--color-cyan-900);
 
     /* Sibling brand colours — the marker dots in the footer and the
        krausgedruckt cross-promo band at the end of the page. */

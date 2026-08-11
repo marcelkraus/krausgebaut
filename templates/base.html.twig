@@ -78,8 +78,13 @@
            In a flex row the navigation is squeezed between logo and actions,
            so its starting edge follows the width of its own labels and lands
            somewhere else on the sibling site. A fixed first column gives both
-           brands the same edge. #}
-        <div class="mx-auto grid h-20 max-w-6xl grid-cols-[10rem_1fr_auto] items-center gap-6 px-6 lg:px-8">
+           brands the same edge.
+
+           The fixed column only applies from `lg` up, where the navigation is
+           visible and the shared edge is actually perceived. Below that it would
+           reserve 160 pixels for a logo that needs less and push the actions off
+           a 320 pixel screen, which WCAG 1.4.10 forbids. #}
+        <div class="mx-auto grid h-20 max-w-6xl grid-cols-[auto_1fr_auto] lg:grid-cols-[10rem_1fr_auto] items-center gap-6 px-6 lg:px-8">
             <a href="{{ path('app_homepage') }}" class="inline-flex items-center" aria-label="Startseite">
                 {{ include('partials/_logo.html.twig', { class: 'h-9 w-auto' }) }}
             </a>
@@ -87,7 +92,7 @@
             {# Desktop navigation #}
             <nav class="hidden items-center gap-8 lg:flex" aria-label="Hauptnavigation">
                 {% for item in nav_items %}
-                    <a href="{{ item.href }}" class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500 transition-colors hover:text-accent">{{ item.label }}</a>
+                    <a href="{{ item.href }}" class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500 transition-colors hover:text-accent-on-light">{{ item.label }}</a>
                 {% endfor %}
             </nav>
 
@@ -107,7 +112,7 @@
         <div id="mobile-menu" class="hidden border-t border-neutral-200 bg-white lg:hidden">
             <nav class="mx-auto flex max-w-6xl flex-col px-6 py-2" aria-label="Mobile Navigation">
                 {% for item in nav_items %}
-                    <a href="{{ item.href }}" class="border-b border-neutral-100 py-3 font-mono text-sm uppercase tracking-[0.15em] text-neutral-600 hover:text-accent" data-menu-link>{{ item.label }}</a>
+                    <a href="{{ item.href }}" class="border-b border-neutral-100 py-3 font-mono text-sm uppercase tracking-[0.15em] text-neutral-600 hover:text-accent-on-light" data-menu-link>{{ item.label }}</a>
                 {% endfor %}
                 <a href="{{ path('app_homepage') }}#kontakt" class="mt-4 mb-3 rounded-lg bg-accent px-5 py-3 text-center font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white hover:bg-accent-hover" data-menu-link>Jetzt anfragen</a>
             </nav>
@@ -134,17 +139,17 @@
                         <p>Unterstützung vor Ort im gesamten Rhein-Erft-Kreis oder nach Vereinbarung.</p>
                     </address>
                     <ul class="mt-4 space-y-1 text-sm">
-                        <li><a href="{{ path('app_homepage') }}#kontakt" class="inline-flex items-center gap-2.5 py-1.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-accent" aria-hidden="true"></span>Kontaktformular</a></li>
-                        <li><a href="{{ path('app_contact_email') }}" class="inline-flex items-center gap-2.5 py-1.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-accent" aria-hidden="true"></span>E-Mail</a></li>
-                        <li><a href="{{ path('app_contact_whats_app') }}" class="inline-flex items-center gap-2.5 py-1.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-accent" aria-hidden="true"></span>WhatsApp</a></li>
+                        <li><a href="{{ path('app_homepage') }}#kontakt" class="inline-flex items-center gap-2.5 py-2.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-accent" aria-hidden="true"></span>Kontaktformular</a></li>
+                        <li><a href="{{ path('app_contact_email') }}" class="inline-flex items-center gap-2.5 py-2.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-accent" aria-hidden="true"></span>E-Mail</a></li>
+                        <li><a href="{{ path('app_contact_whats_app') }}" class="inline-flex items-center gap-2.5 py-2.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-accent" aria-hidden="true"></span>WhatsApp</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400">Mehr von Marcel</h2>
                     <ul class="mt-4 space-y-1 text-sm">
-                        <li><a href="https://www.marcelkraus.de" class="inline-flex items-center gap-2.5 py-1.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-brand-marcelkraus"></span>Persönliche Homepage</a></li>
-                        <li><a href="https://www.krausgedruckt.de" class="inline-flex items-center gap-2.5 py-1.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-brand-krausgedruckt"></span>krausgedruckt</a></li>
+                        <li><a href="https://www.marcelkraus.de" class="inline-flex items-center gap-2.5 py-2.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-brand-marcelkraus"></span>Persönliche Homepage</a></li>
+                        <li><a href="https://www.krausgedruckt.de" class="inline-flex items-center gap-2.5 py-2.5 transition-colors hover:text-white"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px] bg-brand-krausgedruckt"></span>krausgedruckt</a></li>
                     </ul>
                 </div>
             </div>
@@ -152,9 +157,9 @@
             <div class="mt-14 flex flex-col gap-4 border-t border-neutral-800 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
                 <p class="font-mono uppercase tracking-wider text-neutral-400">© {{ 'now'|date('Y') }} krausgebaut von Marcel Kraus</p>
                 <nav class="flex gap-6" aria-label="Rechtliches">
-                    <a href="{{ path('app_review') }}" class="transition-colors hover:text-white">Bewerten</a>
-                    <a href="{{ path('app_imprint') }}" class="transition-colors hover:text-white">Impressum</a>
-                    <a href="{{ path('app_privacy') }}" class="transition-colors hover:text-white">Datenschutz</a>
+                    <a href="{{ path('app_review') }}" class="py-2 transition-colors hover:text-white">Bewerten</a>
+                    <a href="{{ path('app_imprint') }}" class="py-2 transition-colors hover:text-white">Impressum</a>
+                    <a href="{{ path('app_privacy') }}" class="py-2 transition-colors hover:text-white">Datenschutz</a>
                 </nav>
             </div>
         </div>

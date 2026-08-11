@@ -6,13 +6,13 @@
 
 {% block content %}
     <article class="mx-auto max-w-3xl px-6 pt-32 pb-24 lg:px-8 lg:pt-40">
-        <a href="{{ path('app_homepage') }}#referenzen" class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-neutral-500 transition-colors hover:text-accent">
+        <a href="{{ path('app_homepage') }}#referenzen" class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-neutral-500 transition-colors hover:text-accent-on-light">
             <span class="transition-transform group-hover:-translate-x-1">{{ icons.icon('arrow', 'h-4 w-4 rotate-180') }}</span>
             Referenzen
         </a>
 
         <header class="mt-8">
-            <p class="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-accent">
+            <p class="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-accent-on-light">
                 <span class="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-accent"></span>{{ reference.kategorie }}
                 <span class="text-neutral-400">· {{ reference.kunde }}</span>
             </p>

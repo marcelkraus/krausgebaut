@@ -36,7 +36,7 @@
     <section id="start" class="relative isolate overflow-hidden border-b border-neutral-200 bg-neutral-50">
         {# The gear from the brand mark, oversized and cropped off the edge —
            texture rather than ornament. #}
-        <div class="pointer-events-none absolute -right-28 top-1/2 -z-10 hidden -translate-y-1/2 text-accent/[0.07] lg:block">
+        <div class="pointer-events-none absolute -right-28 top-1/2 -z-10 hidden -translate-y-1/2 text-accent-on-light/[0.07] lg:block">
             {{ include('partials/_gear.html.twig', { class: 'h-[42rem] w-auto' }) }}
         </div>
 
@@ -48,7 +48,7 @@
                 <p class="mt-4 max-w-xl text-lg leading-relaxed text-neutral-600">Von der Website über native iOS-Apps bis zur IT vor Ort: Ich bin Ihr Ansprechpartner.</p>
                 <div class="mt-10 flex flex-wrap items-center gap-4">
                     <a href="#kontakt" class="rounded-lg bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">Jetzt anfragen</a>
-                    <a href="#leistungen" class="group inline-flex items-center gap-2 px-2 py-3.5 font-mono text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-accent">
+                    <a href="#leistungen" class="group inline-flex items-center gap-2 px-2 py-3.5 font-mono text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-accent-on-light">
                         Leistungen ansehen
                         <span class="transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-4 w-4') }}</span>
                     </a>
@@ -88,7 +88,7 @@
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     {% for service in services|filter(s => not (s.feature|default(false))) %}
                         <div class="flex flex-col rounded-xl border border-neutral-200 bg-white p-8 transition-shadow hover:shadow-lg hover:shadow-neutral-200/60">
-                            <span class="text-accent">{{ icons.icon(service.icon, 'h-8 w-8') }}</span>
+                            <span class="text-accent-on-light">{{ icons.icon(service.icon, 'h-8 w-8') }}</span>
                             <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
                                 <h3 class="font-display text-lg font-bold text-neutral-900">{{ service.title }}</h3>
                                 {% if service.tag is defined %}
@@ -104,7 +104,7 @@
            accent-tinted panel so it stands apart as the strategic offering. #}
         {% for service in services|filter(s => s.feature|default(false)) %}
             <div class="mt-6 flex flex-col gap-6 rounded-xl border border-accent/20 bg-accent/[0.04] p-8 sm:flex-row sm:items-center sm:gap-8">
-                <span class="shrink-0 text-accent">{{ icons.icon(service.icon, 'h-12 w-12') }}</span>
+                <span class="shrink-0 text-accent-on-light">{{ icons.icon(service.icon, 'h-12 w-12') }}</span>
                 <div class="flex-1">
                     <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
                         <h3 class="font-display text-xl font-bold text-neutral-900">{{ service.title }}</h3>
@@ -132,7 +132,7 @@
                 <p class="mt-6 text-lg leading-relaxed text-neutral-600">„krausgebaut“ heißt: Sie sprechen immer mit dem, der es baut – und der Ihr Projekt zu seinem macht.</p>
                 <p class="mt-6 text-lg leading-relaxed text-neutral-600">Keine Warteschleife, kein Agentur-Sprech und keine Weitergabe an ein anonymes Team an einem anderen Ort. Ich höre Ihnen zu, denke mit und liefere ein sauberes Handwerk, auf das man sich verlassen kann.</p>
                 <p class="mt-6 text-lg leading-relaxed text-neutral-600">Falls Sie mehr über meinen beruflichen Werdegang erfahren möchten, finden Sie weitere Informationen auf meiner persönlichen Website.</p>
-                <a href="https://www.marcelkraus.de" class="group mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-accent hover:text-accent-hover">
+                <a href="https://www.marcelkraus.de" class="group mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-accent-on-light hover:text-accent-on-light-hover">
                     Mehr über mich<span class="transition-transform group-hover:translate-x-1">{{ icons.icon('external', 'h-4 w-4') }}</span>
                 </a>
             </div>
@@ -152,7 +152,7 @@
                     <li class="rounded-xl border border-neutral-200 bg-white p-6">
                         <h3 class="font-display text-base font-bold text-neutral-900">{{ principle.title }}</h3>
                         <p class="mt-2 text-sm leading-relaxed text-neutral-600">{{ principle.text }}</p>
-                        <p class="mt-3 text-sm font-semibold leading-relaxed text-neutral-600"><span class="text-accent">–</span> {{ principle.note }}</p>
+                        <p class="mt-3 text-sm font-semibold leading-relaxed text-neutral-600"><span class="text-accent-on-light">–</span> {{ principle.note }}</p>
                     </li>
                 {% endfor %}
             </ul>
@@ -171,7 +171,7 @@
             {% for reference in references %}
                 {% set href = reference.hatDetailseite ? path('app_case_study', { slug: reference.slug }) : (reference.url ?? null) %}
                 <article class="flex flex-col rounded-xl border border-neutral-200 bg-white p-6 transition-shadow hover:shadow-lg hover:shadow-neutral-200/60">
-                    <span class="font-mono text-[0.625rem] uppercase tracking-[0.15em] text-accent">{{ reference.kategorie }}</span>
+                    <span class="font-mono text-[0.625rem] uppercase tracking-[0.15em] text-accent-on-light">{{ reference.kategorie }}</span>
                     <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
                         <h3 class="font-display text-xl font-bold text-neutral-900">{{ reference.title }}</h3>
                         {% if reference.tag is defined %}
@@ -188,7 +188,7 @@
                         </ul>
                     {% endif %}
                     {% if href %}
-                        <a href="{{ href }}"{% if not reference.hatDetailseite %} target="_blank" rel="noopener"{% endif %} class="group mt-6 inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-accent hover:text-accent-hover">
+                        <a href="{{ href }}"{% if not reference.hatDetailseite %} target="_blank" rel="noopener"{% endif %} class="group mt-6 inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-accent-on-light hover:text-accent-on-light-hover">
                             {{ reference.hatDetailseite ? 'Zur Case Study' : 'Zur Website' }}
                             <span class="transition-transform group-hover:translate-x-1">{{ icons.icon(reference.hatDetailseite ? 'arrow' : 'external', 'h-3.5 w-3.5') }}</span>
                         </a>
@@ -202,7 +202,7 @@
 
             {# Conversion card — fills the grid and invites the next project. #}
             <a href="#kontakt" class="group flex flex-col justify-center rounded-xl border border-dashed border-accent/40 bg-accent/[0.03] p-6 text-center transition-colors hover:bg-accent/[0.06]">
-                <span class="mx-auto text-accent transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-6 w-6') }}</span>
+                <span class="mx-auto text-accent-on-light transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-6 w-6') }}</span>
                 <h3 class="mt-4 font-display text-lg font-bold text-neutral-900">Und jetzt Sie?</h3>
                 <p class="mt-2 text-sm leading-relaxed text-neutral-600">Bitte erzählen Sie mir von Ihrem Projekt – ich baue es Ihnen gerne.</p>
             </a>
@@ -217,7 +217,7 @@
            Rhythmus. #}
         <div class="mx-auto max-w-6xl px-6 py-20 lg:px-8 lg:py-24">
             <div class="max-w-2xl">
-                {{ include('partials/_eyebrow.html.twig', { text: 'Ablauf' }) }}
+                {{ include('partials/_eyebrow.html.twig', { text: 'Ablauf', tone: 'dark' }) }}
                 <h2 class="mt-5 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">In drei Schritten zum Ergebnis</h2>
             </div>
 
@@ -237,10 +237,10 @@
                    Trennung markiert, ohne die Ziffer zu überstrahlen. #}
                 {% for step in steps %}
                     <li class="border-t-2 border-white/25 pt-5">
-                        <span class="font-mono text-2xl font-bold text-accent">{{ step.no }}</span>
+                        <span class="font-mono text-2xl font-bold text-accent-on-dark">{{ step.no }}</span>
                         <h3 class="mt-4 font-display text-lg font-bold text-white">{{ step.title }}</h3>
                         <p class="mt-3 text-sm leading-relaxed text-neutral-400">{{ step.text }}</p>
-                        <p class="mt-4 text-sm font-semibold leading-relaxed text-accent">{{ step.note }}</p>
+                        <p class="mt-4 text-sm font-semibold leading-relaxed text-accent-on-dark">{{ step.note }}</p>
                     </li>
                 {% endfor %}
             </ol>
@@ -284,27 +284,27 @@
                 <div>
                     <dl class="divide-y divide-neutral-200 border-y border-neutral-200">
                         <div class="flex items-start gap-4 py-5">
-                            <span class="mt-0.5 text-accent">{{ icons.icon('mail', 'h-5 w-5') }}</span>
-                            <div><dt class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">E-Mail</dt><dd class="mt-1.5 text-sm"><a class="font-semibold text-accent transition-colors hover:text-accent-hover" href="{{ path('app_contact_email') }}">Schreiben Sie mir eine E-Mail</a></dd></div>
+                            <span class="mt-0.5 text-accent-on-light">{{ icons.icon('mail', 'h-5 w-5') }}</span>
+                            <div><dt class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">E-Mail</dt><dd class="mt-1.5 text-sm"><a class="font-semibold text-accent-on-light transition-colors hover:text-accent-on-light-hover" href="{{ path('app_contact_email') }}">Schreiben Sie mir eine E-Mail</a></dd></div>
                         </div>
                         <div class="flex items-start gap-4 py-5">
-                            <span class="mt-0.5 text-accent">{{ icons.icon('chat', 'h-5 w-5') }}</span>
-                            <div><dt class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">WhatsApp</dt><dd class="mt-1.5 text-sm"><a class="font-semibold text-accent transition-colors hover:text-accent-hover" href="{{ path('app_contact_whats_app') }}">Schreiben Sie mir per WhatsApp</a></dd></div>
+                            <span class="mt-0.5 text-accent-on-light">{{ icons.icon('chat', 'h-5 w-5') }}</span>
+                            <div><dt class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">WhatsApp</dt><dd class="mt-1.5 text-sm"><a class="font-semibold text-accent-on-light transition-colors hover:text-accent-on-light-hover" href="{{ path('app_contact_whats_app') }}">Schreiben Sie mir per WhatsApp</a></dd></div>
                         </div>
                         <div class="flex items-start gap-4 py-5">
-                            <span class="mt-0.5 text-accent">{{ icons.icon('info', 'h-5 w-5') }}</span>
+                            <span class="mt-0.5 text-accent-on-light">{{ icons.icon('info', 'h-5 w-5') }}</span>
                             <div><dt class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">Reaktionszeit</dt><dd class="mt-1.5 text-sm text-neutral-800">In der Regel innerhalb eines Werktags</dd></div>
                         </div>
                         <div class="flex items-start gap-4 py-5">
-                            <span class="mt-0.5 text-accent">{{ icons.icon('pin', 'h-5 w-5') }}</span>
+                            <span class="mt-0.5 text-accent-on-light">{{ icons.icon('pin', 'h-5 w-5') }}</span>
                             <div><dt class="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">Vor-Ort-Service</dt><dd class="mt-1.5 text-sm text-neutral-800">Im gesamten Rhein-Erft-Kreis oder nach Vereinbarung</dd></div>
                         </div>
                     </dl>
 
                     <div class="mt-8 flex flex-col gap-4 rounded-xl border border-neutral-200 bg-white p-6 sm:flex-row sm:items-center sm:gap-6">
-                        <span class="shrink-0 text-accent">{{ icons.icon('wifi', 'h-8 w-8') }}</span>
+                        <span class="shrink-0 text-accent-on-light">{{ icons.icon('wifi', 'h-8 w-8') }}</span>
                         <div>
-                            <p class="font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-accent">IT vor Ort</p>
+                            <p class="font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-accent-on-light">IT vor Ort</p>
                             <p class="mt-1.5 text-sm leading-relaxed text-neutral-700">Ob FRITZ!Box, Software oder IT-Nothilfe – ich helfe auch persönlich in der Nachbarschaft.</p>
                         </div>
                     </div>
@@ -314,7 +314,7 @@
                 <div>
                     {% if app.flashes('contact_success') %}
                         <div class="flex items-start gap-4 rounded-xl border border-neutral-900 bg-white p-8">
-                            <span class="mt-0.5 text-accent">{{ icons.icon('check', 'h-7 w-7') }}</span>
+                            <span class="mt-0.5 text-accent-on-light">{{ icons.icon('check', 'h-7 w-7') }}</span>
                             <div>
                                 <h3 class="font-display text-xl font-bold text-neutral-900">Vielen Dank für Ihre Anfrage!</h3>
                                 <p class="mt-2 text-sm leading-relaxed text-neutral-600">Ihre Nachricht ist eingegangen. Ich melde mich bei Ihnen.</p>

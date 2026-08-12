@@ -1,0 +1,67 @@
+# The quality gates from CLAUDE.md, run by a machine instead of by hand.
+#
+# There is deliberately no deployment step: rolling out stays a decision, and
+# `bin/deploy` on the Uberspace is where that decision is carried out.
+name: Quality gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gates:
+    name: Lint, test and build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: ctype, iconv
+          coverage: none
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      # A lock file that no longer matches composer.json installs versions
+      # nobody chose. It went unnoticed here once already.
+      - name: Validate the composer files
+        run: composer validate --no-check-all --no-check-publish
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Lint Twig
+        run: php bin/console lint:twig templates
+
+      - name: Lint YAML
+        run: php bin/console lint:yaml config
+
+      - name: Lint the service container
+        run: php bin/console lint:container
+
+      - name: Lint PHP
+        run: find src tests -name "*.php" -exec php -l {} \;
+
+      - name: Test
+        run: php bin/phpunit
+
+      - name: Build the stylesheet
+        run: npm run build
+
+      # `output.css` is committed and linked statically, so a template that
+      # introduces a utility class without a rebuild ships a stylesheet that
+      # silently lacks it. If the build changes the file, the commit is
+      # incomplete.
+      - name: Check the committed stylesheet is current
+        run: git diff --exit-code --stat public/css/output.css

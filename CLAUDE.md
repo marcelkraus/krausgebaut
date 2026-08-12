@@ -121,13 +121,13 @@ same five tokens exist on marcelkraus and krausgedruckt under the same names.
 | Token | Value | Role |
 | --- | --- | --- |
 | `accent` | `cyan-800` | the brand: surfaces, borders, markers, the mark — **never type** |
-| `accent-on-light` | `cyan-800` | type on a light ground (6.51:1) |
+| `accent-on-light` | `cyan-800` | type on a light ground (7.22:1 on white) |
 | `accent-on-dark` | `cyan-600` | type on a dark ground |
 | `accent-hover` | `cyan-900` | hover of a filled surface |
 | `accent-on-light-hover` | `cyan-900` | hover of type on a light ground |
 
 The petrol is a **dark** color: it carries a light ground as it is and misses
-AA as type on a dark one (2.72:1), where it needs the brighter step. Two of the
+AA as type on a dark one (2.74:1), where it needs the brighter step. Two of the
 values coincide here and that is fine — the names still say which rule they
 answer.
 
@@ -147,15 +147,15 @@ missing step is information.
 
 | Token | Value | Measured | Used for |
 | --- | --- | --- | --- |
-| `brand-marcelkraus` | `purple-700` | 2.53:1 on `neutral-900` | the brand, not for the dark footer |
+| `brand-marcelkraus` | `purple-700` | 2.54:1 on `neutral-900` | the brand, not for the dark footer |
 | `brand-marcelkraus-on-dark` | `purple-400` | 6.42:1 | the footer marker dot |
-| `brand-krausgedruckt` | `orange-600` | 5.50:1 on `neutral-900` | marker dot, eyebrow and the cross-promo band |
+| `brand-krausgedruckt` | `orange-600` | 4.98:1 on `neutral-900`, 5.50:1 on `neutral-950` | marker dot, eyebrow and the cross-promo band |
 | `brand-krausgedruckt-hover` | `orange-700` | – | hover of the cross-promo button |
 
 **The gray ramp needs the same care as the accent and has no names for it.**
-`neutral-400` carries dark grounds and fails on white (2.59:1); `neutral-500`
+`neutral-400` carries dark grounds and fails on white (2.58:1); `neutral-500`
 passes on white but not on `neutral-100`, and not against a translucent header
-over a dark section (3.79:1); `neutral-600` carries every light ground. So:
+over a dark section (3.78:1); `neutral-600` carries every light ground. So:
 `neutral-600` for labels on light, `neutral-400` for secondary text on dark.
 
 ### Type, shapes, container
@@ -179,7 +179,9 @@ over a dark section (3.79:1); `neutral-600` carries every light ground. So:
   reserved for labels and technical data; a heading set in it ended up smaller
   and quieter than the body text it introduced.
 - **Tap targets** in the footer carry `py-2.5` (contact rows) and `py-2` (the
-  legal links), so nothing there falls below the 44 pixel mark on a phone.
+  legal links). The contact rows measure 40 pixels and the legal links 32,
+  which clears the 24 pixel minimum of WCAG 2.5.8 but not the 44 the header
+  aims for.
 
 ### The family bracket
 
@@ -302,7 +304,7 @@ both sibling sites, so a submission takes one path through the family.
   e-mail and message. Errors keep the **first** violation per field, because the
   constraints are written in order of relevance. There is deliberately no
   subject select — the intent comes from the message, and the mail subject is
-  `Anfrage von {Name}`.
+  `Nachricht von {Name}`.
 - **One required-marker, not two:** the asterisk on the label is the single
   signal (`aria-required` alongside it, plus the `Pflichtfelder *` legend).
   Optional fields carry no marker and no `optional` placeholder — a placeholder

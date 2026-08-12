@@ -58,7 +58,7 @@
        drift from the palette.
 
        The petrol is a dark color: it carries a light ground as it is
-       (6.51:1) and misses AA as type on a dark one (2.72:1), where it needs
+       (7.22:1) and misses AA as type on a dark one (2.74:1), where it needs
        a brighter step. The sibling's papaya has the mirror problem, which
        is why its tokens carry different values under the same names.
 
@@ -76,9 +76,9 @@
 
        marcelkraus is purple — the left square of the family logo,
        which stands for the employment career. It is a dark color and
-       measures 2.53:1 on the footer's neutral-900, so the marker there uses
+       measures 2.54:1 on the footer's neutral-900, so the marker there uses
        the brighter step; the papaya passes on that ground as it is
-       (5.50:1) and needs none. */
+       (4.98:1 on the footer) and needs none. */
     --color-brand-marcelkraus: var(--color-purple-700);
     --color-brand-marcelkraus-on-dark: var(--color-purple-400);
     --color-brand-krausgedruckt: var(--color-orange-600);

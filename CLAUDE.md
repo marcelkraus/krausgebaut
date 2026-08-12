@@ -386,7 +386,20 @@ document root. Do **not** add a rewrite in `~/html`: that directory is above the
 document root and its `.htaccess` is never read. The non-www redirect lives in
 `public/.htaccess`.
 
-**Rolling out.** The server directory is a git checkout tracking `origin/main`:
+**Rolling out.** The server directory is a git checkout tracking `origin/main`.
+**A push to `main` rolls out by itself**: the workflow runs the gates first and
+starts `bin/deploy` over SSH only if they pass, so nothing reaches the server
+that has not been linted, tested and built.
+
+The key GitHub authenticates with is restricted in the server's
+`authorized_keys` to exactly one command — `cd ~/html/krausgebaut &&
+bin/deploy` — with no terminal and no forwarding. A leaked secret can
+therefore redeploy the state already on `main`, and nothing else. Withdraw it
+by deleting that line on the server; the entries there are labelled so they
+can be told apart. Three secrets carry it: `DEPLOY_SSH_KEY`, `DEPLOY_HOST`
+and `DEPLOY_USER`.
+
+By hand, unchanged and always available:
 
 ```bash
 ssh kraus 'cd ~/html/krausgebaut && bin/deploy'

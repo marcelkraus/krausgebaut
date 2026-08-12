@@ -65,3 +65,24 @@ jobs:
       # incomplete.
       - name: Check the committed stylesheet is current
         run: git diff --exit-code --stat public/css/output.css
+
+  # Rolling out is a second job, so it can only start once the gates are
+  # green. The key it uses is restricted on the server to exactly one
+  # command — `cd ~/html/krausgebaut && bin/deploy` — so a leaked secret
+  # buys a redeploy of what is already on `main`, and nothing else.
+  deploy:
+    name: Roll out
+    needs: gates
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Load the deploy key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Run bin/deploy on the server
+        run: >-
+          ssh -T -o StrictHostKeyChecking=accept-new
+          ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}

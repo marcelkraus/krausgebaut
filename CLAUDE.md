@@ -27,7 +27,8 @@ bracket* below.
 - **Content:** JSON files in `config/content/`, read with plain `json_decode`
 - **Mail:** symfony/mailer; ddev Mailpit in development
 - **Logging:** symfony/monolog-bundle (rotating file in prod)
-- **Tests:** PHPUnit via symfony/test-pack
+- **Tests:** PHPUnit (`phpunit/phpunit`) with `symfony/browser-kit` and
+  `symfony/css-selector`
 - **Development:** ddev (apache-fpm, Node 22)
 
 **There is no database at all** — no Doctrine, no `DATABASE_URL`, and
@@ -106,9 +107,9 @@ Each partial is the single source for its pattern: `_logo` (brand lockup),
 
 A light "spec-sheet" look — technical, precise, no dark mode.
 
-### Colours
+### Colors
 
-The only chromatic colour is the petrol accent; everything else is Tailwind's
+The only chromatic color is the petrol accent; everything else is Tailwind's
 `neutral-*`, hairlines `neutral-200`. **No hex values in templates** — use the
 tokens. All tokens bind to `var(--color-…)` rather than to copied hex values,
 so the interface cannot drift from the palette.
@@ -125,7 +126,7 @@ same five tokens exist on marcelkraus and krausgedruckt under the same names.
 | `accent-hover` | `cyan-900` | hover of a filled surface |
 | `accent-on-light-hover` | `cyan-900` | hover of type on a light ground |
 
-The petrol is a **dark** colour: it carries a light ground as it is and misses
+The petrol is a **dark** color: it carries a light ground as it is and misses
 AA as type on a dark one (2.72:1), where it needs the brighter step. Two of the
 values coincide here and that is fine — the names still say which rule they
 answer.
@@ -140,7 +141,7 @@ krausgedruckt the label is near-black and the fill lightens.
 **The footer is a dark ground, so every marker dot there carries an `-on-dark`
 step** — the site's own three included.
 
-**The two foreign brands** carry their own tokens, so their colours stay out of
+**The two foreign brands** carry their own tokens, so their colors stay out of
 the accent scale. A role step exists only where the base value fails, so a
 missing step is information.
 
@@ -151,7 +152,7 @@ missing step is information.
 | `brand-krausgedruckt` | `orange-600` | 5.50:1 on `neutral-900` | marker dot, eyebrow and the cross-promo band |
 | `brand-krausgedruckt-hover` | `orange-700` | – | hover of the cross-promo button |
 
-**The grey ramp needs the same care as the accent and has no names for it.**
+**The gray ramp needs the same care as the accent and has no names for it.**
 `neutral-400` carries dark grounds and fails on white (2.59:1); `neutral-500`
 passes on white but not on `neutral-100`, and not against a translucent header
 over a dark section (3.79:1); `neutral-600` carries every light ground. So:
@@ -182,7 +183,7 @@ over a dark section (3.79:1); `neutral-600` carries every light ground. So:
 
 ### The family bracket
 
-**Header and footer are binding.** Position, measurements, grid and behaviour
+**Header and footer are binding.** Position, measurements, grid and behavior
 stay identical across all three sites; the content of the lists does not.
 Measured at 1440 px: header grid x=144 w=1152 h=80, logo x=176 w=160 h=36,
 navigation x=360, footer columns at 176 / 649 / 981.
@@ -215,7 +216,7 @@ navigation x=360, footer columns at 176 / 649 / 981.
   uses a sticky title column on the left and cards on the right; every other
   section stacks its heading above the content.
 - **Principle cards** (`Arbeitsweise` section) close on a second paragraph
-  holding a one-word promise, preceded by an em dash in the accent colour — the
+  holding a one-word promise, preceded by an em dash in the accent color — the
   same marker language as the required-field asterisk in the form. The dash
   comes from the template and the word from the `note` key, so the copy stays
   free of inline markup.
@@ -234,7 +235,7 @@ navigation x=360, footer columns at 176 / 649 / 981.
 ### Brand mark
 
 The logo in `_logo.html.twig` is gear-brace and wordmark as **one lockup** —
-the brace embraces the "k", so the two must not be split. Colours come from
+the brace embraces the "k", so the two must not be split. Colors come from
 `fill-*` classes: `fill-accent` for gear and "kraus", `fill-neutral-900` for
 "gebaut"; `mono: true` renders everything in `fill-current`.
 
@@ -261,7 +262,7 @@ tile carrying the white gear:
 The SVG **must** keep its `width`/`height` attributes. Without them it has no
 intrinsic size, so the browser rasterises it into a default box and scales that
 into the tab slot, which puts a pale rim around the tile. Every generated file
-is checked for a fully opaque, single-colour border before it ships.
+is checked for a fully opaque, single-color border before it ships.
 
 The tile is `#005F78`, taken verbatim from the master — and that is exactly
 what the `accent` token resolves to. **Artwork and palette agree to the digit,
@@ -453,7 +454,7 @@ would need nonces.
 
 - **Comments, identifiers and this documentation are English.** Visible site
   content is German, with correct German quotation marks „…“.
-- **No hex colour values in templates** — use the design tokens. Standalone
+- **No hex color values in templates** — use the design tokens. Standalone
   asset files such as `favicon.svg` may carry hex.
 
 ## Environment variables

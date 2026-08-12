@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Dto\ContactRequest;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -200,7 +200,7 @@ final class DefaultController extends AbstractController
         }
 
         return new Response(
-            $rules . "Allow: /\n\nSitemap: {$sitemap}\n",
+            $rules . "\nSitemap: {$sitemap}\n",
             Response::HTTP_OK,
             ['Content-Type' => 'text/plain; charset=UTF-8'],
         );

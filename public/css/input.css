@@ -34,8 +34,8 @@
     font-display: swap;
 }
 
-/* Design tokens. The single chromatic colour is the krausgebaut petrol
-   accent (brand family colour); everything else is Tailwind's neutral-*.
+/* Design tokens. The single chromatic color is the krausgebaut petrol
+   accent (brand family color); everything else is Tailwind's neutral-*.
    Typographic roles: Aller (display + body), JetBrains Mono (technical). */
 @theme {
     --font-sans: "Aller", ui-sans-serif, system-ui, sans-serif;
@@ -57,7 +57,7 @@
        the digit. Bound to the token rather than a copied hex so it cannot
        drift from the palette.
 
-       The petrol is a dark colour: it carries a light ground as it is
+       The petrol is a dark color: it carries a light ground as it is
        (6.51:1) and misses AA as type on a dark one (2.72:1), where it needs
        a brighter step. The sibling's papaya has the mirror problem, which
        is why its tokens carry different values under the same names.
@@ -70,12 +70,12 @@
     --color-accent-hover: var(--color-cyan-900);
     --color-accent-on-light-hover: var(--color-cyan-900);
 
-    /* Sibling brand colours — the marker dots in the footer and the
+    /* Sibling brand colors — the marker dots in the footer and the
        krausgedruckt cross-promo band at the end of the page. Bound to the
        palette, never copied as hex, so they cannot drift from it.
 
        marcelkraus is purple — the left square of the family logo,
-       which stands for the employment career. It is a dark colour and
+       which stands for the employment career. It is a dark color and
        measures 2.53:1 on the footer's neutral-900, so the marker there uses
        the brighter step; the papaya passes on that ground as it is
        (5.50:1) and needs none. */
@@ -124,6 +124,15 @@
     :focus-visible {
         outline: 2px solid var(--color-accent);
         outline-offset: 2px;
+    }
+
+    /* The ring follows the same rule as type: the accent measures 2.48:1 on
+       the footer and 2.74:1 on the brand band, below the 3:1 that WCAG 1.4.11
+       asks of an indicator. On those grounds it takes the brighter step
+       (4.95:1 and 5.47:1). */
+    .bg-neutral-900 :focus-visible,
+    .bg-neutral-950 :focus-visible {
+        outline-color: var(--color-accent-on-dark);
     }
 }
 

@@ -16,7 +16,7 @@ final class SecurityHeadersListener
 {
     public function __invoke(ResponseEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if ($event->isMainRequest() === false) {
             return;
         }
 

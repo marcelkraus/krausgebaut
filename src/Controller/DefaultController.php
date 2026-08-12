@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -32,7 +32,7 @@ final class DefaultController extends AbstractController
         #[Autowire('%env(CONTACT_FROM)%')]
         private readonly string $contactFrom,
         #[Autowire(service: 'limiter.contact_form')]
-        private readonly RateLimiterFactory $contactFormLimiter,
+        private readonly RateLimiterFactoryInterface $contactFormLimiter,
     ) {
     }
 

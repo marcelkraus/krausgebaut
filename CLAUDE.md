@@ -373,6 +373,36 @@ Self-hosted Matomo (**SiteId 13**), inlined in `base.html.twig` behind
 stored on or read from the device and no consent banner is required. Covered by
 section 5 of the privacy policy.
 
+## Tests
+
+PHPUnit with browser-kit and css-selector, 47 cases in five files.
+
+- **`RoutingTest`** walks every route: each answers, the legal pages carry
+  `noindex`, the redirect routes redirect, and a case study exists only where
+  `references.json` says it does — a slug with `hatDetailseite: false` has to
+  answer 404, because that card links out instead.
+- **`ContentTest`** checks that every service and every reference reaches the
+  page, that both files stay alphabetical, and that the testimonials section
+  stays hidden while the file is empty. The featured service is the exception
+  the sorting rule allows: it leaves the tile grid for a panel of its own and
+  sits last in the file.
+- **`ContactControllerTest`** pins the form and all three silent drops
+  (honeypot, sub-three-second submission, tampered signature), the CSRF
+  refusal, the throttle and the transport failure — the last two by replacing
+  the service rather than by exhausting it.
+- **`SecurityHeadersListenerTest`** asserts the three headers on every public
+  path, because the listener fails silently.
+- **`AnalyticsTest`** keeps the tracker out of anything but production.
+
+**The rate limiter is injected as `RateLimiterFactoryInterface`**, not as the
+concrete class. That is what lets a test put a refusing factory in its place;
+with the concrete type the container refuses the replacement and the page
+answers 500, which is how the difference was found.
+
+```bash
+ddev exec php bin/phpunit
+```
+
 ## Deployment
 
 Production runs on **Uberspace 7** (`ssh kraus`, CentOS 7, PHP 8.5, Apache) at

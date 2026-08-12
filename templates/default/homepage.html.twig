@@ -63,7 +63,7 @@
                 ] %}
                 <dl class="mt-14 flex flex-wrap gap-3">
                     {% for fact in facts %}
-                        <div class="inline-flex items-baseline gap-2 rounded-lg border border-neutral-200 bg-white px-3.5 py-2.5 font-mono text-[0.6875rem] uppercase tracking-[0.15em]">
+                        <div class="inline-flex items-baseline gap-2 rounded-lg border border-neutral-200 bg-white px-3.5 py-2.5 font-mono text-[0.625rem] uppercase tracking-[0.15em]">
                             <dt class="text-neutral-500">{{ fact.label }}</dt>
                             <dd class="font-semibold text-neutral-900">{{ fact.value }}</dd>
                         </div>
@@ -188,14 +188,14 @@
                         </ul>
                     {% endif %}
                     {% if href %}
-                        <a href="{{ href }}"{% if not reference.hatDetailseite %} target="_blank" rel="noopener"{% endif %} class="group mt-6 inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-accent-on-light hover:text-accent-on-light-hover">
+                        <a href="{{ href }}"{% if not reference.hatDetailseite %} target="_blank" rel="noopener"{% endif %} class="group mt-6 inline-flex items-center gap-2 font-mono text-[0.625rem] uppercase tracking-[0.15em] text-accent-on-light hover:text-accent-on-light-hover">
                             {{ reference.hatDetailseite ? 'Zur Case Study' : 'Zur Website' }}
                             <span class="transition-transform group-hover:translate-x-1">{{ icons.icon(reference.hatDetailseite ? 'arrow' : 'external', 'h-3.5 w-3.5') }}</span>
                         </a>
                     {% else %}
                         {# Internal projects have nothing public to link to — the
                            slot keeps its place so the cards stay aligned. #}
-                        <p class="mt-6 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-neutral-500">Mehr auf Anfrage</p>
+                        <p class="mt-6 font-mono text-[0.625rem] uppercase tracking-[0.15em] text-neutral-500">Mehr auf Anfrage</p>
                     {% endif %}
                 </article>
             {% endfor %}
@@ -260,7 +260,7 @@
                             <blockquote class="flex-1 text-base leading-relaxed text-neutral-700">„{{ testimonial.zitat }}“</blockquote>
                             <figcaption class="mt-6 border-t border-neutral-200 pt-4">
                                 <p class="font-display text-sm font-bold text-neutral-900">{{ testimonial.name }}</p>
-                                <p class="mt-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-neutral-500">{{ testimonial.rolle }}{% if testimonial.firma is defined and testimonial.firma %} · {{ testimonial.firma }}{% endif %}</p>
+                                <p class="mt-0.5 font-mono text-[0.625rem] uppercase tracking-[0.15em] text-neutral-500">{{ testimonial.rolle }}{% if testimonial.firma is defined and testimonial.firma %} · {{ testimonial.firma }}{% endif %}</p>
                             </figcaption>
                         </figure>
                     {% endfor %}
@@ -303,7 +303,7 @@
                     <div class="mt-8 flex flex-col gap-4 rounded-xl border border-neutral-200 bg-white p-6 sm:flex-row sm:items-center sm:gap-6">
                         <span class="shrink-0 text-accent-on-light">{{ icons.icon('wifi', 'h-8 w-8') }}</span>
                         <div>
-                            <p class="font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-accent-on-light">IT vor Ort</p>
+                            <p class="font-mono text-[0.625rem] uppercase tracking-[0.15em] text-accent-on-light">IT vor Ort</p>
                             <p class="mt-1.5 text-sm leading-relaxed text-neutral-700">Ob FRITZ!Box, Software oder IT-Nothilfe – ich helfe auch persönlich in der Nachbarschaft.</p>
                         </div>
                     </div>

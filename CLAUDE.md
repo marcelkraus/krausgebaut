@@ -163,6 +163,19 @@ over a dark section (3.78:1); `neutral-600` carries every light ground. So:
 - **Typography:** `font-display` = `font-sans` = Aller (wordmark, headlines and
   body, which ties the type to the logo); `font-mono` = JetBrains Mono for
   eyebrows, labels and technical data.
+- **Body text is `neutral-600`; the legal pages are `neutral-700`.** The
+  declaration on `<body>` said `neutral-700` while every page overrode it, so
+  the stated base colour was the one colour the site did not use. It now names
+  the normal case. The darker step stays where it belongs — the long reading
+  texts of the imprint and the privacy policy, which set it explicitly.
+- **The mono scale has three trackings and no fourth.** `0.2em` marks a
+  heading role — the eyebrow and the footer's column headings. `0.15em` is
+  every other run of capitals: navigation, buttons, tags, micro labels, the
+  copyright line. Mixed-case mono carries **none**, because tracking is what
+  makes capitals legible and it only loosens everything else. Sizes: `text-sm`
+  in the mobile menu, `text-xs` in the normal case, `text-[0.625rem]` for a
+  micro label inside a card. There was an eleven-pixel step doing the same job
+  as the ten-pixel one; it is gone.
 - **Corners scale with the surface:** `rounded-[2px]` for the square markers,
   `rounded-md` for tags and badges, `rounded-lg` for buttons and fields,
   `rounded-xl` for cards and containers. A tag stands around 24 pixels tall,

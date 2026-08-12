@@ -211,30 +211,29 @@
 
     {# ── Ablauf (dark) ──────────────────────────────────────────── #}
     <section id="ablauf" class="border-y border-neutral-200 bg-neutral-950">
-        {# Eine Stufe flacher als die übrigen Abschnitte: Seit die Schritte ohne
-           Kasten auskommen, trägt dieser Block deutlich weniger Inhalt bei
-           gleicher Polsterung. Er bleibt trotzdem die dunkle Pause im
-           Rhythmus. #}
+        {# One step shallower than the other sections: since the steps do without
+           a box, this block carries noticeably less content at the same
+           padding. It stays the dark pause in the rhythm all the same. #}
         <div class="mx-auto max-w-6xl px-6 py-20 lg:px-8 lg:py-24">
             <div class="max-w-2xl">
                 {{ include('partials/_eyebrow.html.twig', { text: 'Ablauf', tone: 'dark' }) }}
                 <h2 class="mt-5 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">In drei Schritten zum Ergebnis</h2>
             </div>
 
-            {# Drei Schritte statt vier, mit demselben Takt wie bei der
-               Schwestermarke: Subjekt, Verb, Pointe. Konzeption und Kontakt
-               sind zusammengezogen, weil sie für den Kunden ein Gespräch
-               sind und keine zwei Termine. #}
+            {# Three steps rather than four, in the same beat as the sibling
+               brand: subject, verb, punchline. Conception and contact are
+               pulled together, because to a client they are one conversation
+               and not two appointments. #}
             <ol class="mt-14 grid gap-10 md:grid-cols-3">
                 {% set steps = [
                     { no: '01', title: 'Sie haben die Idee.', text: 'Ob ein fertiges Konzept, eine grobe Vorstellung oder nur ein Problem, das gelöst werden soll.', note: 'Sie schildern – ich höre zu.' },
                     { no: '02', title: 'Ich bin dran.', text: 'Ob Website, App oder Ihre IT vor Ort. Mit einem transparenten Angebot vorab und regelmäßigen Updates.', note: 'Ein Ansprechpartner – kein Team im Nebel.' },
                     { no: '03', title: 'Es läuft.', text: 'Eine saubere Übergabe mit Dokumentation, auf Wunsch bleibe ich mit einem Servicevertrag für Betrieb & Wartung an Bord.', note: 'Gebaut, übergeben – und betreut.' }
                 ] %}
-                {# Optik des gedruckten Posters der Schwestermarke: eine Linie
-                   über der Ziffer statt eines Kastens. Auf dem dunklen Grund
-                   trägt die Linie eine gedämpfte Weißstufe, damit sie die
-                   Trennung markiert, ohne die Ziffer zu überstrahlen. #}
+                {# The look of the sibling's printed poster: a rule above the
+                   numeral instead of a box. On the dark ground the rule takes
+                   a muted white so it marks the division without outshining
+                   the numeral it introduces. #}
                 {% for step in steps %}
                     <li class="border-t-2 border-white/25 pt-5">
                         <span class="font-mono text-2xl font-bold text-accent-on-dark">{{ step.no }}</span>
@@ -353,11 +352,11 @@
         // field so the visitor sees exactly what to fix.
         (function () {
             const form = document.querySelector('[data-error-focus]');
-            if (!form) {
+            if (form === null) {
                 return;
             }
             const field = document.getElementById('f_' + form.dataset.errorFocus);
-            if (field) {
+            if (field !== null) {
                 field.focus();
                 field.scrollIntoView({ block: 'center' });
             }

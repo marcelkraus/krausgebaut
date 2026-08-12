@@ -172,7 +172,7 @@ final class DefaultController extends AbstractController
         return $this->render('default/imprint.html.twig');
     }
 
-    #[Route('/datenschutz', name: 'app_privacy', methods: ['GET'])]
+    #[Route('/datenschutz', name: 'app_data_privacy', methods: ['GET'])]
     public function privacy(): Response
     {
         return $this->render('default/data-privacy.html.twig');

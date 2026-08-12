@@ -79,7 +79,6 @@
        measures 2.54:1 on the footer's neutral-900, so the marker there uses
        the brighter step; the papaya passes on that ground as it is
        (4.98:1 on the footer) and needs none. */
-    --color-brand-marcelkraus: var(--color-purple-700);
     --color-brand-marcelkraus-on-dark: var(--color-purple-400);
     --color-brand-krausgedruckt: var(--color-orange-600);
     --color-brand-krausgedruckt-hover: var(--color-orange-700);

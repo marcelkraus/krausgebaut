@@ -9,7 +9,8 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Adds a small set of hardening headers to every response.
+ * Adds a small set of hardening headers to every response. A hosting
+ * environment may override them — the server always has the last word.
  */
 #[AsEventListener(event: KernelEvents::RESPONSE)]
 final class SecurityHeadersListener

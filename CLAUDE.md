@@ -99,7 +99,7 @@ Each partial is the single source for its pattern: `_logo` (brand lockup),
 | `GET /kontakt-per-whats-app` | `app_contact_whats_app` | Redirect to WhatsApp |
 | `GET /bewerten` | `app_review` | Redirect to the Google review URL |
 | `GET /impressum` | `app_imprint` | Imprint (`noindex,follow`) |
-| `GET /datenschutz` | `app_privacy` | Privacy policy (`noindex,follow`) |
+| `GET /datenschutz` | `app_data_privacy` | Privacy policy (`noindex,follow`) |
 | `GET /robots.txt` | `app_robots` | robots (absolute sitemap URL) |
 | `GET /sitemap.xml` | `app_sitemap` | Sitemap (home + case studies) |
 

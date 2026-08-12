@@ -56,8 +56,10 @@ final class ContentTest extends WebTestCase
             ));
             $titel = array_column($eintraege, 'title');
             $sortiert = $titel;
-            setlocale(LC_COLLATE, 'de_DE.UTF-8');
-            usort($sortiert, static fn (string $a, string $b): int => strcoll($a, $b));
+            usort($sortiert, static fn (string $a, string $b): int => strcmp(
+                self::sortierschluessel($a),
+                self::sortierschluessel($b)
+            ));
 
             self::assertSame($sortiert, $titel, sprintf('%s is ordered by title', $datei));
         }
@@ -111,6 +113,24 @@ final class ContentTest extends WebTestCase
         self::assertSelectorTextContains('body', 'Ausgangslage');
         self::assertSelectorTextContains('body', 'Lösung');
         self::assertSelectorTextContains('body', 'Ergebnis');
+    }
+
+    /**
+     * German collation without depending on the machine it runs on.
+     *
+     * `strcoll` with a `de_DE` locale is the obvious way to do this and the
+     * wrong one: the locale is installed here and absent on a CI runner, where
+     * the comparison silently falls back to ASCII and puts every capital
+     * before every lower-case letter — which fails a file that is sorted the
+     * way a reader would sort it. Folding case and umlauts by hand needs no
+     * locale and no extension.
+     */
+    private static function sortierschluessel(string $titel): string
+    {
+        return strtolower(strtr($titel, [
+            'Ä' => 'A', 'Ö' => 'O', 'Ü' => 'U',
+            'ä' => 'a', 'ö' => 'o', 'ü' => 'u', 'ß' => 'ss',
+        ]));
     }
 
     /**

@@ -9,8 +9,7 @@
        under the logo in the footer. One source, so they cannot drift apart.
        Subpages override meta_description alone; the footer keeps naming the
        brand rather than the page. #}
-    {% block brand_description %}krausgebaut von Marcel Kraus: App- &amp; Web-Entwicklung, Schulungen &amp; Workshops und IT-Support vor Ort im Rhein-Erft-Kreis.{% endblock %}
-    <meta name="description" content="{% block meta_description %}{{ block('brand_description') }}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% block brand_description %}krausgebaut von Marcel Kraus: App- &amp; Web-Entwicklung, Schulungen &amp; Workshops und IT-Support vor Ort im Rhein-Erft-Kreis.{% endblock %}{% endblock %}">
     <title>{% block title %}krausgebaut von Marcel Kraus · Internet- & IT-Dienstleistungen aus Erftstadt bei Köln{% endblock %}</title>
 
     {# Favicons. Three files, all derived from the master artwork: the SVG scales

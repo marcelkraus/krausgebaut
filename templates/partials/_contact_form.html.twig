@@ -3,21 +3,21 @@
 {% import _self as field %}
 
 {% macro label(name, text, required) %}
-    <label for="f_{{ name }}" class="block font-mono text-xs uppercase tracking-[0.15em] text-neutral-600">{{ text }}{% if required %} <span class="text-accent-on-light">*</span>{% endif %}</label>
+    <label for="f_{{ name }}" class="block font-mono text-xs uppercase tracking-[0.15em] text-neutral-600">{{ text }}{% if required %} <span class="text-accent-on-light" aria-hidden="true">*</span>{% endif %}</label>
 {% endmacro %}
 
 {% macro input(name, text, old, errors, options) %}
     {% set options = options|default({}) %}
-    {% set err = errors[name] ?? null %}
-    {% set required = options.required ?? false %}
+    {% set error = errors[name]|default(null) %}
+    {% set required = options.required|default(false) %}
     <div>
         {{ _self.label(name, text, required) }}
-        <input type="{{ options.type|default('text') }}" id="f_{{ name }}" name="{{ name }}" value="{{ old[name] ?? '' }}"
+        <input type="{{ options.type|default('text') }}" id="f_{{ name }}" name="{{ name }}" value="{{ old[name]|default('') }}"
                {% if options.autocomplete is defined %}autocomplete="{{ options.autocomplete }}"{% endif %}
                {% if required %}aria-required="true"{% endif %}
-               class="mt-2 w-full rounded-lg border {{ err ? 'border-red-500' : 'border-neutral-200' }} bg-white px-4 py-3 text-sm text-neutral-900 {{ err ? 'focus:border-red-500' : 'focus:border-accent' }} focus:outline-2 focus:outline-offset-2 focus:outline-accent"
-               {% if err %}aria-invalid="true" aria-describedby="e_{{ name }}"{% endif %}>
-        {% if err %}<p id="e_{{ name }}" class="mt-1.5 font-mono text-xs text-red-600">{{ err }}</p>{% endif %}
+               class="mt-2 w-full rounded-lg border {{ error ? 'border-red-500' : 'border-neutral-200' }} bg-white px-4 py-3 text-sm text-neutral-900 {{ error ? 'focus:border-red-500' : 'focus:border-accent' }} focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+               {% if error %}aria-invalid="true" aria-describedby="e_{{ name }}"{% endif %}>
+        {% if error %}<p id="e_{{ name }}" class="mt-1.5 font-mono text-xs text-red-600">{{ error }}</p>{% endif %}
     </div>
 {% endmacro %}
 
@@ -51,7 +51,7 @@
         {{ field.label('message', 'Nachricht', true) }}
         <textarea id="f_message" name="message" rows="5" aria-required="true"
                   {% if errors.message is defined %}aria-invalid="true" aria-describedby="e_message"{% endif %}
-                  class="mt-2 w-full rounded-lg border {{ errors.message is defined ? 'border-red-500' : 'border-neutral-200' }} bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-500 {{ errors.message is defined ? 'focus:border-red-500' : 'focus:border-accent' }} focus:outline-2 focus:outline-offset-2 focus:outline-accent" placeholder="Erzählen Sie mir kurz von Ihrer Idee oder Ihrem Vorhaben.">{{ old.message ?? '' }}</textarea>
+                  class="mt-2 w-full rounded-lg border {{ errors.message is defined ? 'border-red-500' : 'border-neutral-200' }} bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-500 {{ errors.message is defined ? 'focus:border-red-500' : 'focus:border-accent' }} focus:outline-2 focus:outline-offset-2 focus:outline-accent" placeholder="Erzählen Sie mir kurz von Ihrer Idee oder Ihrem Vorhaben.">{{ old.message|default('') }}</textarea>
         {% if errors.message is defined %}<p id="e_message" class="mt-1.5 font-mono text-xs text-red-600">{{ errors.message }}</p>{% endif %}
     </div>
 

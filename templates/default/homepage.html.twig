@@ -183,7 +183,7 @@
                     {% if reference.stack is defined and reference.stack %}
                         <ul class="mt-5 flex flex-wrap gap-2">
                             {% for tag in reference.stack %}
-                                <li class="rounded-md bg-neutral-100 px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-neutral-600">{{ tag }}</li>
+                                <li class="{{ include('partials/_tag_class.html.twig', {}, with_context = false) }}">{{ tag }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}

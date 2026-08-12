@@ -1,0 +1,8 @@
+{# The stack tag as a bare class string. It appears once as a <li> in the
+   reference list and once as a <dd> child on the case study, so the two
+   cannot share an element — but they have to share the skin.
+
+   Emits no markup. Pull it with include(), hand it to `class`.
+   Takes no parameters — there is one tag, and it looks like this. The
+   accent-tinted variant is a different role and lives in _badge. #}
+{{- 'rounded-md bg-neutral-100 px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-neutral-600' -}}

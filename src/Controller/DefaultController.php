@@ -107,7 +107,7 @@ final class DefaultController extends AbstractController
         // Throttle per IP so a scraped token cannot be replayed into a flood.
         if ($this->contactFormLimiter->create($request->getClientIp() ?? 'anonymous')->consume(1)->isAccepted() === false) {
             return $this->renderContactErrors($request, [
-                'form' => 'Es sind zu viele Anfragen eingegangen. Bitte versuchen Sie es später noch einmal.',
+                'form' => 'Es sind zu viele Nachrichten eingegangen. Bitte versuchen Sie es später noch einmal.',
             ]);
         }
 
@@ -121,7 +121,7 @@ final class DefaultController extends AbstractController
                     ->from(new Address($this->contactFrom, 'krausgebaut von Marcel Kraus'))
                     ->to($this->contactTo)
                     ->replyTo(new Address($data->email, $data->name))
-                    ->subject(sprintf('Anfrage von %s', $data->name))
+                    ->subject(sprintf('Nachricht von %s', $data->name))
                     ->textTemplate('default/contact.txt.twig')
                     ->context([
                         'company' => $data->company,
@@ -133,7 +133,7 @@ final class DefaultController extends AbstractController
             );
         } catch (TransportExceptionInterface) {
             return $this->renderContactErrors($request, [
-                'form' => 'Die Anfrage konnte gerade nicht zugestellt werden. Bitte versuchen Sie es später noch einmal oder schreiben Sie mir per E-Mail.',
+                'form' => 'Die Nachricht konnte gerade nicht zugestellt werden. Bitte versuchen Sie es später noch einmal oder schreiben Sie mir per E-Mail.',
             ]);
         }
 

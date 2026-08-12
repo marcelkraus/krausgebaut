@@ -84,9 +84,10 @@ public/             css/, fonts/, images/, favicon.*, apple-touch-icon.png
 ```
 
 Each partial is the single source for its pattern: `_logo` (brand lockup),
-`_gear` (mark alone, `currentColor`, decorative), `_badge` (accent pill),
-`_eyebrow` (mono label with square marker), `_icons` (line-icon macro),
-`_contact_form`.
+`_gear` (mark alone, `currentColor`, decorative), `_badge` (the accent-tinted
+label), `_tag_class` (the neutral stack tag as a bare class string),
+`_button_class` (the button skin, in two sizes), `_eyebrow` (mono label with
+square marker), `_icons` (line-icon macro), `_contact_form`.
 
 ## Routing
 

@@ -41,7 +41,7 @@
         </dl>
 
         {% if reference.url is defined and reference.url %}
-            <a href="{{ reference.url }}" target="_blank" rel="noopener" class="group mt-6 inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">
+            <a href="{{ reference.url }}" target="_blank" rel="noopener" class="{{ include('partials/_button_class.html.twig', { size: 'compact' }, with_context = false) }} group mt-6">
                 Projekt besuchen
                 <span class="transition-transform group-hover:translate-x-1">{{ icons.icon('external', 'h-4 w-4') }}</span>
             </a>
@@ -70,7 +70,7 @@
                 <h2 class="font-display text-xl font-bold text-neutral-900">Sie haben etwas Ähnliches im Kopf?</h2>
                 <p class="mt-1.5 text-sm leading-relaxed text-neutral-600">Dann erzählen Sie mir davon. Ich bin gespannt.</p>
             </div>
-            <a href="{{ path('app_homepage') }}#kontakt" class="shrink-0 rounded-lg bg-accent px-6 py-3.5 text-center font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">Projekt anfragen</a>
+            <a href="{{ path('app_homepage') }}#kontakt" class="{{ include('partials/_button_class.html.twig', {}, with_context = false) }} shrink-0">Projekt anfragen</a>
         </div>
     </article>
 {% endblock %}

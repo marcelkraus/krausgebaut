@@ -47,7 +47,7 @@
                 <p class="mt-7 max-w-xl text-lg leading-relaxed text-neutral-600">krausgebaut, das ist Marcel Kraus – Softwareentwickler und IT-Dienstleister aus Erftstadt bei Köln.</p>
                 <p class="mt-4 max-w-xl text-lg leading-relaxed text-neutral-600">Von der Website über native iOS-Apps bis zur IT vor Ort: Ich bin Ihr Ansprechpartner.</p>
                 <div class="mt-10 flex flex-wrap items-center gap-4">
-                    <a href="#kontakt" class="rounded-lg bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">Jetzt anfragen</a>
+                    <a href="#kontakt" class="{{ include('partials/_button_class.html.twig', {}, with_context = false) }}">Jetzt anfragen</a>
                     <a href="#leistungen" class="group inline-flex items-center gap-2 px-2 py-3.5 font-mono text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-accent-on-light">
                         Leistungen ansehen
                         <span class="transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-4 w-4') }}</span>
@@ -114,7 +114,7 @@
                     </div>
                     <p class="mt-2 max-w-2xl text-base leading-relaxed text-neutral-600">{{ service.text }}</p>
                 </div>
-                <a href="#kontakt" class="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-accent px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">
+                <a href="#kontakt" class="{{ include('partials/_button_class.html.twig', { size: 'compact' }, with_context = false) }} group shrink-0">
                     Anfragen <span class="transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-4 w-4') }}</span>
                 </a>
             </div>

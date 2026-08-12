@@ -102,7 +102,7 @@
             </nav>
 
             <div class="col-start-3 flex items-center justify-self-end gap-3">
-                <a href="{{ path('app_homepage') }}#kontakt" class="inline-flex h-11 items-center gap-2 rounded-lg bg-accent px-4 font-mono text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover sm:px-5">
+                <a href="{{ path('app_homepage') }}#kontakt" class="{{ include('partials/_button_class.html.twig', { size: 'compact' }, with_context = false) }}">
                     <span class="sm:hidden">{{ icons.icon('mail', 'h-5 w-5') }}</span>
                     <span class="sr-only sm:not-sr-only">Jetzt anfragen</span>
                 </a>
@@ -120,7 +120,7 @@
                 {% for item in nav_items %}
                     <a href="{{ item.href }}" class="border-b border-neutral-100 py-3 font-mono text-sm uppercase tracking-[0.15em] text-neutral-600 hover:text-accent-on-light" data-menu-link>{{ item.label }}</a>
                 {% endfor %}
-                <a href="{{ path('app_homepage') }}#kontakt" class="mt-4 mb-3 rounded-lg bg-accent px-5 py-3 text-center font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white hover:bg-accent-hover" data-menu-link>Jetzt anfragen</a>
+                <a href="{{ path('app_homepage') }}#kontakt" class="{{ include('partials/_button_class.html.twig', {}, with_context = false) }} mt-4 mb-3 justify-center" data-menu-link>Jetzt anfragen</a>
             </nav>
         </div>
     </header>

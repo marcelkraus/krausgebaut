@@ -56,7 +56,7 @@
     </div>
 
     <div class="flex flex-wrap items-center gap-4 pt-2">
-        <button type="submit" class="rounded-lg bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover">Nachricht senden</button>
+        <button type="submit" class="{{ include('partials/_button_class.html.twig', {}, with_context = false) }}">Nachricht senden</button>
         <p class="font-mono text-xs text-neutral-600">Pflichtfelder <span class="text-accent-on-light">*</span></p>
     </div>
 

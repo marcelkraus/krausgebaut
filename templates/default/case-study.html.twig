@@ -57,7 +57,7 @@
             {% for chapter in chapters %}
                 {% if chapter.body %}
                     <section>
-                        {{ include('partials/_eyebrow.html.twig', { text: chapter.label }) }}
+                        {{ include('partials/_eyebrow.html.twig', { text: chapter.label, heading: 'h2' }) }}
                         <p class="mt-4 text-base leading-relaxed text-neutral-700">{{ chapter.body }}</p>
                     </section>
                 {% endif %}

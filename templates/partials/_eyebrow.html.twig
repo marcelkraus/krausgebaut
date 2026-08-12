@@ -5,14 +5,19 @@
 
    The tone is not decoration. The petrol measures 2.74:1 on a dark ground
    and misses AA there, so the dark tone carries the brighter step. The
-   sibling's papaya has the mirror problem and needs no lift on dark. #}
+   sibling's papaya has the mirror problem and needs no lift on dark.
+
+   `heading` turns the label into a heading element instead of a paragraph.
+   Pass it where the eyebrow is the only title a section has — otherwise
+   that section stays out of the heading outline entirely. #}
 {% set tone = tone|default('light') %}
+{% set element = heading|default(null) %}
 {% if tone == 'krausgedruckt' %}
-    <p class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-brand-krausgedruckt">
+    <{{ element|default('p') }} class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-brand-krausgedruckt">
         <span aria-hidden="true" class="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-brand-krausgedruckt"></span>{{ text }}
-    </p>
+    </{{ element|default('p') }}>
 {% else %}
-    <p class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] {{ tone == 'dark' ? 'text-accent-on-dark' : 'text-accent-on-light' }}">
+    <{{ element|default('p') }} class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] {{ tone == 'dark' ? 'text-accent-on-dark' : 'text-accent-on-light' }}">
         <span aria-hidden="true" class="inline-block h-2 w-2 shrink-0 rounded-[2px] {{ tone == 'dark' ? 'bg-accent-on-dark' : 'bg-accent' }}"></span>{{ text }}
-    </p>
+    </{{ element|default('p') }}>
 {% endif %}

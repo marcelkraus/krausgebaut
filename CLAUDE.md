@@ -2,20 +2,25 @@
 
 ## Overview
 
-Sales-facing business website for **krausgebaut** – the internet and IT
-services branch of Marcel Kraus's freelance work
-(https://www.krausgebaut.de). It presents the services, references and a
-contact path for acquiring clients. Positioned as *committed, personal,
-direct* – one contact person who builds himself, no agency speak.
+Sales-facing business website for **krausgebaut** — the internet and IT
+services branch of Marcel Kraus's freelance work (https://www.krausgebaut.de).
+It presents the services, references and a contact path for acquiring clients.
+Positioned as *committed, personal, direct*: one contact person who builds
+himself, no agency speak.
 
 German only, no internationalisation: one long homepage plus case studies and
 the two legal pages.
+
+It is one of three sites in a brand family, together with marcelkraus (the
+personal hub and curriculum vitae) and krausgedruckt (3D printing). Header and
+footer are the family bracket and are shared by construction — see *The family
+bracket* below.
 
 ## Technology stack
 
 - **Backend:** Symfony 8.1, PHP 8.4 (skeleton), Twig
 - **Styling:** Tailwind CSS 4 (standalone CLI) with the typography plugin
-- **Fonts:** self-hosted – Aller (display + body, static TTF), JetBrains Mono
+- **Fonts:** self-hosted — Aller (display + body, static TTF), JetBrains Mono
   (mono / technical labels, variable woff2)
 - **Form:** hand-rolled (no symfony/form) + symfony/validator +
   symfony/rate-limiter + CSRF
@@ -25,12 +30,12 @@ the two legal pages.
 - **Tests:** PHPUnit via symfony/test-pack
 - **Development:** ddev (apache-fpm, Node 22)
 
+**There is no database at all** — no Doctrine, no `DATABASE_URL`, and
+`omit_containers: [db]` in the ddev config so no container starts either.
+
 Deliberately **not** included: Doctrine, symfony/form, symfony/serializer,
-EasyAdmin, AssetMapper/Encore/Vite. **There is no database at all** — no
-Doctrine, no `DATABASE_URL`, and `omit_containers: [db]` in the ddev config so
-no container starts either. It used to run one because ddev ships it, and it
-declared a different MariaDB version than the sister project while never being
-touched.
+EasyAdmin, AssetMapper/Encore/Vite, and a custom error page — a 404 or a 405
+renders the plain Symfony page, as on both sibling sites.
 
 ## Development
 
@@ -42,7 +47,7 @@ ddev exec npm run dev                         # Tailwind, watch mode
 ddev exec php bin/console cache:clear
 ```
 
-The first `ddev start` needs sudo to add the hostname to `/etc/hosts` – run it
+The first `ddev start` needs sudo to add the hostname to `/etc/hosts` — run it
 in an interactive shell.
 
 **Rebuild Tailwind after every change to a template or to `input.css`.**
@@ -52,13 +57,16 @@ un-rebuilt stylesheet ships silently broken. `input.css` sets
 without that, Tailwind scans the whole tree and a stray word in a Markdown file
 turns into a CSS rule.
 
+**Never assemble a utility class from a variable.** Tailwind reads the
+templates as text, so `bg-{{ token }}` never reaches the build.
+
 ### Quality gates (before merging to main)
 
 ```bash
 ddev exec php bin/console lint:twig templates
 ddev exec php bin/console lint:yaml config
 ddev exec php bin/console lint:container
-find src -name '*.php' -exec ddev exec php -l {} \;
+ddev exec bash -c 'find src tests -name "*.php" -exec php -l {} \;'
 ddev exec php bin/phpunit
 ddev exec npm run build
 ```
@@ -96,91 +104,89 @@ Each partial is the single source for its pattern: `_logo` (brand lockup),
 
 ## Design system
 
-A light "spec-sheet" look – technical, precise, no dark mode.
+A light "spec-sheet" look — technical, precise, no dark mode.
 
-- **Colours:** the only chromatic colour is the petrol accent; everything else
-  is Tailwind's `neutral-*`, hairlines `neutral-200`. **No hex values in
-  templates** – use the tokens. The marker dots of the two outbound footer
-  links carry their own `brand-*` tokens, so foreign colours stay out of the
-  accent scale.
+### Colours
 
-  **One vocabulary, both brands.** The role is in the name, so the difference
-  between krausgebaut and krausgedruckt falls into the values and not into the
-  naming. The same five tokens exist over there under the same names.
+The only chromatic colour is the petrol accent; everything else is Tailwind's
+`neutral-*`, hairlines `neutral-200`. **No hex values in templates** — use the
+tokens. All tokens bind to `var(--color-…)` rather than to copied hex values,
+so the interface cannot drift from the palette.
 
-  | Token | Value | Role |
-  | --- | --- | --- |
-  | `accent` | `cyan-800` | the brand: surfaces, borders, markers, the mark — **never type** |
-  | `accent-on-light` | `cyan-800` | type on a light ground |
-  | `accent-on-dark` | `cyan-600` | type on a dark ground |
-  | `accent-hover` | `cyan-900` | hover of a filled surface |
-  | `accent-on-light-hover` | `cyan-900` | hover of type on a light ground |
+**One vocabulary, all three brands.** The role is in the name, so the
+difference between the sites falls into the values and not into the naming. The
+same five tokens exist on marcelkraus and krausgedruckt under the same names.
 
-  The petrol is a **dark** colour: it carries a light ground as it is (6.51:1)
-  and misses AA as type on a dark one (2.72:1), where it needs a brighter
-  step. The sibling's papaya has the mirror problem, which is why its tokens
-  hold different values under the same names. Two of the values coincide here
-  and that is fine — the names still say which rule they answer.
+| Token | Value | Role |
+| --- | --- | --- |
+| `accent` | `cyan-800` | the brand: surfaces, borders, markers, the mark — **never type** |
+| `accent-on-light` | `cyan-800` | type on a light ground (6.51:1) |
+| `accent-on-dark` | `cyan-600` | type on a dark ground |
+| `accent-hover` | `cyan-900` | hover of a filled surface |
+| `accent-on-light-hover` | `cyan-900` | hover of type on a light ground |
 
-  The naming makes the rule checkable: **`text-accent` without a role suffix
-  must not appear anywhere.** The dark `Ablauf` block shipped with type at
-  2.72:1 precisely because there was no name for the case.
+The petrol is a **dark** colour: it carries a light ground as it is and misses
+AA as type on a dark one (2.72:1), where it needs the brighter step. Two of the
+values coincide here and that is fine — the names still say which rule they
+answer.
 
-  The hover of a filled surface always moves in whichever direction keeps its
-  label readable. Here the label is white, so the fill **darkens**; on the
-  sibling the label is near-black and the fill lightens.
+The naming makes the rule checkable: **`text-accent` without a role suffix must
+not appear anywhere.**
 
-  The footer is a dark ground, so **every marker dot there carries an
-  `-on-dark` step** — the site's own three included. They used to be plain
-  `accent`, which measures 2.72:1 against `neutral-900` and was effectively a
-  dot nobody could see.
+The hover of a filled surface always moves in whichever direction keeps its
+label readable. Here the label is white, so the fill **darkens**; on
+krausgedruckt the label is near-black and the fill lightens.
 
-  **The two foreign brands.** Bound to the palette, never copied as hex, so
-  they cannot drift from it. A role step exists only where the base value
-  fails, so a missing step is information.
+**The footer is a dark ground, so every marker dot there carries an `-on-dark`
+step** — the site's own three included.
 
-  | Token | Value | Measured | Used for |
-  | --- | --- | --- | --- |
-  | `brand-marcelkraus` | `purple-700` | 2.53:1 on `neutral-900` | the brand, not for the dark footer |
-  | `brand-marcelkraus-on-dark` | `purple-400` | 6.42:1 | the footer marker dot |
-  | `brand-krausgedruckt` | `orange-600` | 5.50:1 on `neutral-900` | marker dot, eyebrow and the cross-promo band |
-  | `brand-krausgedruckt-hover` | `orange-700` | – | hover of the cross-promo button |
+**The two foreign brands** carry their own tokens, so their colours stay out of
+the accent scale. A role step exists only where the base value fails, so a
+missing step is information.
 
-  **marcelkraus is purple**, not the olive it used to be: the personal site
-  now carries the family logo, and its left square — the employment career —
-  is that purple. Like the petrol it is a dark colour and cannot be seen on
-  the dark footer, hence the brighter step for the marker there.
+| Token | Value | Measured | Used for |
+| --- | --- | --- | --- |
+| `brand-marcelkraus` | `purple-700` | 2.53:1 on `neutral-900` | the brand, not for the dark footer |
+| `brand-marcelkraus-on-dark` | `purple-400` | 6.42:1 | the footer marker dot |
+| `brand-krausgedruckt` | `orange-600` | 5.50:1 on `neutral-900` | marker dot, eyebrow and the cross-promo band |
+| `brand-krausgedruckt-hover` | `orange-700` | – | hover of the cross-promo button |
+
+**The grey ramp needs the same care as the accent and has no names for it.**
+`neutral-400` carries dark grounds and fails on white (2.59:1); `neutral-500`
+passes on white but not on `neutral-100`, and not against a translucent header
+over a dark section (3.79:1); `neutral-600` carries every light ground. So:
+`neutral-600` for labels on light, `neutral-400` for secondary text on dark.
+
+### Type, shapes, container
+
 - **Typography:** `font-display` = `font-sans` = Aller (wordmark, headlines and
   body, which ties the type to the logo); `font-mono` = JetBrains Mono for
   eyebrows, labels and technical data.
-- **Corners:** soft on purpose – `rounded-lg` for buttons, fields and tags,
+- **Corners:** soft on purpose — `rounded-lg` for buttons, fields and tags,
   `rounded-xl` for cards and containers.
 - **Cards are free-standing:** `rounded-xl border border-neutral-200 bg-white`
   in a `gap-6` grid. Deliberately **no** hairline (`gap-px`) grids.
 - **Eyebrow and badge always come from their partial**, never hand-written.
   The badge is driven by the optional `tag` field in the content JSON.
-- **Principle cards** (`Arbeitsweise` section) close on a second paragraph
-  holding a one-word promise, preceded by an em dash in the accent colour – the
-  same marker language as the required-field asterisk in the form. The dash
-  comes from the template and the word from the `note` key, so the copy stays
-  free of inline markup.
-- **Hero:** light (`neutral-50`), no photo, the gear oversized and cropped off
-  the right edge as texture, key facts in free-standing chips.
-- **Section rhythm:** light → `neutral-100` → light → dark (`Ablauf`) → light
-  → dark cross-promo. The one dark block arrives late on purpose. `Leistungen`
-  uses a sticky title column on the left and cards on the right; every other
-  section stacks its heading above the content.
-- **Container:** `max-w-6xl mx-auto px-6 lg:px-8`; legal pages and case
-  studies `max-w-3xl`. The legal pages clear the fixed header themselves
+- **Container:** `max-w-6xl mx-auto px-6 lg:px-8`; legal pages and case studies
+  `max-w-3xl`. The legal pages clear the fixed header themselves
   (`pt-36 lg:pt-40`) because there is no padding on `main`; those numbers are
-  the header height plus the same rhythm the sibling gets from `main.pt-20`,
-  so the two sites' legal pages sit at identical measurements. Changing one
-  without the other is what put them 16 pixels apart.
-- **Section headings on the legal pages** are `font-display`, not mono. Mono
-  is reserved for labels and technical data; a heading set in it ended up
-  smaller and quieter than the body text it introduced.
+  the header height plus the same rhythm the sibling gets from `main.pt-20`, so
+  all three sites' legal pages sit at identical measurements. Changing one
+  without the others is what put them 16 pixels apart.
+- **Section headings on the legal pages** are `font-display`, not mono. Mono is
+  reserved for labels and technical data; a heading set in it ended up smaller
+  and quieter than the body text it introduced.
 - **Tap targets** in the footer carry `py-2.5` (contact rows) and `py-2` (the
   legal links), so nothing there falls below the 44 pixel mark on a phone.
+
+### The family bracket
+
+**Header and footer are binding.** Position, measurements, grid and behaviour
+stay identical across all three sites; the content of the lists does not.
+Measured at 1440 px: header grid x=144 w=1152 h=80, logo x=176 w=160 h=36,
+navigation x=360, footer columns at 176 / 649 / 981.
+
 - **Header:** a three-column grid, not a flex row. The fixed first column
   (`lg:grid-cols-[10rem_1fr_auto]`) starts at `lg`, where the navigation is
   visible and the shared edge is actually perceived; below that the grid is
@@ -188,92 +194,117 @@ A light "spec-sheet" look – technical, precise, no dark mode.
   needs less pushed the actions off a 320 pixel screen, which WCAG 1.4.10
   forbids. In a flex row the navigation is squeezed between logo and actions and
   its starting edge follows the width of its own labels — which puts it in a
-  different place than on the sibling site. The fixed first column gives both
-  brands the same edge. The enquiry button stays visible on a phone and
-  shrinks to its icon there; hiding it below `sm` left the whole page without
-  a call to action on every phone.
+  different place than on the sibling sites. The fixed first column gives all
+  three brands the same edge. The enquiry button stays visible on a phone and
+  shrinks to its icon there; hiding it below `sm` left the whole page without a
+  call to action on every phone.
+- **The mobile menu** closes on the burger, on Escape (focus returns to the
+  burger), on a link, on a tap outside and when the viewport grows to desktop.
+  The burger swaps to a cross while open — an `aria-label` alone leaves sighted
+  users without a signal.
+- **The focus ring** follows the same rule as type: on the dark sections it
+  takes the brighter step, because the accent misses the 3:1 that WCAG 1.4.11
+  asks of an indicator.
+
+### The body
+
+- **Hero:** light (`neutral-50`), no photo, the gear oversized and cropped off
+  the right edge as texture, key facts in free-standing chips.
+- **Section rhythm:** light → `neutral-100` → light → dark (`Ablauf`) → light →
+  dark cross-promo. The one dark block arrives late on purpose. `Leistungen`
+  uses a sticky title column on the left and cards on the right; every other
+  section stacks its heading above the content.
+- **Principle cards** (`Arbeitsweise` section) close on a second paragraph
+  holding a one-word promise, preceded by an em dash in the accent colour — the
+  same marker language as the required-field asterisk in the form. The dash
+  comes from the template and the word from the `note` key, so the copy stays
+  free of inline markup.
 - **Voice:** first person singular ("ich").
 - **Place names carry two roles and must not be mixed.** *Where I am* is
-  "Erftstadt bei Köln" – title, meta description, hero lead, JSON-LD and the
-  imprint. *How far I travel* is "Rhein-Erft-Kreis" – the region chip, the
+  "Erftstadt bei Köln" — title, meta description, hero lead, JSON-LD and the
+  imprint. *How far I travel* is "Rhein-Erft-Kreis" — the region chip, the
   footer and the contact panel. The town has to stay, because search engines
   match it against the imprint address; "bei Köln" makes it placeable for
   everyone outside the district.
-- **Positioning:** a client-facing sales site, **not** a job application or CV.
-  Keep employment-framing out of the copy (availability-for-hire, remote /
-  on-site flexibility, "seeking"). Speak to clients buying a service.
-- **Brand mark:** the logo in `_logo.html.twig` is gear-brace and wordmark as
-  **one lockup** – the brace embraces the "k", so the two must not be split.
-  The wordmark is outlined, so the logo carries no font dependency. Colours
-  come from `fill-*` classes: `fill-accent` for gear and "kraus",
-  `fill-neutral-900` for "gebaut"; `mono: true` renders everything in
-  `fill-current`. **The wordmark must stay outlined.** A master that keeps it
-  as `<text>` carries a `font-family` and therefore a dependency the logo is
-  not allowed to have — it would fall back to a generic sans wherever Aller is
-  not present, and the mark is the one thing on the page that has to be exact.
-  A curve export is the requirement, not a compromise.
+- **Positioning:** a client-facing sales site, **not** a job application or
+  curriculum vitae. Keep employment-framing out of the copy
+  (availability-for-hire, remote / on-site flexibility, "seeking"). Speak to
+  clients buying a service; the curriculum vitae is marcelkraus.
+
+### Brand mark
+
+The logo in `_logo.html.twig` is gear-brace and wordmark as **one lockup** —
+the brace embraces the "k", so the two must not be split. Colours come from
+`fill-*` classes: `fill-accent` for gear and "kraus", `fill-neutral-900` for
+"gebaut"; `mono: true` renders everything in `fill-current`.
+
+**The wordmark must stay outlined.** A master that keeps it as `<text>` carries
+a `font-family` and therefore a dependency the logo is not allowed to have — it
+would fall back to a generic sans wherever Aller is absent, and the mark is the
+one thing on the page that has to be exact. A curve export is the requirement,
+not a compromise.
 
 Master artwork is **not** kept in the repository. Marcel supplies it on demand,
 and every shipped asset is derived from it.
 
 ### Favicons
 
-Three files at the web root, all derived from the master artwork – a petrol
+Three files at the web root, all derived from the master artwork — a petrol
 tile carrying the white gear:
 
 | File | Role |
 |------|------|
-| `favicon.svg` | primary – scales to any size a browser asks for |
+| `favicon.svg` | primary — scales to any size a browser asks for |
 | `favicon.ico` | 16 + 32 px; also answers the implicit `/favicon.ico` request browsers make without a `<link>` |
 | `apple-touch-icon.png` | 180×180, iOS home screen |
 
 The SVG **must** keep its `width`/`height` attributes. Without them it has no
 intrinsic size, so the browser rasterises it into a default box and scales that
-into the tab slot, which puts a pale rim around the tile. When regenerating the
-rasters, check every file for a fully opaque, single-colour border.
+into the tab slot, which puts a pale rim around the tile. Every generated file
+is checked for a fully opaque, single-colour border before it ships.
 
 The tile is `#005F78`, taken verbatim from the master — and that is exactly
 what the `accent` token resolves to. **Artwork and palette agree to the digit,
 and they have to stay that way.** Icons follow the artwork, the interface
 follows the palette, and the two must not disagree; when the artwork changes,
-the three icon files are re-derived from it rather than edited.
+the icon files are re-derived from it rather than edited.
 
 ## Content
 
 `config/content/*.json` is read by `DefaultController::loadContent()` (missing
 or malformed → empty list). Editing content needs no code change.
 
-- **services.json** – ordered alphabetically by `title`: `key` (stable
+- **services.json** — ordered alphabetically by `title`: `key` (stable
   identifier, not rendered), `title`, `text`, `icon` (a name from `_icons`),
   optional `tag` (badge; `Fokus` marks the two lead services). An entry with
   `feature: true` is lifted out of the tile grid into a set-apart panel below
   it.
-- **references.json** – ordered alphabetically by `title`: `slug`, `title`,
+- **references.json** — ordered alphabetically by `title`: `slug`, `title`,
   `kunde`, `kategorie`, `summary`, `hatDetailseite` (bool), optional `stack[]`
-  (kept alphabetical – the file order is the rendered order), `url` and `tag`.
+  (kept alphabetical — the file order is the rendered order), `url` and `tag`.
   With `hatDetailseite` the card links to the internal case study and the entry
   carries its body (`rolle`, `ausgangslage`, `loesung`, `ergebnis`); otherwise
-  it links out to `url`. An entry with neither renders `Mehr auf Anfrage` in
-  the link slot, so the cards stay aligned. To withdraw a reference, delete the
-  entry – there is deliberately no visibility flag, because an unused switch is
+  it links out to `url`. An entry with neither renders `Mehr auf Anfrage` in the
+  link slot, so the cards stay aligned. To withdraw a reference, delete the
+  entry — there is deliberately no visibility flag, because an unused switch is
   a switch that rots.
-- **testimonials.json** – `zitat`, `name`, `rolle`, `firma`. The section
-  renders **only when the array is non-empty**; never publish placeholder
-  quotes.
+- **testimonials.json** — `zitat`, `name`, `rolle`, `firma`. The section renders
+  **only when the array is non-empty**; never publish placeholder quotes.
 
 ## Contact form
 
-Hand-rolled, handled in `DefaultController::contact()`.
+Hand-rolled, handled in `DefaultController::contact()` — the same shape as on
+both sibling sites, so a submission takes one path through the family.
 
 - Data → `App\Dto\ContactRequest`, validated with symfony/validator (German
   messages). Fields: name, e-mail, company, phone, message; required are name,
-  e-mail and message. Errors keep the **first** violation per field, because
-  the constraints are written in order of relevance. There is deliberately no
-  subject select – the intent comes from the message, and the mail subject is
+  e-mail and message. Errors keep the **first** violation per field, because the
+  constraints are written in order of relevance. There is deliberately no
+  subject select — the intent comes from the message, and the mail subject is
   `Anfrage von {Name}`.
 - **One required-marker, not two:** the asterisk on the label is the single
   signal (`aria-required` alongside it, plus the `Pflichtfelder *` legend).
-  Optional fields carry no marker and no `optional` placeholder – a placeholder
+  Optional fields carry no marker and no `optional` placeholder — a placeholder
   is the wrong carrier for semantics, it disappears on the first keystroke.
 - **Spam protection without a captcha:** a hidden honeypot field (`website`)
   plus a signed, time-boxed timestamp (`ts`/`ts_sig`, HMAC over
@@ -288,15 +319,15 @@ Hand-rolled, handled in `DefaultController::contact()`.
 - **Rate limiting:** `contact_form`, sliding window, 5/hour per IP.
 - **CSRF** enabled, token `contact`.
 - Success ⇒ mail to `CONTACT_TO` (reply-to = sender), PRG redirect to
-  `/#kontakt` with flash `contact_success`. Errors ⇒ home re-renders with
-  status 422, per-field errors, old input and the first invalid field name
-  (`contact_focus`); inline JS focuses it.
-- **The address never appears in the markup.** The footer offers an E-Mail
-  and a WhatsApp entry, but both point at a route that answers with a
-  redirect; the `mailto:` never reaches the page. The address therefore never sits in the page,
-  which is the whole point of the rule; the imprint and the privacy policy
-  still show `mail(at)krausgebaut(dot)de` as plain, unlinked text. Do not
-  reintroduce a `mailto:` written into the markup.
+  `/#kontakt` with flash `contact_success`. Errors ⇒ home re-renders with status
+  422, per-field errors, old input and the first invalid field name
+  (`contact_focus`); inline JS focuses it. The error border stays red while the
+  field has focus, so the marking does not disappear at the moment it is needed.
+- **The address never appears in the markup.** The footer offers an E-Mail and a
+  WhatsApp entry, but both point at a route that answers with a redirect; the
+  `mailto:` never reaches the page. The imprint and the privacy policy show
+  `mail(at)krausgebaut(dot)de` as plain, unlinked text. Do not reintroduce a
+  `mailto:` written into the markup.
 
 ## SEO / meta
 
@@ -309,15 +340,15 @@ in the sitemap; legal pages are `noindex`.
 The sharing image is a finished asset, not a build product. Should it ever be
 redrawn: white, the logo lockup with the `Internet- & IT-Dienstleistungen`
 eyebrow on the left, domain and location as a mono line at the bottom, and the
-gear oversized and cropped off the right edge in **solid** accent. Type is
-sized for a chat card around 320 px wide rather than for the canvas – which is
-why the mono lines sit well above their on-site sizes and why the gear is
-opaque instead of a tint.
+gear oversized and cropped off the right edge in **solid** accent. Type is sized
+for a chat card around 320 px wide rather than for the canvas — which is why the
+mono lines sit well above their on-site sizes and why the gear is opaque instead
+of a tint.
 
 ## Analytics
 
 Self-hosted Matomo (**SiteId 13**), inlined in `base.html.twig` behind
-`{% if app.environment == 'prod' %}` – dev and test never track. Cookieless
+`{% if app.environment == 'prod' %}` — dev and test never track. Cookieless
 (`disableCookies`) with the visitor IP anonymised server-side, so nothing is
 stored on or read from the device and no consent banner is required. Covered by
 section 5 of the privacy policy.
@@ -347,15 +378,14 @@ server needs no npm run. The reset is hard, but `.env.local`, `vendor/` and
 `var/` are ignored and survive it.
 
 The cache is removed rather than cleared, and that is not a detail:
-`cache:clear` loads the existing compiled container before it replaces it, so
-a release that drops a bundle dies on a class that no longer exists. It has
-happened once in the sister project, when its anti-spam bundle went. The
-script also runs under `set -euo pipefail`, so a failed `composer install` is
-not followed by a cache rebuild against half-installed dependencies.
+`cache:clear` loads the existing compiled container before it replaces it, so a
+release that drops a bundle dies on a class that no longer exists. The script
+runs under `set -euo pipefail`, so a failed `composer install` is not followed
+by a cache rebuild against half-installed dependencies.
 
 **Repository access.** The server authenticates with a per-repository **deploy
 key**. Deploy keys are bound to one repository, and since they all live on
-`github.com` the host name cannot tell them apart – so `~/.ssh/config` gives the
+`github.com` the host name cannot tell them apart — so `~/.ssh/config` gives the
 project an alias and the remote URL names the alias instead of the real domain:
 
 ```
@@ -371,13 +401,13 @@ wrong one first burns the single authentication attempt a deploy key allows.
 
 **`.env.local`** (mode 600, never committed) holds `APP_ENV=prod`,
 `APP_DEBUG=0`, a generated `APP_SECRET`, `CONTACT_TO`, `CONTACT_FROM`,
-`DEFAULT_URI=https://www.krausgebaut.de` and the mailer DSN below. The
-committed `.env` carries the real addresses as defaults, matching the sibling
-project: `mail@krausgebaut.de` as the recipient, `noreply@krausgebaut.de` as
-the sender. They are no secret — the mailto redirect hands the recipient to
-anyone who follows it — and a placeholder that has to be replaced on every
-machine is a step that gets forgotten. What stays out of the repository is
-`.env.local`, which is where production overrides them.
+`DEFAULT_URI=https://www.krausgebaut.de` and the mailer DSN below. The committed
+`.env` carries the real addresses as defaults, matching the sibling projects:
+`mail@krausgebaut.de` as the recipient, `noreply@krausgebaut.de` as the sender.
+They are no secret — the mailto redirect hands the recipient to anyone who
+follows it — and a placeholder that has to be replaced on every machine is a
+step that gets forgotten. What stays out of the repository is `.env.local`,
+which is where production overrides them.
 
 **Mail.** Delivery goes through the local MTA; the SPF record includes
 `spf.uberspace.de`, so no SMTP credentials are needed. `krausgebaut.de` carries
@@ -389,8 +419,9 @@ DSN below:
   pipe mode.
 - The command **must be URL-encoded** inside the DSN. With literal spaces the
   query string is mangled and the mailer fails with `Unsupported sendmail
-  command flags`, surfacing as a bare 500 because Apache replaces the Symfony
-  error page.
+  command flags`. The contact form catches the transport exception, so the
+  visitor gets a readable message — but the mail is still lost, so the DSN has
+  to be right.
 
 ```
 MAILER_DSN="sendmail://default?command=%2Fusr%2Fsbin%2Fsendmail%20-t%20-i"
@@ -403,8 +434,8 @@ MAILER_DSN="sendmail://default?command=%2Fusr%2Fsbin%2Fsendmail%20-t%20-i"
 ## Logging
 
 Production logs into a **rotating file** under `var/log` (14 days, 7 for
-deprecations) instead of the recipe's `php://stderr`, which is not readable
-from the Uberspace account and would leave an error without a trace.
+deprecations) instead of the recipe's `php://stderr`, which is not readable from
+the Uberspace account and would leave an error without a trace.
 `fingers_crossed` at `action_level: error` keeps a normal request silent and
 delivers an error together with the requests that led up to it. 404 and 405 are
 excluded.
@@ -415,14 +446,14 @@ excluded.
 
 `App\EventListener\SecurityHeadersListener` sets `X-Content-Type-Options:
 nosniff`, `Referrer-Policy: strict-origin-when-cross-origin` and
-`X-Frame-Options: DENY` on every main response. No CSP – all JS is inline and
+`X-Frame-Options: DENY` on every main response. No CSP — all JS is inline and
 would need nonces.
 
 ## Code conventions
 
 - **Comments, identifiers and this documentation are English.** Visible site
   content is German, with correct German quotation marks „…“.
-- **No hex colour values in templates** – use the design tokens. Standalone
+- **No hex colour values in templates** — use the design tokens. Standalone
   asset files such as `favicon.svg` may carry hex.
 
 ## Environment variables
@@ -440,7 +471,11 @@ would need nonces.
 
 ## Open points
 
-1. Add real reference screenshots (optional `image` field).
-2. Publish the testimonials section only with real, attributed quotes.
-3. The homepage `<title>` is 85 characters and the meta description 219, so
+1. **Reference cards carry no images.** Neither `references.json` nor the card
+   template knows an `image` field. Two usable screenshots exist (OwnYard and
+   krausgedruckt); six of the eight references have none, and two illustrated
+   cards next to six empty ones look worse than none at all.
+2. **The testimonials section stays hidden** until there are real, attributed
+   quotes.
+3. **The homepage `<title>` is 85 characters and the meta description 219**, so
    both get truncated in search results. Deliberately left as is.

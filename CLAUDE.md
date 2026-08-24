@@ -466,7 +466,7 @@ wrong one first burns the single authentication attempt a deploy key allows.
 `APP_DEBUG=0`, a generated `APP_SECRET`, `CONTACT_TO`, `CONTACT_FROM`,
 `DEFAULT_URI=https://www.krausgebaut.de` and the mailer DSN below. The committed
 `.env` carries the real addresses as defaults, matching the sibling projects:
-`mail@krausgebaut.de` as the recipient, `noreply@krausgebaut.de` as the sender.
+`mail@krausgebaut.de` as the recipient, `no-reply@krausgebaut.de` as the sender.
 They are no secret — the mailto redirect hands the recipient to anyone who
 follows it — and a placeholder that has to be replaced on every machine is a
 step that gets forgotten. What stays out of the repository is `.env.local`,

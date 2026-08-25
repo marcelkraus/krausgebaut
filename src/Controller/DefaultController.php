@@ -57,7 +57,7 @@ final class DefaultController extends AbstractController
             throw $this->createNotFoundException('Referenz nicht gefunden.');
         }
 
-        return $this->render('default/case-study.html.twig', ['reference' => $reference]);
+        return $this->render('content/case-study.html.twig', ['reference' => $reference]);
     }
 
     #[Route('/kontakt', name: 'app_contact', methods: ['POST'])]
@@ -122,7 +122,7 @@ final class DefaultController extends AbstractController
                     ->to($this->contactTo)
                     ->replyTo(new Address($data->email, $data->name))
                     ->subject(sprintf('Nachricht von %s', $data->name))
-                    ->textTemplate('default/contact.txt.twig')
+                    ->textTemplate('content/contact.txt.twig')
                     ->context([
                         'company' => $data->company,
                         'emailAddress' => $data->email,
@@ -169,13 +169,13 @@ final class DefaultController extends AbstractController
     #[Route('/impressum', name: 'app_imprint', methods: ['GET'])]
     public function imprint(): Response
     {
-        return $this->render('default/imprint.html.twig');
+        return $this->render('content/imprint.html.twig');
     }
 
     #[Route('/datenschutz', name: 'app_data_privacy', methods: ['GET'])]
     public function privacy(): Response
     {
-        return $this->render('default/data-privacy.html.twig');
+        return $this->render('content/data-privacy.html.twig');
     }
 
     #[Route('/robots.txt', name: 'app_robots', methods: ['GET'])]
@@ -247,7 +247,7 @@ final class DefaultController extends AbstractController
     {
         $timestamp = (string) time();
 
-        $response = $this->render('default/homepage.html.twig', array_merge([
+        $response = $this->render('content/homepage.html.twig', array_merge([
             'services' => $this->loadContent('services'),
             'references' => $this->loadContent('references'),
             'testimonials' => $this->loadContent('testimonials'),

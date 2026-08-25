@@ -116,14 +116,26 @@ final class RoutingTest extends WebTestCase
         }
     }
 
-    public function testTheLegalPagesShowTheObfuscatedAddress(): void
+    /**
+     * The mailbox is a mandatory disclosure, so it has to be readable — and it
+     * is hidden from a harvester by a decoy that only the markup carries. Both
+     * halves are asserted: drop the decoy and the obfuscation is gone, drop
+     * the plain address and the disclosure is.
+     */
+    public function testTheLegalPagesSpellTheMailboxOutBehindADecoy(): void
     {
         $client = static::createClient();
 
         foreach (['/impressum', '/datenschutz'] as $path) {
             $client->request('GET', $path);
+            $inhalt = (string) $client->getResponse()->getContent();
 
-            self::assertSelectorTextContains('body', 'mail(at)krausgebaut(dot)de');
+            self::assertStringContainsString(
+                'mail+legal@<span style="display:none" aria-hidden="true">nospam.</span>krausgebaut.de',
+                $inhalt,
+                $path,
+            );
+            self::assertStringNotContainsString('mail(at)', $inhalt, $path);
         }
     }
 

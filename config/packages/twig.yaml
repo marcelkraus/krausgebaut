@@ -1,4 +1,7 @@
 twig:
+    globals:
+        contact_email_address: '%app.contact_email_address%'
+        legal_email_address: '%app.legal_email_address%'
     file_name_pattern: '*.twig'
 
 when@test:

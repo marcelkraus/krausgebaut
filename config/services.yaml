@@ -11,6 +11,10 @@ parameters:
     # routes, so a changed address is one edit in one place — the sibling
     # project keeps the same list.
     app.contact_email_address: 'mail@krausgebaut.de'
+    # Only the imprint and the privacy policy show an address, and they show
+    # this one: whatever is harvested from a legal page arrives on its own
+    # tag and can be filtered without touching the mailbox.
+    app.legal_email_address: 'mail+legal@krausgebaut.de'
     app.whats_app_url: 'https://wa.me/message/TKVKBR7RPHA7B1'
 
 services:

@@ -345,9 +345,13 @@ both sibling sites, so a submission takes one path through the family.
   field has focus, so the marking does not disappear at the moment it is needed.
 - **The address never appears in the markup.** The footer offers an E-Mail and a
   WhatsApp entry, but both point at a route that answers with a redirect; the
-  `mailto:` never reaches the page. The imprint and the privacy policy show
-  `mail(at)krausgebaut(dot)de` as plain, unlinked text. Do not reintroduce a
-  `mailto:` written into the markup.
+  `mailto:` never reaches the page. The imprint and the privacy policy render
+  `partials/_legal_mail_address.html.twig`: the plus-addressed mailbox
+  `mail+legal@krausgebaut.de` in plain, unlinked text, followed by a decoy hidden
+  with an inline style, so a harvester reading the markup carries off an
+  address that does not exist. The plus tag appears on those two pages only –
+  what arrives on it came from a legal page and can be filtered on its own.
+  Do not reintroduce a `mailto:` written into the markup.
 
 ## SEO / meta
 

@@ -1,7 +1,8 @@
 # The quality gates from CLAUDE.md, run by a machine instead of by hand.
 #
-# There is deliberately no deployment step: rolling out stays a decision, and
-# `bin/deploy` on the Uberspace is where that decision is carried out.
+# The rollout is the second job below. It waits for the gates, runs only on a
+# push to `main`, and reaches the Uberspace with a key that is restricted
+# there to exactly one command.
 name: Quality gates
 
 on:

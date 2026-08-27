@@ -163,7 +163,7 @@ final class DefaultController extends AbstractController
     #[Route('/bewerten', name: 'app_review', methods: ['GET'])]
     public function review(): Response
     {
-        return $this->redirect($_SERVER['GOOGLE_REVIEW_URL']);
+        return $this->redirect($this->getParameter('app.google_review_url'));
     }
 
     #[Route('/impressum', name: 'app_imprint', methods: ['GET'])]

@@ -320,7 +320,7 @@
                             </div>
                         </div>
                     {% else %}
-                        {{ include('partials/_contact_form.html.twig', { errors: contact_errors, old: contact_old, ts: contact_ts, ts_sig: contact_ts_sig, focus: contact_focus }) }}
+                        {{ include('partials/_contact_form.html.twig', { errors: contact_errors, old: contact_old, contact_timestamp: contact_timestamp, contact_timestamp_signature: contact_timestamp_signature, focus: contact_focus }) }}
                     {% endif %}
                 </div>
             </div>

@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * The JSON content files reach the page, and the rules the files are kept
- * under hold — alphabetical order, and a testimonials section that stays
+ * under hold – alphabetical order, and a testimonials section that stays
  * hidden until there is something real to show.
  */
 final class ContentTest extends WebTestCase
@@ -46,7 +46,7 @@ final class ContentTest extends WebTestCase
     public function testServicesAndReferencesAreKeptAlphabetical(): void
     {
         // The file order is the rendered order, so the sorting rule is not a
-        // matter of taste here — it decides what a visitor sees first. The
+        // matter of taste here – it decides what a visitor sees first. The
         // featured service is the documented exception: it leaves the tile
         // grid for a panel of its own and sits last in the file.
         foreach (['services.json', 'references.json'] as $datei) {
@@ -121,7 +121,7 @@ final class ContentTest extends WebTestCase
      * `strcoll` with a `de_DE` locale is the obvious way to do this and the
      * wrong one: the locale is installed here and absent on a CI runner, where
      * the comparison silently falls back to ASCII and puts every capital
-     * before every lower-case letter — which fails a file that is sorted the
+     * before every lower-case letter – which fails a file that is sorted the
      * way a reader would sort it. Folding case and umlauts by hand needs no
      * locale and no extension.
      */

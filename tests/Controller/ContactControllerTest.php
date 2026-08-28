@@ -247,7 +247,7 @@ final class ContactControllerTest extends WebTestCase
 
     /**
      * Builds a POST payload with a valid CSRF token (from a rendered form) and
-     * a signed timestamp aged `age` seconds — within the valid window by
+     * a signed timestamp aged `age` seconds – within the valid window by
      * default, or expired when a large age is passed.
      *
      * @param array<string, string> $fields

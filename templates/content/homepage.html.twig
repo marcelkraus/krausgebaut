@@ -34,7 +34,7 @@
 {% block content %}
     {# ── Hero ───────────────────────────────────────────────────── #}
     <section id="start" class="relative isolate overflow-hidden border-b border-neutral-200 bg-neutral-50">
-        {# The gear from the brand mark, oversized and cropped off the edge —
+        {# The gear from the brand mark, oversized and cropped off the edge –
            texture rather than ornament. #}
         <div class="pointer-events-none absolute -right-28 top-1/2 -z-10 hidden -translate-y-1/2 text-accent-on-light/[0.07] lg:block">
             {{ include('partials/_gear.html.twig', { class: 'h-[42rem] w-auto' }) }}
@@ -76,7 +76,7 @@
     {# ── Leistungen ─────────────────────────────────────────────── #}
     <section id="leistungen" class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
         <div class="grid gap-12 lg:grid-cols-[22rem_1fr] lg:gap-16">
-            {# Section title as a sticky column — the cards scroll past it. #}
+            {# Section title as a sticky column – the cards scroll past it. #}
             <div class="lg:sticky lg:top-28 lg:self-start">
                 {{ include('partials/_eyebrow.html.twig', { text: 'Leistungen' }) }}
                 <h2 class="mt-5 font-display text-3xl font-bold leading-tight tracking-tight text-neutral-900 sm:text-4xl lg:text-3xl">Nicht von A–Z. Aber von C wie Code bis W wie Workshop.</h2>
@@ -100,7 +100,7 @@
                     {% endfor %}
                 </div>
 
-        {# Freelancing — lifted out of the tile grid into its own roomy,
+        {# Freelancing – lifted out of the tile grid into its own roomy,
            accent-tinted panel so it stands apart as the strategic offering. #}
         {% for service in services|filter(s => s.feature|default(false)) %}
             <div class="mt-6 flex flex-col gap-6 rounded-xl border border-accent/20 bg-accent/[0.04] p-8 sm:flex-row sm:items-center sm:gap-8">
@@ -193,14 +193,14 @@
                             <span class="transition-transform group-hover:translate-x-1">{{ icons.icon(reference.hatDetailseite ? 'arrow' : 'external', 'h-3.5 w-3.5') }}</span>
                         </a>
                     {% else %}
-                        {# Internal projects have nothing public to link to — the
+                        {# Internal projects have nothing public to link to – the
                            slot keeps its place so the cards stay aligned. #}
                         <p class="mt-6 font-mono text-[0.625rem] uppercase tracking-[0.15em] text-neutral-500">Mehr auf Anfrage</p>
                     {% endif %}
                 </article>
             {% endfor %}
 
-            {# Conversion card — fills the grid and invites the next project. #}
+            {# Conversion card – fills the grid and invites the next project. #}
             <a href="#kontakt" class="group flex flex-col justify-center rounded-xl border border-dashed border-accent/40 bg-accent/[0.03] p-6 text-center transition-colors hover:bg-accent/[0.06]">
                 <span class="mx-auto text-accent-on-light transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-6 w-6') }}</span>
                 <h3 class="mt-4 font-display text-lg font-bold text-neutral-900">Und jetzt Sie?</h3>

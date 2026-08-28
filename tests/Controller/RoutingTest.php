@@ -53,7 +53,7 @@ final class RoutingTest extends WebTestCase
         $client = static::createClient();
 
         // The slug exists in references.json, but with `hatDetailseite: false`
-        // — that card links out instead, so the internal route must not answer.
+        // – that card links out instead, so the internal route must not answer.
         $client->request('GET', '/referenzen/3d-druck-kostenrechner');
 
         self::assertResponseStatusCodeSame(404);
@@ -117,7 +117,7 @@ final class RoutingTest extends WebTestCase
     }
 
     /**
-     * The mailbox is a mandatory disclosure, so it has to be readable — and it
+     * The mailbox is a mandatory disclosure, so it has to be readable – and it
      * is hidden from a harvester by a decoy that only the markup carries. Both
      * halves are asserted: drop the decoy and the obfuscation is gone, drop
      * the plain address and the disclosure is.

@@ -2,12 +2,12 @@
    in the mobile menu, the two in the body and the <button> in the contact
    form wear the same clothes without any of the copies drifting from the
    others. The contrast rule lives here and nowhere else: petrol fill with a
-   white label, and a hover that DARKENS — the petrol is a dark brand, so
+   white label, and a hover that DARKENS – the petrol is a dark brand, so
    lightening would drop the label below AA.
 
    Emits no markup. Pull it with include(), assign it, hand it to `class`.
    Params: size ('default' or 'compact'). Compact is for buttons that share a
-   row with something else — the header bar and the two inline calls in the
+   row with something else – the header bar and the two inline calls in the
    body; it holds 44 pixels so a thumb still finds it on a phone. #}
 {%- set size = size|default('default') -%}
 {%- set base = 'inline-flex items-center gap-2 rounded-lg bg-accent font-mono font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent-hover' -%}

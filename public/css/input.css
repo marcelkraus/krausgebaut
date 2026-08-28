@@ -6,7 +6,7 @@
 @plugin "@tailwindcss/typography";
 @source "../../templates/**/*.html.twig";
 
-/* Self-hosted fonts — no external requests. Aller carries the wordmark,
+/* Self-hosted fonts – no external requests. Aller carries the wordmark,
    headlines and body (ties the type to the logo); JetBrains Mono is the
    technical voice for eyebrows, labels and spec data. Latin covers the
    German umlauts (ä ö ü ß). */
@@ -46,14 +46,14 @@
        difference between the two brands falls into the values and not into
        the naming.
 
-         accent                 the brand itself — surfaces, borders, markers,
+         accent                 the brand itself – surfaces, borders, markers,
                                 the mark. Never type without a checked step.
          accent-on-light        type on a light ground
          accent-on-dark         type on a dark ground
          accent-hover           hover of a filled surface
          accent-on-light-hover  hover of type on a light ground
 
-       The accent is Tailwind's cyan-800 — and so is the master artwork, to
+       The accent is Tailwind's cyan-800 – and so is the master artwork, to
        the digit. Bound to the token rather than a copied hex so it cannot
        drift from the palette.
 
@@ -63,18 +63,18 @@
        is why its tokens carry different values under the same names.
 
        The hover of a filled surface moves in whichever direction keeps its
-       label readable — here the label is white, so the fill DARKENS. */
+       label readable – here the label is white, so the fill DARKENS. */
     --color-accent: var(--color-cyan-800);
     --color-accent-on-light: var(--color-cyan-800);
     --color-accent-on-dark: var(--color-cyan-600);
     --color-accent-hover: var(--color-cyan-900);
     --color-accent-on-light-hover: var(--color-cyan-900);
 
-    /* Sibling brand colors — the marker dots in the footer and the
+    /* Sibling brand colors – the marker dots in the footer and the
        krausgedruckt cross-promo band at the end of the page. Bound to the
        palette, never copied as hex, so they cannot drift from it.
 
-       marcelkraus is purple — the left square of the family logo,
+       marcelkraus is purple – the left square of the family logo,
        which stands for the employment career. It is a dark color and
        measures 2.54:1 on the footer's neutral-900, so the marker there uses
        the brighter step; the papaya passes on that ground as it is

@@ -49,7 +49,7 @@
     {% if app.environment == 'prod' %}
         {# Privacy-first analytics: self-hosted Matomo (SiteId 13), run
            cookieless via disableCookies. Nothing is stored on or read from the
-           visitor's device, so no consent banner is required. Production only —
+           visitor's device, so no consent banner is required. Production only –
            local and CI traffic must not pollute the statistics. #}
         <script>
             var _paq = window._paq = window._paq || [];
@@ -196,7 +196,7 @@
                     link.addEventListener('click', () => setOpen(false));
                 });
 
-                // A tap next to an open menu is a request to close it — without
+                // A tap next to an open menu is a request to close it – without
                 // this the panel stays open until the burger is hit again.
                 document.addEventListener('click', (event) => {
                     if (menu.classList.contains('hidden')) {

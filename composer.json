@@ -2,7 +2,7 @@
     "name": "marcelkraus/krausgebaut",
     "type": "project",
     "license": "proprietary",
-    "description": "krausgebaut - website for internet and IT services",
+    "description": "My business homepage for web & IT services",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {

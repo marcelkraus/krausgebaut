@@ -160,18 +160,24 @@ in **solid** accent.
 
 ## Deployment
 
-Server directory `~/html/krausgebaut`, on the account `kraus`, host `menkar`.
-Mechanism, deploy keys and the mailer are in `../docs/DEPLOYMENT.md`.
+Server directory `~/www/html/krausgebaut`, on the account `krswrk`, host
+`nix`. Mechanism, deploy keys and the mailer are in `../docs/DEPLOYMENT.md`.
 
 **Layout on the host:** both `krausgebaut.de` and `www.krausgebaut.de` are
-symlinked from `/var/www/virtual/kraus/` straight to
-`html/krausgebaut/public`. The domain carries an MX record
-(`0 menkar.uberspace.de.`).
+symlinked from `~/www/` straight to `html/krausgebaut/public/`.
 
-**`analytics.krausgebaut.de` is not served from here.** The measurement stands
-on the Uberspace account `krswrk`, it belongs to no repository, and `bin/deploy`
-never touches it. The domain is where it is named, not where it runs – which is
-why it is written down here and nowhere in this project's code.
+**The mail stayed where it was.** The MX record points at `menkar`, and the
+domain is registered for mail on the account `kraus` – so it must **never** be
+registered for mail on the account the site runs on. The local MTA would then
+treat it as local, and `mail@krausgebaut.de` would land in a mailbox nobody
+reads instead of reaching the MX. Sending is unaffected: SPF authorises every
+Uberspace host.
+
+**`analytics.krausgebaut.de` is not served from here.** It stands on the same
+account now, but on a document root of its own: the measurement belongs to no
+repository, and `bin/deploy` never touches it. The domain is where it is named,
+not where it runs – which is why it is written down here and nowhere in this
+project's code.
 
 The committed `.env` carries the real addresses as defaults –
 `mail@krausgebaut.de` as recipient, `no-reply@krausgebaut.de` as sender. They

@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 #
 # Rolls the checked-out branch out. Run it on the server, inside the
-# application directory:
-#
-#     ssh kraus 'cd ~/html/krausgebaut && bin/deploy'
+# application directory.
 #
 # `set -e` matters here: without it a failed `composer install` would be
 # followed by a cache rebuild against half-installed dependencies, and the

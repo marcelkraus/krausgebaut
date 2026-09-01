@@ -160,8 +160,8 @@ in **solid** accent.
 
 ## Deployment
 
-Server directory `~/html/krausgebaut`. Mechanism, deploy keys and the mailer are
-in `../docs/DEPLOYMENT.md`.
+Server directory `~/html/krausgebaut`, on the account `kraus`, host `menkar`.
+Mechanism, deploy keys and the mailer are in `../docs/DEPLOYMENT.md`.
 
 **Layout on the host:** both `krausgebaut.de` and `www.krausgebaut.de` are
 symlinked from `/var/www/virtual/kraus/` straight to

@@ -38,4 +38,22 @@ final class SecurityHeadersListenerTest extends WebTestCase
         self::assertResponseHeaderSame('Referrer-Policy', 'strict-origin-when-cross-origin');
         self::assertResponseHeaderSame('X-Frame-Options', 'DENY');
     }
+
+    /**
+     * The one header that depends on how the request arrived, and the one the
+     * listener may not set unconditionally. Over HTTPS it has to be there –
+     * the contact form carries a name, an address and a
+     * message. Over plain HTTP it must not be: a browser ignores it, and
+     * sending it states something that is not true.
+     */
+    public function testTheTransportHeaderFollowsTheScheme(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', 'https://localhost/');
+        self::assertResponseHeaderSame('Strict-Transport-Security', 'max-age=31536000');
+
+        $client->request('GET', 'http://localhost/');
+        self::assertResponseNotHasHeader('Strict-Transport-Security');
+    }
 }

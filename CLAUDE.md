@@ -168,6 +168,11 @@ symlinked from `/var/www/virtual/kraus/` straight to
 `html/krausgebaut/public`. The domain carries an MX record
 (`0 menkar.uberspace.de.`).
 
+**`analytics.krausgebaut.de` is not served from here.** The measurement stands
+on the Uberspace account `krswrk`, it belongs to no repository, and `bin/deploy`
+never touches it. The domain is where it is named, not where it runs – which is
+why it is written down here and nowhere in this project's code.
+
 The committed `.env` carries the real addresses as defaults –
 `mail@krausgebaut.de` as recipient, `no-reply@krausgebaut.de` as sender. They
 are no secret, since the mailto redirect hands the recipient to anyone who

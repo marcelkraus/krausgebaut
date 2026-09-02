@@ -1,8 +1,12 @@
 # krausgebaut
 
-Shared rules that apply here: `../docs/WEB_STACK.md`, `../docs/DEPLOYMENT.md`,
-`../docs/BRAND_FAMILY.md`. This document carries only what is true of this
-project alone.
+This project lives in the krauswerk, in the group Brand Family, and this
+document is not complete on its own. The rules it follows stand a level up –
+`../../docs/WEB_STACK.md`, `../../docs/DEPLOYMENT.md` and the group's
+`../docs/BRAND_FAMILY.md` – and a session inside the workspace has the
+`CLAUDE.md` of the workspace and of the group loaded. Read alone, in a
+repository cloned elsewhere, it lacks that context. This document carries only
+what is true of this project alone.
 
 ## Overview
 
@@ -127,7 +131,7 @@ or malformed → empty list). Editing content needs no code change.
 
 ## Contact form
 
-The mechanism is in `../docs/WEB_STACK.md`. Specific here:
+The mechanism is in `../../docs/WEB_STACK.md`. Specific here:
 
 * Fields: name, e-mail, company, phone, message; required are name, e-mail and
   message. **There is deliberately no subject select** – the intent comes from
@@ -161,7 +165,7 @@ in **solid** accent.
 ## Deployment
 
 Server directory `~/www/html/krausgebaut`, on the account `krswrk`, host
-`nix`. Mechanism, deploy keys and the mailer are in `../docs/DEPLOYMENT.md`.
+`nix`. Mechanism, deploy keys and the mailer are in `../../docs/DEPLOYMENT.md`.
 
 **Layout on the host:** both `krausgebaut.de` and `www.krausgebaut.de` are
 symlinked from `~/www/` straight to `html/krausgebaut/public/`.
@@ -170,7 +174,7 @@ symlinked from `~/www/` straight to `html/krausgebaut/public/`.
 domain is registered for mail on the account `kraus` – so it must **never** be
 registered for mail on the account the site runs on. The local MTA would then
 treat it as local, and `mail@krausgebaut.de` would land in a mailbox nobody
-reads instead of reaching the MX. Sending is unaffected: SPF authorises every
+reads instead of reaching the MX. Sending is unaffected: SPF authorizes every
 Uberspace host.
 
 **`analytics.krausgebaut.de` is not served from here.** It stands on the same

@@ -70,7 +70,7 @@ badge is driven by the optional `tag` field in the content JSON.
 
 ## Design
 
-The light "spec-sheet" look, no dark mode. Tokens, contrast rules and the family
+The light „spec-sheet“ look, no dark mode. Tokens, contrast rules and the family
 bracket are in `../docs/BRAND_FAMILY.md`.
 
 **What this site does differently:**

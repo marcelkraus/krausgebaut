@@ -196,7 +196,7 @@ final class ContactControllerTest extends WebTestCase
         $client->request('POST', '/kontakt', $payload);
 
         // Apache replaces the Symfony error page with its own, so an uncaught
-        // transport exception costs the enquiry and shows a bare 500 on the
+        // transport exception costs the inquiry and shows a bare 500 on the
         // one form this site exists for.
         self::assertResponseStatusCodeSame(422);
         self::assertSelectorTextContains('body', 'konnte gerade nicht zugestellt werden');

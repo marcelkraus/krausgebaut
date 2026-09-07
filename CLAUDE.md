@@ -145,6 +145,19 @@ homepage `structured_data` block. Subpage title scheme:
 `{Page} · krausgebaut von Marcel Kraus`. Case studies are indexable and listed
 in the sitemap.
 
+The robots.txt disallows exactly the two routes whose Location header holds the
+mail address – `/kontakt-per-email` and `/kontakt-per-whats-app`. A crawler
+that fetches one of them takes the address into its corpus, and those corpora
+are where address lists come from.
+
+**`/bewerten` does not belong in that list**, although it is built the same
+way. Its header holds a public Google address, so there is nothing to keep out
+of a corpus, and blocking it works against the index rather than for it: the
+link stands in the footer of every page, so a crawler barred from fetching it
+never learns that the address is a redirect and can hold it bare. It is the
+rule the legal pages stand on – a path a crawler may not fetch is a path it
+learns nothing about.
+
 Sharing image composition: white, the logo lockup with the
 `Internet- & IT-Dienstleistungen` eyebrow on the left, domain and location as a
 mono line at the bottom, and the gear oversized and cropped off the right edge

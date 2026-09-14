@@ -175,12 +175,11 @@ Server directory `~/www/html/krausgebaut`, on the account `krswrk`, host
 **Layout on the host:** both `krausgebaut.de` and `www.krausgebaut.de` are
 symlinked from `~/www/` straight to `html/krausgebaut/public/`.
 
-**The mail stayed where it was.** The MX record points at `menkar`, and the
-domain is registered for mail on the account `kraus` – so it must **never** be
-registered for mail on the account the site runs on. The local MTA would then
-treat it as local, and `mail@krausgebaut.de` would land in a mailbox nobody
-reads instead of reaching the MX. Sending is unaffected: SPF authorizes every
-Uberspace host.
+**The mail is on the same account.** The MX record points at
+`in-mx.uberspace.de`, and `krausgebaut.de` is registered for mail on `krswrk`,
+so `mail@krausgebaut.de` is a mailbox of that account and the contact form
+delivers locally. The sender is not this domain – see “The sender on `krswrk`”
+in `../../docs/DEPLOYMENT.md`.
 
 **`analytics.krausgebaut.de` is not served from here.** It stands on the same
 account now, but on a document root of its own: the measurement belongs to no

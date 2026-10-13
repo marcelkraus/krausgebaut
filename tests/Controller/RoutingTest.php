@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use App\Controller\DefaultController;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Every route answers, the legal pages stay out of the index, the contact
- * routes redirect rather than carrying the address in a document, and a case
- * study exists only where the content file says it does.
+ * routes redirect rather than carrying the address in a document, a case
+ * study exists only where the content file says it does, and a printed
+ * short link leads home under the campaign it is counted as.
  */
 final class RoutingTest extends WebTestCase
 {
@@ -63,6 +65,104 @@ final class RoutingTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/referenzen/gibt-es-nicht');
+
+        self::assertResponseStatusCodeSame(404);
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function printEditions(): iterable
+    {
+        foreach (DefaultController::PRINT_EDITIONS as $prefix => $codes) {
+            foreach ($codes as $code) {
+                $query = 'mtm_campaign=' . DefaultController::PRINT_CAMPAIGNS[$prefix] . '&mtm_medium=print';
+                $query .= $prefix === 'ad'
+                    ? '&mtm_source=' . DefaultController::PRINT_SOURCES[substr($code, 0, 2)] . '&mtm_kwd=' . substr($code, 2)
+                    : '&mtm_kwd=' . $code;
+
+                yield $prefix . '-' . $code => [$prefix . '-' . $code, $query];
+            }
+        }
+    }
+
+    #[DataProvider('printEditions')]
+    public function testAPrintLeadsHomeCountedAsPrint(string $slug, string $query): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/s/' . $slug);
+
+        self::assertResponseRedirects('/?' . $query, 302);
+    }
+
+    /**
+     * What Matomo reports, written out once rather than derived from the
+     * controller, so a renamed campaign cannot pass unnoticed.
+     *
+     * @return iterable<string, array{string, string}>
+     */
+    public static function countedAs(): iterable
+    {
+        yield 'advertisement' => ['/s/ad-ea2610', 'mtm_campaign=advertisement&mtm_medium=print&mtm_source=erftstadt-aktuell&mtm_kwd=2610'];
+        yield 'business card' => ['/s/bc-2610', 'mtm_campaign=business-card&mtm_medium=print&mtm_kwd=2610'];
+        yield 'flyer' => ['/s/fl-2610', 'mtm_campaign=flyer&mtm_medium=print&mtm_kwd=2610'];
+    }
+
+    #[DataProvider('countedAs')]
+    public function testAPrintIsCountedUnderItsReadableCampaign(string $path, string $query): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', $path);
+
+        self::assertResponseRedirects('/?' . $query, 302);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function unknownShortLinks(): iterable
+    {
+        yield 'advertisement in an unknown medium' => ['/s/ad-xx2610'];
+        yield 'advertisement without edition' => ['/s/ad-ea'];
+        yield 'business card without edition' => ['/s/bc-'];
+        yield 'code with a hyphen' => ['/s/fl-2610-b'];
+        yield 'flyer without edition' => ['/s/fl-'];
+        yield 'path behind the slug' => ['/s/gibt-es-nicht/s/fl-2610'];
+        yield 'signature model, printed for krausgedruckt only' => ['/s/sm-d13'];
+        yield 'unknown advertisement edition' => ['/s/ad-ea0000'];
+        yield 'unknown business card edition' => ['/s/bc-0000'];
+        yield 'unknown flyer edition' => ['/s/fl-0000'];
+        yield 'unknown prefix' => ['/s/xx-2610'];
+        yield 'unknown slug' => ['/s/gibt-es-nicht'];
+    }
+
+    /**
+     * Two prints under one slug would share one count, a slug the route
+     * refuses would put a dead code on paper, and an advertisement in a
+     * medium without a source would answer 404.
+     */
+    public function testPrintedSlugsFollowTheSchemeAndAreUnique(): void
+    {
+        $slugs = array_map(static fn (array $case): string => $case[0], iterator_to_array(self::printEditions(), false));
+
+        foreach ($slugs as $slug) {
+            self::assertMatchesRegularExpression('/^[a-z]{2}-[a-z0-9]+$/', $slug);
+        }
+
+        foreach (DefaultController::PRINT_EDITIONS['ad'] as $code) {
+            self::assertArrayHasKey(substr($code, 0, 2), DefaultController::PRINT_SOURCES);
+        }
+
+        self::assertSame(array_values(array_unique($slugs)), $slugs);
+    }
+
+    #[DataProvider('unknownShortLinks')]
+    public function testAnUnknownShortLinkIsNotFound(string $path): void
+    {
+        $client = static::createClient();
+        $client->request('GET', $path);
 
         self::assertResponseStatusCodeSame(404);
     }
@@ -150,6 +250,7 @@ final class RoutingTest extends WebTestCase
         self::assertNotFalse(simplexml_load_string($inhalt), 'The sitemap parses as XML');
         self::assertStringContainsString('/referenzen/meetmyrc', $inhalt);
         self::assertStringNotContainsString('/impressum', $inhalt);
+        self::assertStringNotContainsString('/s/', $inhalt);
     }
 
     public function testRobotsKeepsTheRedirectRoutesOutOfCrawlerCorpora(): void
@@ -161,5 +262,6 @@ final class RoutingTest extends WebTestCase
 
         self::assertStringContainsString('Sitemap:', $inhalt);
         self::assertStringContainsString('/kontakt-per-email', $inhalt);
+        self::assertStringNotContainsString('/s/', $inhalt);
     }
 }

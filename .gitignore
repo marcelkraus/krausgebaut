@@ -1,5 +1,6 @@
 ###> custom ###
 /.claude/
+/.scratch/
 /.playwright-mcp
 /config/reference.php
 /node_modules

@@ -34,7 +34,7 @@ final class DefaultController extends AbstractController
 
     /**
      * Prefix => codes in print: the edition, the year and month of the print
-     * run – for an advertisement behind the two letters of its medium.
+     * run—for an advertisement behind the two letters of its medium.
      *
      * @var array<string, list<string>>
      */
@@ -99,7 +99,7 @@ final class DefaultController extends AbstractController
     {
         $timestampState = $this->timestampState($request);
 
-        // Silent drop only for clear bot signals – a filled honeypot, a
+        // Silent drop only for clear bot signals—a filled honeypot, a
         // missing/tampered signature, or an inhumanly fast submission. These
         // get a fake "success" so bots learn nothing; nothing is sent.
         $honeypot = trim((string) $request->request->get('website', ''));
@@ -129,7 +129,7 @@ final class DefaultController extends AbstractController
         }
 
         // A valid but stale signature is a real user whose form sat open too
-        // long – never silently drop it, ask them to resend instead.
+        // long—never silently drop it, ask them to resend instead.
         if ($timestampState === 'expired') {
             $errors['form'] = 'Das Formular war zu lange geöffnet. Bitte senden Sie das Formular erneut ab.';
         }
@@ -177,7 +177,7 @@ final class DefaultController extends AbstractController
     }
 
     /**
-     * The address never appears in the markup – the link points at a route
+     * The address never appears in the markup—the link points at a route
      * and the route redirects. That keeps the mailto out of a shape that is
      * trivial to scrape, which is the same reason the legal pages spell the
      * address out in words.
@@ -236,22 +236,8 @@ final class DefaultController extends AbstractController
     {
         $sitemap = $this->generateUrl('app_sitemap', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        // The two contact routes carry no document, only a Location header,
-        // and that header holds the address. A well-behaved crawler follows
-        // it and takes the address into its corpus, and those corpora are
-        // where address lists come from. Harvesters ignore robots.txt, but
-        // the corpora do not.
-        //
-        // `/bewerten` is deliberately not in here, though it is built the same
-        // way. Its header holds a public link, so there is nothing to keep out
-        // of a corpus – and blocking it would do the opposite of what it looks
-        // like. The link stands in the footer of every page, so a crawler that
-        // may not fetch it never learns that the address is a redirect, and it
-        // can keep the bare address in the index. Fetched, it follows the
-        // redirect and knows where the address leads. The route answers 302
-        // rather than 301, so the address can sit in the index longer than a
-        // permanent redirect would leave it – but then as one whose target is
-        // known, not one nothing is known about.
+        // Which routes are disallowed, and why `/bewerten` is not: see
+        // `BRAND_FAMILY.md`, “robots.txt”.
         $disallowed = [
             '/kontakt-per-email',
             '/kontakt-per-whats-app',

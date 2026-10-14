@@ -15,8 +15,8 @@
     {# Favicons. Three files, all derived from the master artwork: the SVG scales
        to any size a browser asks for, the ICO carries 16 and 32 px and answers
        the implicit /favicon.ico request, the PNG covers the iOS home screen.
-       The SVG must keep its width/height – without them it has no intrinsic
-       size, a browser rasterises it into a default box and scales that into the
+       The SVG must keep its width/height—without them it has no intrinsic
+       size, a browser rasterizes it into a default box and scales that into the
        tab slot, which leaves a pale rim around the tile. #}
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="32x32">
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
@@ -49,7 +49,7 @@
     {% if app.environment == 'prod' %}
         {# Privacy-first analytics: self-hosted Matomo (SiteId 13), run
            cookieless via disableCookies. Nothing is stored on or read from the
-           visitor's device, so no consent banner is required. Production only –
+           visitor's device, so no consent banner is required. Production only—
            local and CI traffic must not pollute the statistics. #}
         <script>
             var _paq = window._paq = window._paq || [];
@@ -196,7 +196,7 @@
                     link.addEventListener('click', () => setOpen(false));
                 });
 
-                // A tap next to an open menu is a request to close it – without
+                // A tap next to an open menu is a request to close it—without
                 // this the panel stays open until the burger is hit again.
                 document.addEventListener('click', (event) => {
                     if (menu.classList.contains('hidden')) {

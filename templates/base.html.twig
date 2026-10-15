@@ -32,7 +32,7 @@
     {% block structured_data %}{% endblock %}
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="/css/output.css">
+        <link rel="stylesheet" href="{{ asset('css/output.css') }}">
     {% endblock %}
 
     {% if app.environment == 'prod' %}

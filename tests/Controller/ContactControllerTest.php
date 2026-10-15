@@ -175,10 +175,7 @@ final class ContactControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Both lines have to come before the first request. The kernel is
-        // rebooted between requests by default, which would drop the
-        // replacement; and once the container has handed the mailer out, it
-        // refuses to replace it.
+        // Before the first request: a reboot or a handed-out mailer drops the replacement.
         $client->disableReboot();
         static::getContainer()->set(MailerInterface::class, new class implements MailerInterface {
             public function send(RawMessage $message, ?Envelope $envelope = null): void
@@ -194,10 +191,6 @@ final class ContactControllerTest extends WebTestCase
         ]);
 
         $client->request('POST', '/kontakt', $payload);
-
-        // Apache replaces the Symfony error page with its own, so an uncaught
-        // transport exception costs the inquiry and shows a bare 500 on the
-        // one form this site exists for.
         self::assertResponseStatusCodeSame(422);
         self::assertSelectorTextContains('body', 'konnte gerade nicht zugestellt werden');
     }
@@ -206,9 +199,7 @@ final class ContactControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // The limiter is replaced rather than exhausted: its counter lives in
-        // the cache and outlives a single run, so a test that actually sent
-        // six messages would poison every case that follows.
+        // Replaced, not exhausted: the real counter lives in the cache and outlives the run.
         $client->disableReboot();
         static::getContainer()->set('limiter.contact_form', new class implements RateLimiterFactoryInterface {
             public function create(?string $key = null): LimiterInterface
@@ -246,10 +237,6 @@ final class ContactControllerTest extends WebTestCase
     }
 
     /**
-     * Builds a POST payload with a valid CSRF token (from a rendered form) and
-     * a signed timestamp aged `age` seconds—within the valid window by
-     * default, or expired when a large age is passed.
-     *
      * @param array<string, string> $fields
      *
      * @return array<string, string>

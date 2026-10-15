@@ -32,10 +32,7 @@
 {% endblock %}
 
 {% block content %}
-    {# ── Hero ───────────────────────────────────────────────────── #}
     <section id="start" class="relative isolate overflow-hidden border-b border-neutral-200 bg-neutral-50">
-        {# The gear from the brand mark, oversized and cropped off the edge—
-           texture rather than ornament. #}
         <div class="pointer-events-none absolute -right-28 top-1/2 -z-10 hidden -translate-y-1/2 text-accent-on-light/[0.07] lg:block">
             {{ include('partials/_gear.html.twig', { class: 'h-[42rem] w-auto' }) }}
         </div>
@@ -54,7 +51,6 @@
                     </a>
                 </div>
 
-                {# Key facts as free-standing chips. #}
                 {% set facts = [
                     { label: 'Region', value: 'Rhein-Erft-Kreis' },
                     { label: 'Erfahrung IT', value: '~30 Jahre' },
@@ -73,10 +69,8 @@
         </div>
     </section>
 
-    {# ── Leistungen ─────────────────────────────────────────────── #}
     <section id="leistungen" class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
         <div class="grid gap-12 lg:grid-cols-[22rem_1fr] lg:gap-16">
-            {# Section title as a sticky column—the cards scroll past it. #}
             <div class="lg:sticky lg:top-28 lg:self-start">
                 {{ include('partials/_eyebrow.html.twig', { text: 'Leistungen' }) }}
                 <h2 class="mt-5 font-display text-3xl font-bold leading-tight tracking-tight text-neutral-900 sm:text-4xl lg:text-3xl">Nicht von A–Z. Aber von C wie Code bis W wie Workshop.</h2>
@@ -100,8 +94,6 @@
                     {% endfor %}
                 </div>
 
-        {# Freelancing—lifted out of the tile grid into its own roomy,
-           accent-tinted panel so it stands apart as the strategic offering. #}
         {% for service in services|filter(s => s.feature|default(false)) %}
             <div class="mt-6 flex flex-col gap-6 rounded-xl border border-accent/20 bg-accent/[0.04] p-8 sm:flex-row sm:items-center sm:gap-8">
                 <span class="shrink-0 text-accent-on-light">{{ icons.icon(service.icon, 'h-12 w-12') }}</span>
@@ -123,7 +115,6 @@
         </div>
     </section>
 
-    {# ── Arbeitsweise ───────────────────────────────────────────── #}
     <section id="arbeitsweise" class="border-y border-neutral-200 bg-neutral-100">
         <div class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-32">
             <div>
@@ -137,11 +128,7 @@
                 </a>
             </div>
             <ul class="grid gap-6 sm:grid-cols-2">
-                {# Each principle closes on a paragraph of its own with a
-                   one-word promise. The em dash is set apart in the accent
-                   color, mirroring the required-field marker in the contact
-                   form; the `note` holds the word alone so the copy carries no
-                   inline markup. #}
+                {# `note` holds the word alone, so the copy carries no inline markup. #}
                 {% set principles = [
                     { title: 'Ein Ansprechpartner', text: 'Vom ersten Gespräch, über den Launch des Projekts und danach.', note: 'persönlich.' },
                     { title: 'Sauberes Handwerk', text: 'Saubere Arbeit, klare Dokumentation und definierte Übergaben.', note: 'hochwertig.' },
@@ -159,7 +146,6 @@
         </div>
     </section>
 
-    {# ── Referenzen ─────────────────────────────────────────────── #}
     <section id="referenzen" class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
         <div class="max-w-2xl">
             {{ include('partials/_eyebrow.html.twig', { text: 'Referenzen' }) }}
@@ -193,14 +179,12 @@
                             <span class="transition-transform group-hover:translate-x-1">{{ icons.icon(reference.hatDetailseite ? 'arrow' : 'external', 'h-3.5 w-3.5') }}</span>
                         </a>
                     {% else %}
-                        {# Internal projects have nothing public to link to—the
-                           slot keeps its place so the cards stay aligned. #}
+                        {# The slot keeps its place so the cards stay aligned. #}
                         <p class="mt-6 font-mono text-[0.625rem] uppercase tracking-[0.15em] text-neutral-500">Mehr auf Anfrage</p>
                     {% endif %}
                 </article>
             {% endfor %}
 
-            {# Conversion card—fills the grid and invites the next project. #}
             <a href="#kontakt" class="group flex flex-col justify-center rounded-xl border border-dashed border-accent/40 bg-accent/[0.03] p-6 text-center transition-colors hover:bg-accent/[0.06]">
                 <span class="mx-auto text-accent-on-light transition-transform group-hover:translate-x-1">{{ icons.icon('arrow', 'h-6 w-6') }}</span>
                 <h3 class="mt-4 font-display text-lg font-bold text-neutral-900">Und jetzt Sie?</h3>
@@ -209,31 +193,19 @@
         </div>
     </section>
 
-    {# ── Ablauf (dark) ──────────────────────────────────────────── #}
     <section id="ablauf" class="border-y border-neutral-200 bg-neutral-950">
-        {# One step shallower than the other sections: since the steps do without
-           a box, this block carries noticeably less content at the same
-           padding. It stays the dark pause in the rhythm all the same. #}
         <div class="mx-auto max-w-6xl px-6 py-20 lg:px-8 lg:py-24">
             <div class="max-w-2xl">
                 {{ include('partials/_eyebrow.html.twig', { text: 'Ablauf', tone: 'dark' }) }}
                 <h2 class="mt-5 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">In drei Schritten zum Ergebnis</h2>
             </div>
 
-            {# Three steps rather than four, in the same beat as the sibling
-               brand: subject, verb, punchline. Conception and contact are
-               pulled together, because to a client they are one conversation
-               and not two appointments. #}
             <ol class="mt-14 grid gap-10 md:grid-cols-3">
                 {% set steps = [
                     { no: '01', title: 'Sie haben die Idee.', text: 'Ob ein fertiges Konzept, eine grobe Vorstellung oder nur ein Problem, das gelöst werden soll.', note: 'Sie schildern – ich höre zu.' },
                     { no: '02', title: 'Ich bin dran.', text: 'Ob Website, App oder Ihre IT vor Ort. Mit einem transparenten Angebot vorab und regelmäßigen Updates.', note: 'Ein Ansprechpartner – kein Team im Nebel.' },
                     { no: '03', title: 'Es läuft.', text: 'Eine saubere Übergabe mit Dokumentation, auf Wunsch bleibe ich mit einem Servicevertrag für Betrieb & Wartung an Bord.', note: 'Gebaut, übergeben – und betreut.' }
                 ] %}
-                {# The look of the sibling's printed poster: a rule above the
-                   numeral instead of a box. On the dark ground the rule takes
-                   a muted white so it marks the division without outshining
-                   the numeral it introduces. #}
                 {% for step in steps %}
                     <li class="border-t-2 border-white/25 pt-5">
                         <span class="font-mono text-2xl font-bold text-accent-on-dark">{{ step.no }}</span>
@@ -246,7 +218,6 @@
         </div>
     </section>
 
-    {# ── Kundenstimmen (only rendered once real, attributed quotes exist) ── #}
     {% if testimonials %}
         <section id="stimmen" class="border-y border-neutral-200 bg-neutral-100">
             <div class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
@@ -269,7 +240,6 @@
         </section>
     {% endif %}
 
-    {# ── Kontakt ────────────────────────────────────────────────── #}
     <section id="kontakt" class="bg-neutral-50">
         <div class="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
             <div class="max-w-2xl">
@@ -279,7 +249,6 @@
             </div>
 
             <div class="mt-14 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-                {# Direct contact + service area #}
                 <div>
                     <dl class="divide-y divide-neutral-200 border-y border-neutral-200">
                         <div class="flex items-start gap-4 py-5">
@@ -309,7 +278,6 @@
                     </div>
                 </div>
 
-                {# Form or confirmation #}
                 <div>
                     {% if app.flashes('contact_success') %}
                         <div class="flex items-start gap-4 rounded-xl border border-neutral-900 bg-white p-8" role="status">
@@ -327,8 +295,6 @@
         </div>
     </section>
 
-    {# ── krausgedruckt cross-promo (brand bookend: an orange glow mirrors
-         the petrol hero) ──────────────────────────────────────────── #}
     <section class="relative isolate overflow-hidden border-t border-neutral-800 bg-neutral-950">
         <div class="pointer-events-none absolute -right-32 -top-24 -z-10 h-[28rem] w-[28rem] rounded-full bg-brand-krausgedruckt/20 blur-[120px]"></div>
         <div class="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-8 lg:py-24">
@@ -348,8 +314,6 @@
 {% block javascript %}
     {{ parent() }}
     <script>
-        // On a contact-form error re-render, move focus to the first invalid
-        // field so the visitor sees exactly what to fix.
         (function () {
             const form = document.querySelector('[data-error-focus]');
             if (form === null) {

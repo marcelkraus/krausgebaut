@@ -1,5 +1,5 @@
-{# Hand-rolled contact form. Expects: errors (map path→message),
-   old (submitted values), contact_timestamp + contact_timestamp_signature (signed anti-spam timestamp). #}
+{# Params: errors (path → message), old, contact_timestamp,
+   contact_timestamp_signature. #}
 {% import _self as field %}
 
 {% macro label(name, text, required) %}
@@ -26,8 +26,7 @@
     <input type="hidden" name="ts" value="{{ contact_timestamp }}">
     <input type="hidden" name="ts_sig" value="{{ contact_timestamp_signature }}">
 
-    {# Honeypot: hidden from users, tempting to bots. A neutral field name
-       that browser autofill is unlikely to populate for a real visitor. #}
+    {# Honeypot, named so that autofill leaves it empty. #}
     <div class="sr-only" aria-hidden="true">
         <label for="f_website">Dieses Feld bitte leer lassen</label>
         <input type="text" id="f_website" name="website" tabindex="-1" autocomplete="off">

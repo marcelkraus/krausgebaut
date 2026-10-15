@@ -6,11 +6,6 @@ namespace App\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Carries and validates the data submitted through the contact form.
- * The form is hand-rolled (no symfony/form); this DTO is populated from
- * the request and validated with symfony/validator.
- */
 final class ContactRequest
 {
     #[Assert\NotBlank(message: 'Bitte geben Sie Ihren Namen an.')]

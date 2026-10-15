@@ -21,8 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class DefaultController extends AbstractController
 {
     /**
-     * Prefix => campaign. A printed short link reads `<prefix>-<code>`, and
-     * the code carries no hyphen of its own.
+     * Prefix => campaign.
      *
      * @var array<string, string>
      */
@@ -33,8 +32,7 @@ final class DefaultController extends AbstractController
     ];
 
     /**
-     * Prefix => codes in print: the edition, the year and month of the print
-     * run—for an advertisement behind the two letters of its medium.
+     * Prefix => codes in print.
      *
      * @var array<string, list<string>>
      */
@@ -45,8 +43,7 @@ final class DefaultController extends AbstractController
     ];
 
     /**
-     * The medium an advertisement appears in => the source it is counted
-     * under.
+     * Medium => the source it is counted under.
      *
      * @var array<string, string>
      */
@@ -99,9 +96,7 @@ final class DefaultController extends AbstractController
     {
         $timestampState = $this->timestampState($request);
 
-        // Silent drop only for clear bot signals—a filled honeypot, a
-        // missing/tampered signature, or an inhumanly fast submission. These
-        // get a fake "success" so bots learn nothing; nothing is sent.
+        // A clear bot signal gets a fake success, so the bot learns nothing.
         $honeypot = trim((string) $request->request->get('website', ''));
         if ($honeypot !== '' || $timestampState === 'invalid' || $timestampState === 'too_fast') {
             $this->addFlash('contact_success', true);
@@ -116,9 +111,7 @@ final class DefaultController extends AbstractController
         $data->phone = trim((string) $request->request->get('phone', ''));
         $data->message = trim((string) $request->request->get('message', ''));
 
-        // Keep the first violation per field: the constraints are written in
-        // order of relevance, so an empty message must report NotBlank rather
-        // than the minimum-length rule that fires alongside it.
+        // The constraints are written in order of relevance; the first one wins.
         $errors = [];
         foreach ($this->validator->validate($data) as $violation) {
             $errors[$violation->getPropertyPath()] ??= $violation->getMessage();
@@ -128,8 +121,7 @@ final class DefaultController extends AbstractController
             $errors['form'] = 'Ihre Sitzung ist abgelaufen. Bitte senden Sie das Formular erneut ab.';
         }
 
-        // A valid but stale signature is a real user whose form sat open too
-        // long—never silently drop it, ask them to resend instead.
+        // A stale signature is a real visitor whose form sat open too long.
         if ($timestampState === 'expired') {
             $errors['form'] = 'Das Formular war zu lange geöffnet. Bitte senden Sie das Formular erneut ab.';
         }
@@ -138,17 +130,14 @@ final class DefaultController extends AbstractController
             return $this->renderContactErrors($request, $errors);
         }
 
-        // Throttle per IP so a scraped token cannot be replayed into a flood.
+        // Per IP, so a scraped token cannot be replayed into a flood.
+
         if ($this->contactFormLimiter->create($request->getClientIp() ?? 'anonymous')->consume(1)->isAccepted() === false) {
             return $this->renderContactErrors($request, [
                 'form' => 'Es sind zu viele Nachrichten eingegangen. Bitte versuchen Sie es später noch einmal.',
             ]);
         }
 
-        // A transport failure must not cost the inquiry and must not hand a
-        // visitor a bare error page: the sendmail DSN has two documented ways
-        // of being wrong on this host, and Apache replaces the Symfony error
-        // page with its own.
         try {
             $this->mailer->send(
                 (new TemplatedEmail())
@@ -176,12 +165,6 @@ final class DefaultController extends AbstractController
         return $this->redirect($this->generateUrl('app_homepage', ['_fragment' => 'kontakt']));
     }
 
-    /**
-     * The address never appears in the markup—the link points at a route
-     * and the route redirects. That keeps the mailto out of a shape that is
-     * trivial to scrape, which is the same reason the legal pages spell the
-     * address out in words.
-     */
     #[Route('/kontakt-per-email', name: 'app_contact_email', methods: ['GET'])]
     public function contactByEmail(): Response
     {
@@ -200,13 +183,7 @@ final class DefaultController extends AbstractController
         return $this->redirect($this->getParameter('app.google_review_url'));
     }
 
-    /**
-     * The address behind the QR code of a printed piece. It stays short so
-     * the code stays coarse enough to scan, and it answers 302 because the
-     * target of something already printed must be free to change. Every
-     * scan is counted as print, under the piece's campaign; an
-     * advertisement under its medium as the source.
-     */
+    // 302, because the target of something already printed must be free to change.
     #[Route('/s/{slug}', name: 'app_short_link', methods: ['GET'], requirements: ['slug' => '[a-z0-9-]+'])]
     public function shortLink(string $slug): Response
     {
@@ -236,8 +213,6 @@ final class DefaultController extends AbstractController
     {
         $sitemap = $this->generateUrl('app_sitemap', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        // Which routes are disallowed, and why `/bewerten` is not: see
-        // `BRAND_FAMILY.md`, “robots.txt”.
         $disallowed = [
             '/kontakt-per-email',
             '/kontakt-per-whats-app',
@@ -258,8 +233,6 @@ final class DefaultController extends AbstractController
     #[Route('/sitemap.xml', name: 'app_sitemap', methods: ['GET'])]
     public function sitemap(): Response
     {
-        // The homepage plus every reference that has its own case-study page.
-        // The legal pages are noindex and stay out.
         $locations = [
             [$this->generateUrl('app_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL), '1.0'],
         ];
@@ -287,9 +260,6 @@ final class DefaultController extends AbstractController
     }
 
     /**
-     * Renders the homepage, always seeding a fresh anti-spam timestamp and
-     * the JSON-driven content (services, references, testimonials).
-     *
      * @param array<string, mixed> $formState
      */
     private function renderHomepage(array $formState = [], int $status = Response::HTTP_OK): Response
@@ -312,9 +282,6 @@ final class DefaultController extends AbstractController
     }
 
     /**
-     * Re-renders the homepage with contact-form errors, the submitted values
-     * and the first errored field name so the client can focus it.
-     *
      * @param array<string, string> $errors
      */
     private function renderContactErrors(Request $request, array $errors): Response
@@ -333,9 +300,7 @@ final class DefaultController extends AbstractController
             'contact_focus' => $focus,
         ];
 
-        // Reuse the visitor's still-valid timestamp on re-render so a quick
-        // fix-and-resend is not misclassified as a bot ("too_fast"). Only seed
-        // a fresh timestamp when none is reusable (missing, tampered, expired).
+        // A fresh timestamp would make a quick fix-and-resend look too fast.
         $submittedTimestamp = (string) $request->request->get('ts', '');
         $submittedSignature = (string) $request->request->get('ts_sig', '');
         if ($submittedTimestamp !== ''
@@ -350,8 +315,7 @@ final class DefaultController extends AbstractController
     }
 
     /**
-     * Loads a content file from config/content and decodes it to an array.
-     * Missing or malformed files degrade to an empty list.
+     * A missing or malformed file reads as an empty list.
      *
      * @return array<int, array<string, mixed>>
      */
@@ -372,11 +336,6 @@ final class DefaultController extends AbstractController
         return hash_hmac('sha256', $timestamp, $this->appSecret);
     }
 
-    /**
-     * Classifies the signed anti-spam timestamp: 'invalid' (missing or
-     * tampered signature), 'too_fast' (submitted within 3 s), 'expired'
-     * (older than two hours) or 'valid'.
-     */
     private function timestampState(Request $request): string
     {
         $timestamp = (string) $request->request->get('ts', '');
@@ -400,9 +359,6 @@ final class DefaultController extends AbstractController
     }
 
     /**
-     * What a scan of the short link is counted as, or null where nothing is
-     * printed under it.
-     *
      * @return array<string, string>|null
      */
     private function countedAs(string $slug): ?array

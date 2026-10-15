@@ -8,12 +8,6 @@ use App\Controller\DefaultController;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * Every route answers, the legal pages stay out of the index, the contact
- * routes redirect rather than carrying the address in a document, a case
- * study exists only where the content file says it does, and a printed
- * short link leads home under the campaign it is counted as.
- */
 final class RoutingTest extends WebTestCase
 {
     /**
@@ -54,8 +48,7 @@ final class RoutingTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // The slug exists in references.json, but with `hatDetailseite:
-        // false`—that card links out instead, so the internal route must not answer.
+        // The slug exists, but its card links out, so the internal route must not answer.
         $client->request('GET', '/referenzen/3d-druck-kostenrechner');
 
         self::assertResponseStatusCodeSame(404);
@@ -97,8 +90,7 @@ final class RoutingTest extends WebTestCase
     }
 
     /**
-     * What Matomo reports, written out once rather than derived from the
-     * controller, so a renamed campaign cannot pass unnoticed.
+     * Written out rather than derived, so a renamed campaign shows.
      *
      * @return iterable<string, array{string, string}>
      */
@@ -138,11 +130,6 @@ final class RoutingTest extends WebTestCase
         yield 'unknown slug' => ['/s/gibt-es-nicht'];
     }
 
-    /**
-     * Two prints under one slug would share one count, a slug the route
-     * refuses would put a dead code on paper, and an advertisement in a
-     * medium without a source would answer 404.
-     */
     public function testPrintedSlugsFollowTheSchemeAndAreUnique(): void
     {
         $slugs = array_map(static fn (array $case): string => $case[0], iterator_to_array(self::printEditions(), false));
@@ -204,9 +191,6 @@ final class RoutingTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // The address is offered through a redirect route precisely so that no
-        // document carries it. A `mailto:` written into the markup would undo
-        // that in one line.
         foreach (['/', '/impressum', '/datenschutz'] as $path) {
             $client->request('GET', $path);
             $inhalt = (string) $client->getResponse()->getContent();
@@ -216,12 +200,7 @@ final class RoutingTest extends WebTestCase
         }
     }
 
-    /**
-     * The mailbox is a mandatory disclosure, so it has to be readable—and it
-     * is hidden from a harvester by a decoy that only the markup carries. Both
-     * halves are asserted: drop the decoy and the obfuscation is gone, drop
-     * the plain address and the disclosure is.
-     */
+    // Both halves: the readable disclosure and the decoy only the markup carries.
     public function testTheLegalPagesSpellTheMailboxOutBehindADecoy(): void
     {
         $client = static::createClient();

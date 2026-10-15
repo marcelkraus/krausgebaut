@@ -20,7 +20,6 @@
             <p class="mt-5 text-lg leading-relaxed text-neutral-600">{{ reference.summary }}</p>
         </header>
 
-        {# Meta readout: role, stack, live link. #}
         <dl class="mt-10 grid gap-6 sm:grid-cols-2">
             {% if reference.rolle is defined and reference.rolle %}
                 <div class="rounded-xl border border-neutral-200 bg-white p-6">
@@ -47,7 +46,6 @@
             </a>
         {% endif %}
 
-        {# Case-study body: challenge → solution → result. #}
         <div class="mt-16 space-y-12">
             {% set chapters = [
                 { label: 'Ausgangslage', body: reference.ausgangslage ?? null },
@@ -64,7 +62,6 @@
             {% endfor %}
         </div>
 
-        {# CTA #}
         <div class="mt-16 flex flex-col gap-4 rounded-xl border border-neutral-200 bg-neutral-50 p-8 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h2 class="font-display text-xl font-bold text-neutral-900">Sie haben etwas Ähnliches im Kopf?</h2>

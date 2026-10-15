@@ -1,15 +1,8 @@
-/* source(none) switches off Tailwind's automatic project scan. Without it
-   every file in the tree is a candidate source, so a stray word in a
-   Markdown file can end up as a CSS rule in the build. The templates are
-   the only place utilities are written. */
+/* source(none): only the templates may produce utilities. */
 @import "tailwindcss" source(none);
 @plugin "@tailwindcss/typography";
 @source "../../templates/**/*.html.twig";
 
-/* Self-hosted fonts—no external requests. Aller carries the wordmark,
-   headlines and body (ties the type to the logo); JetBrains Mono is the
-   technical voice for eyebrows, labels and spec data. Latin covers the
-   German umlauts (ä ö ü ß). */
 @font-face {
     font-family: "Aller";
     src: url("../fonts/aller_regular.ttf") format("truetype");
@@ -34,51 +27,20 @@
     font-display: swap;
 }
 
-/* Design tokens. The single chromatic color is the krausgebaut petrol
-   accent (brand family color); everything else is Tailwind's neutral-*.
-   Typographic roles: Aller (display + body), JetBrains Mono (technical). */
 @theme {
     --font-sans: "Aller", ui-sans-serif, system-ui, sans-serif;
     --font-display: "Aller", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
-    /* One vocabulary, both brands: the role is in the name, so the
-       difference between the two brands falls into the values and not into
-       the naming.
-
-         accent                 the brand itself—surfaces, borders, markers,
-                                the mark. Never type without a checked step.
-         accent-on-light        type on a light ground
-         accent-on-dark         type on a dark ground
-         accent-hover           hover of a filled surface
-         accent-on-light-hover  hover of type on a light ground
-
-       The accent is Tailwind's cyan-800—and so is the master artwork, to
-       the digit. Bound to the token rather than a copied hex so it cannot
-       drift from the palette.
-
-       The petrol is a dark color: it carries a light ground as it is
-       (7.22:1) and misses AA as type on a dark one (2.74:1), where it needs
-       a brighter step. The sibling's papaya has the mirror problem, which
-       is why its tokens carry different values under the same names.
-
-       The hover of a filled surface moves in whichever direction keeps its
-       label readable—here the label is white, so the fill DARKENS. */
+    /* Petrol is dark: 7.22:1 as type on light, 2.74:1 on dark, where the on-dark
+       step takes over. The filled hover darkens under its white label. */
     --color-accent: var(--color-cyan-800);
     --color-accent-on-light: var(--color-cyan-800);
     --color-accent-on-dark: var(--color-cyan-600);
     --color-accent-hover: var(--color-cyan-900);
     --color-accent-on-light-hover: var(--color-cyan-900);
 
-    /* Sibling brand colors—the marker dots in the footer and the
-       krausgedruckt cross-promo band at the end of the page. Bound to the
-       palette, never copied as hex, so they cannot drift from it.
-
-       marcelkraus is purple—the left square of the family logo,
-       which stands for the employment career. It is a dark color and
-       measures 2.54:1 on the footer's neutral-900, so the marker there uses
-       the brighter step; the papaya passes on that ground as it is
-       (4.98:1 on the footer) and needs none. */
+    /* Purple measures 2.54:1 on the footer, so its marker takes the brighter step. */
     --color-brand-marcelkraus-on-dark: var(--color-purple-400);
     --color-brand-krausgedruckt: var(--color-orange-600);
     --color-brand-krausgedruckt-hover: var(--color-orange-700);
@@ -95,17 +57,8 @@
             transform: translateY(0);
         }
     }
-    /* Error is the second semantic color of the interface and gets the same
-       role treatment as the accent, so its contrast is checkable by name.
-
-         error             type on a light ground (4.77:1 on white)
-         error-surface     the tinted panel behind a form-level message
-         error-on-surface  type on that panel (5.87:1)
-         error-border      the outline of an invalid field and of the panel
-                           (3.81:1 on white, 3.48:1 on the panel)
-
-       The border step used to be red-300, which measures 1.75:1 on the panel
-       and misses the 3:1 WCAG 1.4.11 asks of a state indicator. */
+    /* error 4.77:1 on white, error-on-surface 5.87:1 on the panel, error-border
+       3.48:1 on the panel. */
     --color-error: var(--color-red-600);
     --color-error-surface: var(--color-red-50);
     --color-error-on-surface: var(--color-red-700);
@@ -113,11 +66,9 @@
 
 }
 
-/* Base layer. */
 @layer base {
     html {
         scroll-behavior: smooth;
-        /* Offset anchor targets for the fixed header. */
         scroll-padding-top: 5rem;
     }
 
@@ -126,7 +77,6 @@
         text-rendering: optimizeLegibility;
     }
 
-    /* Contact/postal addresses should not render italic. */
     address {
         font-style: normal;
     }
@@ -141,10 +91,8 @@
         outline-offset: 2px;
     }
 
-    /* The ring follows the same rule as type: the accent measures 2.48:1 on
-       the footer and 2.74:1 on the brand band, below the 3:1 that WCAG 1.4.11
-       asks of an indicator. On those grounds it takes the brighter step
-       (4.95:1 and 5.47:1). */
+    /* The accent misses 3:1 on the footer and the brand band; the ring takes the
+       brighter step there. */
     .bg-neutral-900 :focus-visible,
     .bg-neutral-950 :focus-visible {
         outline-color: var(--color-accent-on-dark);

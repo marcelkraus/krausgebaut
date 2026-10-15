@@ -6,11 +6,6 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * The JSON content files reach the page, and the rules the files are kept
- * under hold—alphabetical order, and a testimonials section that stays
- * hidden until there is something real to show.
- */
 final class ContentTest extends WebTestCase
 {
     public function testEveryServiceIsRendered(): void
@@ -45,10 +40,7 @@ final class ContentTest extends WebTestCase
 
     public function testServicesAndReferencesAreKeptAlphabetical(): void
     {
-        // The file order is the rendered order, so the sorting rule is not a
-        // matter of taste here—it decides what a visitor sees first. The
-        // featured service is the documented exception: it leaves the tile
-        // grid for a panel of its own and sits last in the file.
+        // File order is rendered order; the featured service sits last on purpose.
         foreach (['services.json', 'references.json'] as $datei) {
             $eintraege = array_values(array_filter(
                 self::inhalt($datei),
@@ -98,8 +90,7 @@ final class ContentTest extends WebTestCase
             return;
         }
 
-        // Never publish placeholder quotes: an empty file means the section
-        // does not exist, not that it renders empty.
+        // An empty file means no section, not an empty one.
         self::assertSelectorNotExists('blockquote');
     }
 
@@ -108,22 +99,13 @@ final class ContentTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/referenzen/meetmyrc');
 
-        // Each chapter carries a heading of its own, so the body of a case
-        // study appears in the heading outline instead of hanging under the h1.
         self::assertSelectorTextContains('body', 'Ausgangslage');
         self::assertSelectorTextContains('body', 'Lösung');
         self::assertSelectorTextContains('body', 'Ergebnis');
     }
 
     /**
-     * German collation without depending on the machine it runs on.
-     *
-     * `strcoll` with a `de_DE` locale is the obvious way to do this and the
-     * wrong one: the locale is installed here and absent on a CI runner, where
-     * the comparison silently falls back to ASCII and puts every capital
-     * before every lower-case letter—which fails a file that is sorted the
-     * way a reader would sort it. Folding case and umlauts by hand needs no
-     * locale and no extension.
+     * German collation by hand: strcoll needs a de_DE locale a CI runner lacks.
      */
     private static function sortierschluessel(string $titel): string
     {

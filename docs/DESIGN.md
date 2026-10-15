@@ -4,17 +4,19 @@ The light “spec-sheet” look, no dark mode. Tokens, contrast rules and the fa
 
 * **Eyebrow and badge always come from their partial.** The badge is driven by the optional `tag` field in the content JSON.
 * **Hero:** light (`neutral-50`), no photo, the gear oversized and cropped off the right edge as texture, key facts in free-standing chips.
-* **Section rhythm:** light → `neutral-100` → light → dark (`Ablauf`) → light → dark cross-promo; the first dark block arrives late on purpose. `Leistungen` has a sticky title column on the left and cards on the right; every other section stacks its heading above the content.
+* **Section rhythm:** light → `neutral-100` → light → dark (`Ablauf`) → light → dark cross-promo; the first dark block arrives late on purpose. `Ablauf` is one padding step shallower (`py-20 lg:py-24`): its steps have no box, so it carries less content and would otherwise hold too much air. `Leistungen` has a sticky title column on the left and cards on the right; every other section stacks its heading above the content.
+* **`Ablauf` has three steps, not four**, in the sibling's beat: conception and contact are one, because to a client they are one conversation, not two appointments.
 * **Principle cards** in `Arbeitsweise` close on a one-word promise from the `note` key, preceded by a dash in the accent color that the template sets.
 * **Mono micro label inside a card** is `text-[0.625rem]`.
-* **Tap targets** in the footer are 40 px (contact rows, `py-2.5`) and 32 px (legal links, `py-2`); the header aims for 44.
-* **Reference cards carry no images.**
+* **Tap targets** in the footer are 40 px (contact rows, `py-2.5`) and 32 px (legal links, `py-2`); the header aims for 44. Both clear the 24 px minimum of WCAG 2.5.8.
+* **Reference cards carry no images.** Six of the eight references have no usable screenshot, and two illustrated cards beside six empty ones look worse than none.
+* **The header's fixed first column starts at `lg`.** Below it, 160 px reserved for the logo would push the actions off a 320 px screen (WCAG 1.4.10).
 
-**Place names carry two roles.** *Where I am* is „Erftstadt bei Köln“ – title, meta description, hero lead, JSON-LD and the imprint, matching the imprint address. *How far I travel* is „Rhein-Erft-Kreis“ – the region chip, the footer and the contact panel.
+**Place names carry two roles.** *Where I am* is “Erftstadt bei Köln”—title, meta description, hero lead, JSON-LD and the imprint, matching the imprint address, which search engines compare; “bei Köln” makes the town placeable for anyone outside the district. *How far I travel* is “Rhein-Erft-Kreis”—the region chip, the footer and the contact panel.
 
 ## Brand mark and favicons
 
-The logo in `_logo.html.twig` is gear-brace and wordmark as one lockup; the brace embraces the „k“. `fill-accent` for gear and „kraus“, `fill-neutral-900` for „gebaut“. The favicon tile is the petrol ground carrying the white gear.
+The logo in `_logo.html.twig` is gear-brace and wordmark as one lockup; the brace embraces the “k”. `fill-accent` for gear and “kraus”, `fill-neutral-900` for “gebaut”. The favicon tile is the petrol ground carrying the white gear.
 
 ## SEO / meta
 

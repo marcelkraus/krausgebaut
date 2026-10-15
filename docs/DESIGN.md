@@ -10,7 +10,6 @@ The light “spec-sheet” look, no dark mode. Tokens, contrast rules and the fa
 * **Mono micro label inside a card** is `text-[0.625rem]`.
 * **Tap targets** in the footer are 40 px (contact rows, `py-2.5`) and 32 px (legal links, `py-2`); the header aims for 44. Both clear the 24 px minimum of WCAG 2.5.8.
 * **Reference cards carry no images.** Six of the eight references have no usable screenshot, and two illustrated cards beside six empty ones look worse than none.
-* **The header's fixed first column starts at `lg`.** Below it, 160 px reserved for the logo would push the actions off a 320 px screen (WCAG 1.4.10).
 
 **Place names carry two roles.** *Where I am* is “Erftstadt bei Köln”—title, meta description, hero lead, JSON-LD and the imprint, matching the imprint address, which search engines compare; “bei Köln” makes the town placeable for anyone outside the district. *How far I travel* is “Rhein-Erft-Kreis”—the region chip, the footer and the contact panel.
 

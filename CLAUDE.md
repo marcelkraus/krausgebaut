@@ -4,7 +4,7 @@ Sales website for **krausgebaut**, Marcel Kraus's internet and IT services (http
 
 ## Rules
 
-* **The site speaks to clients buying a service**, in the first person, addressing them as “Sie”. Availability for hire belongs to marcelkraus.
+* **The site speaks to clients buying a service**, in the first person, addressing them as “Sie”.
 * **The content lives in `config/content/*.json`**; editing it needs no code change.
 * **The contact form asks for name, e-mail, company, phone and message**; name, e-mail and message are required. The intent comes from the message, so there is no subject select; the mail subject is `Nachricht von {Name}`. The mechanism is in `../../docs/WEB_STACK.md`, the legal mailbox is `mail+legal@krausgebaut.de`.
 * **A printed piece answers under `/s/<prefix>-<code>`** and leads to the homepage; the scheme is in `../../docs/WORKSPACE.md` › Short links, this site's codes in `DefaultController::PRINT_CAMPAIGNS`, `PRINT_EDITIONS` and `PRINT_SOURCES`.

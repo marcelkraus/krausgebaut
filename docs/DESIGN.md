@@ -1,6 +1,6 @@
 # Design
 
-The light “spec-sheet” look, no dark mode. Tokens, contrast rules and the family bracket are in `../../docs/BRAND_FAMILY.md`; this document names what differs here.
+The light “spec-sheet” look, no dark mode. Tokens, contrast rules and the family bracket are in `../../../docs/BRAND_FAMILY.md`; this document names what differs here.
 
 * **Eyebrow and badge always come from their partial.** The badge is driven by the optional `tag` field in the content JSON.
 * **Hero:** light (`neutral-50`), no photo, the gear oversized and cropped off the right edge as texture, key facts in free-standing chips.

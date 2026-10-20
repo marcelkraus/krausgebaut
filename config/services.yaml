@@ -7,11 +7,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    # Outbound targets, read by the redirect routes.
     app.contact_email_address: 'mail@krausgebaut.de'
+    app.google_review_url: 'https://g.page/r/CS9gZYeQAIzJEBM/review'
     # Shown on the legal pages only, so what is harvested there arrives on its own tag.
     app.legal_email_address: 'mail+legal@krausgebaut.de'
-    app.google_review_url: 'https://g.page/r/CS9gZYeQAIzJEBM/review'
+    app.phone_number: '+49 151 47828523'
     app.whats_app_url: 'https://wa.me/message/TKVKBR7RPHA7B1'
 
 services:

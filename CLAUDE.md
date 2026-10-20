@@ -20,4 +20,4 @@ Sales website for **krausgebaut**, Marcel Kraus's internet and IT services (http
 
 ## Agent skills
 
-Issues and specs live as local markdown files under `.scratch/` (`docs/agents/issue-tracker.md`). Triage uses the five canonical roles (`docs/agents/triage-labels.md`). Domain docs are single-context: one `CONTEXT.md` and `docs/adr/` at the repository root (`docs/agents/domain.md`).
+Issues and specs live as local markdown files under `.scratch/` (`docs/agents/issue-tracker.md`). Triage uses the five canonical roles (`docs/agents/triage-labels.md`). Domain docs are single-context: one `GLOSSARY.md` and `docs/adr/` at the repository root (`docs/agents/domain.md`).

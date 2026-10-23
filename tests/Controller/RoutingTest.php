@@ -96,9 +96,9 @@ final class RoutingTest extends WebTestCase
      */
     public static function countedAs(): iterable
     {
-        yield 'advertisement' => ['/s/ad-ea2610', 'mtm_campaign=advertisement&mtm_medium=print&mtm_source=erftstadt-aktuell&mtm_kwd=2610'];
-        yield 'business card' => ['/s/bc-2610', 'mtm_campaign=business-card&mtm_medium=print&mtm_kwd=2610'];
-        yield 'flyer' => ['/s/fl-2610', 'mtm_campaign=flyer&mtm_medium=print&mtm_kwd=2610'];
+        yield 'advertisement' => ['/s/ad-ea2611', 'mtm_campaign=advertisement&mtm_medium=print&mtm_source=erftstadt-aktuell&mtm_kwd=2611'];
+        yield 'business card' => ['/s/bc-2611', 'mtm_campaign=business-card&mtm_medium=print&mtm_kwd=2611'];
+        yield 'flyer' => ['/s/fl-2611', 'mtm_campaign=flyer&mtm_medium=print&mtm_kwd=2611'];
     }
 
     #[DataProvider('countedAs')]
@@ -116,17 +116,17 @@ final class RoutingTest extends WebTestCase
      */
     public static function unknownShortLinks(): iterable
     {
-        yield 'advertisement in an unknown medium' => ['/s/ad-xx2610'];
+        yield 'advertisement in an unknown medium' => ['/s/ad-xx2611'];
         yield 'advertisement without edition' => ['/s/ad-ea'];
         yield 'business card without edition' => ['/s/bc-'];
-        yield 'code with a hyphen' => ['/s/fl-2610-b'];
+        yield 'code with a hyphen' => ['/s/fl-2611-b'];
         yield 'flyer without edition' => ['/s/fl-'];
-        yield 'path behind the slug' => ['/s/gibt-es-nicht/s/fl-2610'];
+        yield 'path behind the slug' => ['/s/gibt-es-nicht/s/fl-2611'];
         yield 'signature model, printed for krausgedruckt only' => ['/s/sm-d13'];
         yield 'unknown advertisement edition' => ['/s/ad-ea0000'];
         yield 'unknown business card edition' => ['/s/bc-0000'];
         yield 'unknown flyer edition' => ['/s/fl-0000'];
-        yield 'unknown prefix' => ['/s/xx-2610'];
+        yield 'unknown prefix' => ['/s/xx-2611'];
         yield 'unknown slug' => ['/s/gibt-es-nicht'];
     }
 

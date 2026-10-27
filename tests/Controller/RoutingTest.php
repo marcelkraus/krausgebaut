@@ -20,8 +20,7 @@ final class RoutingTest extends WebTestCase
         yield 'privacy' => ['/datenschutz'];
         yield 'robots' => ['/robots.txt'];
         yield 'sitemap' => ['/sitemap.xml'];
-        yield 'case study meetmyrc' => ['/referenzen/meetmyrc'];
-        yield 'case study ownyard' => ['/referenzen/ownyard'];
+        yield 'case study schrauberfuchs' => ['/referenzen/schrauberfuchs'];
     }
 
     #[DataProvider('successfulPaths')]
@@ -37,7 +36,7 @@ final class RoutingTest extends WebTestCase
     {
         $client = static::createClient();
 
-        foreach (['/', '/impressum', '/datenschutz', '/referenzen/meetmyrc'] as $path) {
+        foreach (['/', '/impressum', '/datenschutz', '/referenzen/schrauberfuchs'] as $path) {
             $crawler = $client->request('GET', $path);
 
             self::assertCount(1, $crawler->filter('h1'), sprintf('%s carries one <h1>', $path));
@@ -169,7 +168,7 @@ final class RoutingTest extends WebTestCase
     {
         $client = static::createClient();
 
-        foreach (['/', '/referenzen/meetmyrc'] as $path) {
+        foreach (['/', '/referenzen/schrauberfuchs'] as $path) {
             $client->request('GET', $path);
 
             self::assertSelectorExists('meta[name="robots"][content="index,follow"]');
@@ -227,7 +226,7 @@ final class RoutingTest extends WebTestCase
 
         self::assertResponseHeaderSame('Content-Type', 'application/xml; charset=UTF-8');
         self::assertNotFalse(simplexml_load_string($inhalt), 'The sitemap parses as XML');
-        self::assertStringContainsString('/referenzen/meetmyrc', $inhalt);
+        self::assertStringContainsString('/referenzen/schrauberfuchs', $inhalt);
         self::assertStringNotContainsString('/impressum', $inhalt);
         self::assertStringNotContainsString('/s/', $inhalt);
     }

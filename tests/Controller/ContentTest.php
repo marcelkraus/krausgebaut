@@ -97,7 +97,7 @@ final class ContentTest extends WebTestCase
     public function testACaseStudyRendersTheChaptersFromItsEntry(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/referenzen/meetmyrc');
+        $client->request('GET', '/referenzen/schrauberfuchs');
 
         self::assertSelectorTextContains('body', 'Ausgangslage');
         self::assertSelectorTextContains('body', 'Lösung');

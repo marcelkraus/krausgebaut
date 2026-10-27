@@ -40,24 +40,6 @@
         "hatDetailseite": false
     },
     {
-        "slug": "meetmyrc",
-        "title": "meetMyRC",
-        "kunde": "Eigenes Projekt",
-        "kategorie": "Website",
-        "summary": "Das Schaufenster für RC-Modelle weltweit: Land-, Luft- & Wasserfahrzeuge, Übersicht verbauter Komponenten, Clubs, Locations & Meetups.",
-        "stack": [
-            "PHP",
-            "Symfony"
-        ],
-        "tag": "Beta",
-        "url": "https://www.meetmyrc.com",
-        "hatDetailseite": true,
-        "rolle": "Gründer, Produktmanager & Entwickler – alles aus einer Hand.",
-        "ausgangslage": "RC-Begeisterte investieren viel Zeit und Herzblut in ihre Modelle – doch es fehlt ein Ort, an dem sich diese Modelle, die verbauten Komponenten und die Geschichte dahinter dokumentieren und zeigen lassen.",
-        "loesung": "meetMyRC ist eine kontobasierte Website: ein persönliches Schaufenster für RC-Modelle aller Sparten, ob zu Land, zu Luft oder zu Wasser – mit Fotostrecken, Tagebucheinträgen, Komponentenverwaltung, Clubs, Locations und Terminen.",
-        "ergebnis": "Im Rahmen einer Beta-Version im Juni 2026 veröffentlicht und frei verfügbar."
-    },
-    {
         "slug": "baum-hien",
         "title": "Möbelwerk Baum & Hien",
         "kunde": "Kundenprojekt",
@@ -68,24 +50,6 @@
             "Symfony"
         ],
         "hatDetailseite": false
-    },
-    {
-        "slug": "ownyard",
-        "title": "OwnYard",
-        "kunde": "Eigenes Projekt",
-        "kategorie": "Website",
-        "summary": "Inventar- und Werkstattverwaltung für Hobbyschrauber: Ob Teile, Fahrzeuge, Ausrüstung, Ausgaben oder Lagerorte – alles an einem Ort.",
-        "stack": [
-            "PHP",
-            "Symfony"
-        ],
-        "tag": "Beta",
-        "url": "https://www.ownyard.app",
-        "hatDetailseite": true,
-        "rolle": "Gründer, Produktmanager & Entwickler – alles aus einer Hand. Wissen: Wo, was & wie.",
-        "ausgangslage": "Wer an einem oder mehreren Fahrzeugen schraubt, verliert schnell den Überblick: Welches Teil liegt wo, was wurde investiert, was verbaut, was ist noch zu tun? Vorhandene Werkzeuge sind entweder teure und überladene Werkstatt-Software für Betriebe oder lose Zettel und Tabellen.",
-        "loesung": "OwnYard bündelt alles rund um die eigene Hobbywerkstatt an einer Stelle – Fahrzeuge als Projekte, dazu Teile, Ausgaben, Lagerorte und Ausrüstung, z. B. Werkzeuge. Eine schlanke, schnelle Web-Anwendung, die sich an Privatpersonen und Hobbyschrauber richtet.",
-        "ergebnis": "Im Rahmen einer Beta-Version im Mai 2026 veröffentlicht und frei verfügbar."
     },
     {
         "slug": "richard-hecker",
@@ -99,6 +63,23 @@
         ],
         "url": "https://www.richardhecker.de",
         "hatDetailseite": false
+    },
+    {
+        "slug": "schrauberfuchs",
+        "title": "Schrauberfuchs",
+        "kunde": "Eigenes Projekt",
+        "kategorie": "Website",
+        "summary": "Planung & Dokumentation der Arbeit an Fahrzeugen: Aufgaben, Arbeitszeit, Teile, Kosten, Fahrzeugdaten, Wert & Versicherung – alles an einem Ort.",
+        "stack": [
+            "PHP",
+            "Symfony"
+        ],
+        "url": "https://schrauberfuchs.app",
+        "hatDetailseite": true,
+        "rolle": "Gründer, Produktmanager & Entwickler – alles aus einer Hand. Halte Ordnung im Bau!",
+        "ausgangslage": "Wer an einem oder mehreren Fahrzeugen schraubt, verliert schnell den Überblick: Welches Teil liegt wo, was wurde investiert, was verbaut, was ist noch zu tun? Vorhandene Werkzeuge sind entweder teure und überladene Werkstatt-Software für Betriebe oder lose Zettel und Tabellen.",
+        "loesung": "Schrauberfuchs bündelt alles rund um die eigene Hobbywerkstatt an einer Stelle – Fahrzeuge als Projekte mit einem Board für ihre Aufgaben, dazu Teile, Kosten und Lagerorte. Die digitale Fahrzeugmappe hält Datenblätter, die Chronik und Angaben zu Wert & Versicherung fest. Eine schlanke, schnelle Web-Anwendung, die sich an Privatpersonen und Hobbyschrauber richtet.",
+        "ergebnis": "Seit Mai 2026 ist Schrauberfuchs online und wird regelmäßig erweitert. Im Oktober 2026 kam Schrauberfuchs PLUS dazu, das den Funktionsumfang durch kostenpflichtige Funktionen ergänzt."
     },
     {
         "slug": "stuppin-robotics",

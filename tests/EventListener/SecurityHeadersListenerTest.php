@@ -18,7 +18,7 @@ final class SecurityHeadersListenerTest extends WebTestCase
         yield 'privacy' => ['/datenschutz'];
         yield 'robots' => ['/robots.txt'];
         yield 'sitemap' => ['/sitemap.xml'];
-        yield 'case study' => ['/referenzen/meetmyrc'];
+        yield 'case study' => ['/referenzen/schrauberfuchs'];
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('publicPaths')]

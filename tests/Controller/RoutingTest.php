@@ -186,6 +186,14 @@ final class RoutingTest extends WebTestCase
         }
     }
 
+    public function testWhatsAppEntryPointRedirectsToTheBusinessAccount(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/kontakt-per-whats-app');
+
+        self::assertResponseRedirects('https://wa.me/message/DE6XB6KKERAZM1');
+    }
+
     public function testTheMailAddressNeverAppearsInTheMarkup(): void
     {
         $client = static::createClient();
